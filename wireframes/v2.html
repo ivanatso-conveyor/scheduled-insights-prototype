@@ -1,0 +1,1706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scheduled Insights — Wireframes v2</title>
+<style>
+  :root{
+    --bg:#eceef0;
+    --surface:#ffffff;
+    --surface-2:#f6f7f8;
+    --line:#e2e4e7;
+    --line-2:#cbd0d5;
+    --line-dash:#c2c8ce;
+    --text:#1c1e21;
+    --text-2:#5b6169;
+    --text-3:#8b9199;
+    --fill:#eef0f2;
+    --fill-2:#e3e6e9;
+    --ink:#2f3a45;
+    --sel:#dfe6ee;
+    --sel-line:#9fb2c6;
+    --warn-fill:#f0ece4;
+    --warn-line:#d8ccb6;
+    --r:4px;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    /* type scale mirrors @conveyorhq/design-tokens */
+    --h1:26px; --h2:20px; --h3:16px; --h4:14px; --body:14px; --sm:12px; --xs:11px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    font-family:var(--font);
+    font-size:var(--body);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- workbench ---------- */
+  .workbench{padding:32px 32px 200px;max-width:1520px;margin:0 auto}
+  .wb-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .wb-head h1{font-size:var(--h2);margin:0;letter-spacing:-.01em}
+  .wb-head .tag{font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3)}
+  .wb-sub{font-size:var(--sm);color:var(--text-2);margin:0 0 20px}
+
+  .artboard-label{max-width:1440px;margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:var(--xs);
+    text-transform:uppercase;letter-spacing:.08em;color:var(--text-3)}
+  .artboard-label b{color:var(--text-2);font-weight:600}
+
+  .artboard{
+    width:100%;max-width:1440px;margin:0 auto;
+    background:var(--surface);border:1px solid var(--line-2);border-radius:6px;
+    overflow:hidden;position:relative;box-shadow:0 1px 2px rgba(0,0,0,.04);
+    min-height:720px;display:flex;
+  }
+
+  /* ---------- notes ---------- */
+  .notes{
+    max-width:1440px;margin:12px auto 0;border:1px dashed var(--line-dash);border-radius:6px;background:var(--surface-2);
+    padding:14px 16px;font-size:var(--sm);color:var(--text-2);line-height:1.55;
+    padding-right:336px; /* clears the fixed ideation panel */
+  }
+  .notes h4{margin:0 0 8px;font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3)}
+  .notes ul{margin:0;padding-left:16px}
+  .notes li{margin-bottom:5px}
+  .notes li:last-child{margin-bottom:0}
+  .notes .ref{color:var(--text-3);font-style:italic}
+  .notes.hidden{display:none}
+
+  /* ---------- app chrome ---------- */
+  .rail{width:196px;flex:0 0 196px;background:var(--surface-2);border-right:1px solid var(--line);
+    padding:14px 10px;font-size:var(--sm)}
+  .rail .brand{display:flex;align-items:center;gap:8px;padding:2px 6px 14px}
+  .rail .brand .mark{width:20px;height:20px;border-radius:4px;background:var(--fill-2)}
+  .rail .brand .wm{width:64px;height:8px;border-radius:2px;background:var(--fill-2)}
+  .rail .grp{margin:12px 0 4px;padding:0 6px;font-size:var(--xs);text-transform:uppercase;
+    letter-spacing:.07em;color:var(--text-3)}
+  .rail a{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:var(--r);
+    color:var(--text-2);text-decoration:none}
+  .rail a .dot{width:12px;height:12px;border-radius:3px;background:var(--fill-2);flex:0 0 12px}
+  .rail a.on{background:var(--sel);color:var(--text);font-weight:600}
+  .rail a.on .dot{background:var(--sel-line)}
+  .rail .foot{margin-top:18px;padding-top:12px;border-top:1px solid var(--line)}
+
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--surface)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:16px 24px 0}
+  .topbar h2{font-size:var(--h1);margin:0;letter-spacing:-.015em}
+  .crumb{font-size:var(--sm);color:var(--text-3);margin:0 0 4px}
+  .tabs{display:flex;gap:20px;padding:14px 24px 0;border-bottom:1px solid var(--line)}
+  .tabs span{padding-bottom:9px;color:var(--text-2);font-size:var(--h4);cursor:default}
+  .tabs span.on{color:var(--text);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
+  .body{flex:1;overflow:auto;padding:24px}
+  .body.tight{padding:20px 24px}
+
+  /* settings takeover rail — replaces the app rail, per settings-nav.tsx */
+  .set-rail{width:240px;flex:0 0 240px;background:var(--surface-2);border-right:1px solid var(--line);
+    padding:12px 8px;font-size:var(--h4);overflow:auto}
+  .set-rail .backlink{display:flex;align-items:center;gap:6px;padding:4px 8px;margin-bottom:14px;
+    border-radius:var(--r);color:var(--text-2);font-weight:500;text-decoration:none}
+  .set-rail .grp{margin:16px 0 6px;padding:0 8px;font-size:var(--xs);letter-spacing:.02em;
+    color:var(--text-2);font-weight:600}
+  .set-rail .grp:first-of-type{margin-top:0}
+  .set-rail a:not(.backlink){display:block;padding:4px 8px;border-radius:var(--r);
+    color:var(--text-2);text-decoration:none;font-weight:500}
+  .set-rail a.on{background:var(--sel);color:var(--text)}
+
+  /* settings two-pane */
+  .set-wrap{flex:1;display:flex;min-height:0}
+  .set-nav{width:216px;flex:0 0 216px;border-right:1px solid var(--line);padding:20px 12px;
+    font-size:var(--sm);overflow:auto}
+  .set-nav .grp{margin:14px 0 4px;padding:0 8px;font-size:var(--xs);text-transform:uppercase;
+    letter-spacing:.07em;color:var(--text-3)}
+  .set-nav .grp:first-child{margin-top:0}
+  .set-nav a{display:block;padding:5px 8px;border-radius:var(--r);color:var(--text-2);text-decoration:none}
+  .set-nav a.on{background:var(--sel);color:var(--text);font-weight:600}
+
+  /* ---------- primitives ---------- */
+  .btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:var(--r);
+    border:1px solid var(--line-2);background:var(--surface);color:var(--text);font-size:var(--h4);
+    font-family:var(--font);white-space:nowrap}
+  .btn.pri{background:var(--ink);border-color:var(--ink);color:#fff}
+  .btn.sm{height:26px;font-size:var(--sm);padding:0 9px}
+  .btn.ghost{border-color:transparent;background:transparent;color:var(--text-2)}
+  .btn .ic{width:11px;height:11px;border-radius:2px;background:currentColor;opacity:.5}
+
+  .field{margin-bottom:16px}
+  .label{display:block;font-size:var(--h4);font-weight:600;margin-bottom:5px}
+  .hint{font-size:var(--sm);color:var(--text-3);margin:5px 0 0;line-height:1.5}
+  .input,.select,.textarea{
+    width:100%;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);
+    padding:8px 10px;font-size:var(--h4);color:var(--text-2);font-family:var(--font);min-height:34px;
+    display:flex;align-items:center;
+  }
+  .input.ph,.textarea.ph{color:var(--text-3)}
+  .select{justify-content:space-between}
+  .select:after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;
+    border-top:5px solid var(--line-2)}
+  .textarea{display:block;min-height:112px;line-height:1.6;white-space:pre-wrap}
+  /* The two real template prompts are longer than any sheet, so this box always
+     scrolls. Size it to the room the sheet has left below the label, so the whole
+     box is visible and the schedule sits just under the fold. */
+  .textarea.editable{max-height:368px;overflow-y:auto}
+  .row{display:flex;gap:10px}
+  .row > *{flex:1}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1px solid var(--line-2);
+    border-radius:var(--r);padding:6px 8px;min-height:34px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--fill);border:1px solid var(--line);
+    border-radius:12px;padding:2px 8px;font-size:var(--sm);color:var(--text-2)}
+  .chip .x{color:var(--text-3)}
+  .chips .ghosttext{font-size:var(--sm);color:var(--text-3)}
+
+  .pill{display:inline-flex;align-items:center;gap:5px;border-radius:11px;padding:2px 9px;
+    font-size:var(--xs);border:1px solid var(--line-2);color:var(--text-2);background:var(--surface-2)}
+  .pill .d{width:6px;height:6px;border-radius:50%;background:var(--line-2)}
+  .pill.on .d{background:var(--ink)}
+  .pill.warn,.pill.err{background:var(--warn-fill);border-color:var(--warn-line)}
+  .pill.warn .d,.pill.err .d{background:#a8823c}
+  .pill.err{color:#8a6d34}
+  .pill.ok{background:var(--surface);border-color:var(--line-2);color:var(--text-2)}
+  .pill.ok .d{background:var(--ink)}
+  .pill.off{background:var(--surface-2);border-color:var(--line);color:var(--text-3)}
+  .pill.off .d{background:var(--line-2)}
+
+  /* Banner — the one place failures are reported. Follows the <Banner> component in
+     @conveyorhq/react-components: 4px radius, no border, 12/16 padding, 12px/18px text,
+     a 16px icon in its own column at 10px gap, title over description, close top-right.
+     Tints and icon colours are the real caution / failure tokens. */
+  .banner{position:relative;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;
+    border-radius:var(--r);padding:12px 16px;padding-right:72px;margin-bottom:14px}
+  .banner.caution{background:#f4f1e8}
+  .banner.caution .bicon{color:#9d7300}
+  .banner.failure{background:#f4eded}
+  .banner.failure .bicon{color:#b7221a}
+  .bicon{grid-row:span 2;width:16px;height:16px;margin-top:2px}
+  .bt{grid-column:2;font-size:var(--sm);line-height:18px;font-weight:500;color:#204156}
+  .bs{grid-column:2;font-size:var(--sm);line-height:18px;color:#162d3c}
+  .bs p{margin:0 0 16px}
+  .bs p:last-child{margin-bottom:0}
+  .bs.rows p{margin-bottom:5px}
+  .bname{font-weight:600}
+  .blink{text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+  .bclose{position:absolute;top:10px;right:12px;width:24px;height:24px;color:#86a3b5;
+    display:flex;align-items:center;justify-content:center}
+  .bclose svg{width:16px;height:16px}
+
+  .toggle{width:30px;height:17px;border-radius:9px;background:var(--fill-2);border:1px solid var(--line-2);
+    position:relative;display:inline-block}
+  .toggle:after{content:"";position:absolute;top:1px;left:1px;width:13px;height:13px;border-radius:50%;
+    background:#fff;border:1px solid var(--line-2)}
+  .toggle.on{background:var(--ink);border-color:var(--ink)}
+  .toggle.on:after{left:auto;right:1px;border-color:var(--ink)}
+
+  .card{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:16px}
+  .sec{border:1px solid var(--line);border-radius:6px;margin-bottom:14px;overflow:hidden}
+  .sec > header{padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface-2);
+    display:flex;align-items:center;justify-content:space-between}
+  .sec > header h3{margin:0;font-size:var(--h4);font-weight:600}
+  .sec > header .step{font-size:var(--xs);color:var(--text-3);text-transform:uppercase;letter-spacing:.07em}
+  .sec .in{padding:16px}
+
+  .ph-box{border:1px dashed var(--line-dash);border-radius:var(--r);background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:var(--sm)}
+  .bar{height:8px;border-radius:2px;background:var(--fill-2)}
+  .bar.s{width:40%} .bar.m{width:65%} .bar.l{width:88%}
+  .stack > *{margin-bottom:7px} .stack > *:last-child{margin-bottom:0}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:var(--h4)}
+  table.tbl th{text-align:left;font-size:var(--xs);text-transform:uppercase;letter-spacing:.07em;
+    color:var(--text-3);font-weight:600;padding:0 12px 8px;border-bottom:1px solid var(--line)}
+  table.tbl th.sortable{cursor:pointer;user-select:none}
+  table.tbl th.sortable:hover{color:var(--text-2)}
+  table.tbl th.sortable.on{color:var(--text-2)}
+  .caretsort{margin-left:5px;font-size:9px;opacity:.55}
+  table.tbl th.sortable.on .caretsort{opacity:1}
+  table.tbl td{padding:13px 12px;border-bottom:1px solid var(--line);color:var(--text-2);vertical-align:middle}
+  table.tbl td.name{color:var(--text);font-weight:600}
+  table.tbl td .sub{font-size:var(--sm);color:var(--text-3);font-weight:400;margin-top:2px}
+  table.tbl tr.hl td{background:var(--surface-2)}
+
+  .kicker{font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin:0 0 8px}
+  .h3{font-size:var(--h3);font-weight:600;margin:0 0 4px}
+  .h2{font-size:var(--h2);font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+  .muted{color:var(--text-2);font-size:var(--h4);line-height:1.6;margin:0}
+  .muted.sm{font-size:var(--sm)}
+
+  /* overlays */
+  .scrim{position:absolute;inset:0;background:rgba(28,30,33,.30);display:flex;align-items:center;
+    justify-content:center;padding:28px;z-index:5}
+  .modal{background:var(--surface);border-radius:8px;width:100%;max-width:620px;max-height:100%;
+    display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,.22);overflow:hidden}
+  .pframe{display:contents}
+  .modal > header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;
+    align-items:flex-start;justify-content:space-between;gap:12px}
+  .modal > header h3{margin:0;font-size:var(--h3);font-weight:600}
+  .modal > .mbody{padding:20px;overflow:auto}
+  .modal > footer{padding:14px 20px;border-top:1px solid var(--line);display:flex;
+    align-items:center;justify-content:space-between;gap:10px;background:var(--surface-2)}
+  .menu{position:absolute;background:var(--surface);border:1px solid var(--line-2);border-radius:6px;
+    box-shadow:0 8px 24px rgba(0,0,0,.14);padding:4px;min-width:158px;font-size:var(--h4);z-index:4}
+  .menu div{padding:7px 10px;border-radius:var(--r);color:var(--text-2)}
+  .menu div.sep{border-top:1px solid var(--line);margin:4px 0;padding:0;height:0}
+
+  /* report artifact preview */
+  .paper{background:#fff;border:1px solid var(--line-2);box-shadow:0 2px 10px rgba(0,0,0,.07);
+    width:520px;padding:34px 38px;margin:0 auto}
+  .paper .plogo{width:78px;height:9px;background:var(--fill-2);border-radius:2px;margin-bottom:22px}
+  .paper h4{margin:0 0 4px;font-size:var(--h2);letter-spacing:-.01em}
+  .paper .pmeta{font-size:var(--sm);color:var(--text-3);margin:0 0 20px}
+  .paper .pkick{font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);
+    margin:22px 0 8px}
+
+  .callout{border:1px solid var(--line);background:var(--surface-2);border-radius:6px;padding:12px 14px;
+    font-size:var(--sm);color:var(--text-2);line-height:1.55}
+  .callout b{color:var(--text)}
+  .discl{border:1px solid var(--line);border-radius:6px;background:var(--surface-2);padding:10px 12px;
+    font-size:var(--sm);color:var(--text-2);display:flex;gap:8px;align-items:flex-start}
+
+  .scopegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 14px;margin-top:8px}
+  .scopegrid span{font-size:var(--sm);color:var(--text-2);display:flex;gap:7px;align-items:center}
+  .scopegrid span:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--line-2)}
+
+  /* an editable prompt canvas — full-contrast text, focus ring, caret, resize grip */
+  .textarea.editable{
+    color:var(--text);background:#fff;position:relative;
+    border-color:var(--ink);box-shadow:0 0 0 3px rgba(47,58,69,.09);
+    padding:11px 13px;
+  }
+  .textarea.editable:after{
+    content:"";position:absolute;right:4px;bottom:4px;width:7px;height:7px;
+    border-right:2px solid var(--line-2);border-bottom:2px solid var(--line-2);
+  }
+  .textarea.editable.ph,.input.editable.ph{color:var(--text-3)}
+  .caret{display:inline-block;width:1.5px;height:15px;background:var(--ink);
+    vertical-align:-3px;margin-left:1px}
+  .lblrow{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:3px}
+  .lblrow .label{margin-bottom:0}
+  .editnote{font-size:var(--sm);color:var(--text-2);margin:0 0 8px}
+  .editnote .promptname{font-weight:600;color:var(--text)}
+  .btn.icon{width:28px;height:28px;padding:0;justify-content:center;color:var(--text-2);
+    font-size:15px;line-height:1}
+
+  .scopeline{font-size:var(--sm);color:var(--text-2);margin:0;line-height:1.5}
+
+  .heropanel{max-width:820px;margin:26px auto 0;border:1px solid var(--line);border-radius:8px;
+    background:var(--surface);overflow:hidden}
+  .heropanel-foot{border-top:1px solid var(--line);background:var(--surface-2);padding:18px 30px 24px}
+  /* manage list */
+  .rchips{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+  .rchip{width:24px;height:24px;border-radius:50%;background:var(--fill-2);border:1px solid var(--line-2);
+    display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;
+    color:var(--text-2);letter-spacing:.02em;flex:0 0 24px}
+  .rchip.ext{background:var(--warn-fill);border-color:var(--warn-line)}
+  .rmore{font-size:var(--sm);color:var(--text-3);margin-left:2px}
+  .rcount{border-bottom:1px dotted var(--line-2);cursor:default}
+  .rcwrap{position:relative;display:inline-block}
+  .rcwrap .rtip{top:24px}
+  .extbadge{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#8a6d34;
+    background:var(--warn-fill);border:1px solid var(--warn-line);border-radius:3px;padding:0 4px}
+  .rtip.up{top:auto;bottom:46px}
+  .rtip{position:absolute;left:0;top:46px;z-index:6;width:262px;background:#fff;
+    border:1px solid var(--line-2);border-radius:6px;box-shadow:0 10px 28px rgba(0,0,0,.16);overflow:hidden}
+  .rtiphead{padding:8px 12px;border-bottom:1px solid var(--line);background:var(--surface-2);
+    font-size:var(--xs);text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  .rtiplist{max-height:246px;overflow:auto}
+  .rtiprow{display:flex;gap:9px;align-items:center;padding:6px 12px}
+  .rtiprow .t{font-size:var(--sm);font-weight:600;line-height:1.3}
+  .rtiprow .s{font-size:var(--xs);color:var(--text-3)}
+
+
+  .btn.dis{opacity:.42;pointer-events:none}
+  .btn.strong{border-color:var(--ink);color:var(--text);font-weight:600}
+  .bodybar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    max-width:520px;margin:0 auto 12px}
+  .extcount{color:#8a6d34}
+  .spill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);
+    background:var(--surface-2);border-radius:12px;padding:3px 8px;font-size:var(--sm);
+    color:var(--text-2);cursor:pointer;white-space:nowrap}
+  .spill:hover{border-color:var(--line-2);background:var(--fill-2)}
+  .spill.ext{background:var(--warn-fill);border-color:var(--warn-line)}
+  .spill .x{color:var(--text-3)}
+
+  .quickset{font-size:var(--sm);display:flex;gap:8px;align-items:center}
+  .tokenfield{display:flex;flex-wrap:wrap;gap:5px;align-items:center;border:1px solid var(--ink);
+    border-radius:var(--r);padding:7px 9px;min-height:40px;background:#fff;
+    box-shadow:0 0 0 3px rgba(47,58,69,.09);max-height:132px;overflow-y:auto}
+  .tokeninput{flex:1;min-width:150px;border:none;outline:none;font-size:var(--h4);
+    font-family:var(--font);color:var(--text);padding:2px 0}
+  /* typeahead menu — appears under the field while you type */
+  .gmenu{margin-top:5px;border:1px solid var(--line-2);border-radius:var(--r);background:#fff;
+    box-shadow:0 8px 24px rgba(0,0,0,.12);max-height:236px;overflow-y:auto}
+  .gmrow{display:flex;align-items:center;gap:11px;padding:8px 12px;cursor:pointer}
+  .gmrow:hover,.gmrow.on{background:var(--surface-2)}
+  .gmrow .t{font-size:var(--h4);line-height:1.35;color:var(--text-2)}
+  .gmrow .s{font-size:var(--sm);line-height:1.4;color:var(--text-3)}
+  .gmrow b{font-weight:600;color:var(--text)}
+  .gmempty{padding:11px 12px;font-size:var(--sm);color:var(--text-3);line-height:1.5}
+
+  /* shortcut rows under the field */
+  .srows{margin:9px 0 10px;border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden}
+  .srow{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;
+    background:var(--surface-2);border-bottom:1px solid var(--line)}
+  .srow:last-child{border-bottom:none}
+  .srow:hover{background:var(--sel)}
+  .srow.on{background:var(--sel);box-shadow:inset 2px 0 0 var(--sel-line)}
+  .srow .t{font-size:var(--h4);color:var(--text)}
+  .srow .s{font-size:var(--sm);color:var(--text-3);margin-left:auto}
+  .srow .rchip{width:auto;padding:0 7px;border-radius:11px;font-size:9px}
+  .cbox{width:14px;height:14px;border-radius:3px;border:1px solid var(--line-2);background:#fff;flex:0 0 14px}
+  .cbox.on{background:var(--ink);border-color:var(--ink)}
+
+
+  .dim{opacity:.42;pointer-events:none;user-select:none}
+  .addplus{width:22px;height:22px;border-radius:50%;border:1px dashed var(--line-dash);
+    display:inline-flex;align-items:center;justify-content:center;color:var(--text-3);
+    font-size:12px;flex:0 0 22px}
+
+
+  /* test-run treatments */
+  .art{display:flex;justify-content:center}
+  .artpage{width:300px;background:#fff;border:1px dashed var(--line-dash);border-radius:4px;
+    padding:22px 24px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  .artbar{height:9px;border-radius:2px;background:var(--fill-2);margin-bottom:8px}
+  .artbar.w40{width:40%} .artbar.w70{width:70%}
+  .artline{height:6px;border-radius:2px;background:var(--fill);margin-bottom:6px}
+  .artline.w60{width:60%}
+  .artchart{display:flex;align-items:flex-end;gap:7px;height:78px;margin:16px 0 14px;
+    padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .artcol{flex:1;background:var(--fill-2);border-radius:2px 2px 0 0}
+  .arttable{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+  .arttable div{height:6px;border-radius:2px;background:var(--fill)}
+
+  /* inset sheet — the standard for every step in the create flow.
+     Fills the frame minus a margin, so the app stays visible behind it. */
+  .scrim.roomy{padding:44px}
+  .modal.sheet{max-width:none;width:100%;height:100%;max-height:none}
+  .modal.sheet .mbody{display:flex;flex-direction:column;flex:1;min-height:0}
+  .modal.sheet .pwrap{flex:1;min-height:0}
+  .modal.sheet .plist{overflow-y:auto}
+  /* a sheet body whose content is a single centred object rather than a form */
+  .modal.sheet .mbody.centred{justify-content:center;align-items:center;overflow-y:auto}
+  /* a form column stays readable however wide the container gets */
+  .formcol{max-width:620px;margin:0 auto;width:100%}
+  .modal .mbody:has(> .formcol){display:block;overflow-y:auto}
+
+  /* two-pane template picker */
+  .pwrap{display:flex;min-height:376px}
+  .plist{width:320px;flex:0 0 320px;border-right:1px solid var(--line);background:var(--surface-2);
+    padding:10px 8px}
+  .pitem{padding:9px 10px;border-radius:var(--r);font-size:var(--h4);color:var(--text-2);
+    line-height:1.35;margin-bottom:2px}
+  .pitem.on{background:var(--sel);color:var(--text);font-weight:600;
+    box-shadow:0 0 0 1px var(--sel-line)}
+  .pitem.scratch{color:var(--text-3);border:1px dashed var(--line-dash);margin-top:8px}
+  .pitem.scratch.on{color:var(--text);background:var(--sel);border-style:solid;
+    border-color:var(--sel-line);font-weight:600}
+  .tips{margin:0;padding-left:17px;font-size:var(--sm);color:var(--text-2);line-height:1.55}
+  .tips li{margin-bottom:4px}
+  .pdetail{flex:1;min-width:0;padding:24px 28px;overflow:auto}
+  .promptview{border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);
+    padding:13px 15px;font-size:var(--h4);color:var(--text);line-height:1.6;white-space:pre-wrap;
+    max-height:340px;overflow-y:auto}
+
+  /* prompt-block treatments */
+  .tmplbar{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .tmplchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--sel-line);background:var(--sel);
+    border-radius:13px;padding:3px 10px;font-size:var(--sm);color:var(--text);font-weight:600}
+  .tmplchip .x{color:var(--text-2);font-weight:400}
+  .lnk{font-size:var(--sm);color:var(--text-2);text-decoration:underline;text-underline-offset:2px}
+  .tok{background:var(--sel);border:1px solid var(--sel-line);border-radius:3px;padding:0 4px}
+  .ptool{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    border:1px solid var(--line-2);border-bottom:none;border-radius:var(--r) var(--r) 0 0;
+    padding:6px 8px;background:var(--surface-2);position:relative}
+  .ptool .grpb{display:flex;gap:6px;align-items:center}
+  .textarea.attached{border-radius:0 0 var(--r) var(--r)}
+  .dlist{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+  .dlist .drow{display:flex;gap:9px;padding:8px 10px;border-bottom:1px solid var(--line);align-items:flex-start}
+  .dlist .drow:last-child{border-bottom:none}
+  .dlist .drow .plus{color:var(--text-3);font-size:var(--sm);flex:0 0 auto;margin-top:1px}
+  .dlist .drow .t{font-size:var(--sm);font-weight:600;line-height:1.3}
+  .dlist .drow .s{font-size:var(--xs);color:var(--text-3);line-height:1.4;margin-top:1px}
+  .dlist.scroll{max-height:268px;overflow:auto}
+  .scopebar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+  .srcchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);background:var(--surface-2);
+    border-radius:12px;padding:2px 9px;font-size:var(--sm);color:var(--text-2)}
+  .srcchip .x{color:var(--text-3)}
+  .srcchip.add{border-style:dashed;color:var(--text-3)}
+  .slot{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .slot:last-of-type{border-bottom:none}
+  .slot .sl{font-size:var(--h4);color:var(--text-2);flex:0 0 auto}
+  .slot .sf{flex:1;min-width:0}
+  .assembled{border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);padding:11px 13px;
+    font-size:var(--sm);color:var(--text-2);line-height:1.6}
+
+  /* ---------- control panel ---------- */
+  #ctl{
+    position:fixed;right:20px;bottom:20px;z-index:100;background:#fff;border:1px solid var(--line-2);
+    border-radius:10px;box-shadow:0 10px 34px rgba(0,0,0,.18);width:288px;font-size:var(--sm);
+    overflow:hidden;
+  }
+  #ctl .ch{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;
+    border-bottom:1px solid var(--line);background:var(--surface-2);cursor:pointer;user-select:none}
+  #ctl .ch b{font-size:var(--xs);text-transform:uppercase;letter-spacing:.09em;color:var(--text-2)}
+  #ctl .ch .cv{color:var(--text-3);font-size:14px;line-height:1}
+  #ctl .cb{padding:12px;max-height:calc(100vh - 190px);overflow-y:auto}
+  #ctl.min .cb{display:none}
+  #ctl .grp{margin-bottom:12px}
+  #ctl .grp:last-child{margin-bottom:0}
+  #ctl .gl{font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);
+    margin-bottom:5px;display:flex;justify-content:space-between;align-items:center}
+  #ctl .seg{display:flex;flex-wrap:wrap;gap:4px}
+  #ctl .seg button{flex:1 1 auto;min-width:0;border:1px solid var(--line-2);background:#fff;border-radius:var(--r);
+    padding:6px 8px;font-size:var(--sm);color:var(--text-2);font-family:var(--font);cursor:pointer;
+    white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+  #ctl .seg button:hover{background:var(--surface-2)}
+  #ctl .seg button.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
+  #ctl .seg.stack button{flex:1 1 100%;text-align:left}
+  #ctl .seg.stack > .subs{flex:1 1 100%}
+  #ctl .subs{margin:6px 0 8px 9px;padding-left:11px;border-left:2px solid var(--line)}
+  #ctl .sgrp{margin-bottom:9px}
+  #ctl .sgrp:last-child{margin-bottom:2px}
+  #ctl .sgrp .gl{margin-bottom:4px;color:var(--text-3)}
+  #ctl .sgrp .seg button{font-size:11px;padding:5px 8px}
+  #ctl .subs .subs{margin:5px 0 7px 7px;padding-left:9px;border-left:2px solid var(--line-2)}
+  #ctl .foot{border-top:1px solid var(--line);padding:9px 12px;display:flex;align-items:center;
+    justify-content:space-between;color:var(--text-3);font-size:var(--xs)}
+  #ctl .sw{display:flex;align-items:center;gap:7px;color:var(--text-2);cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="workbench">
+  <div class="wb-head">
+    <h1>Scheduled Insights</h1>
+    <span class="tag">Wireframes · round 2 · greybox</span>
+  </div>
+  <p class="wb-sub">Use the panel in the bottom-right to switch between ideations. ← → step through screens; ↑ ↓ step through the states within a screen.</p>
+
+  <p class="artboard-label" id="ablabel"></p>
+  <div class="artboard" id="stage"></div>
+  <div class="notes" id="notes"></div>
+</div>
+
+<div id="ctl">
+  <div class="ch" onclick="document.getElementById('ctl').classList.toggle('min')">
+    <b>Ideations</b><span class="cv">▾</span>
+  </div>
+  <div class="cb" id="ctlbody"></div>
+  <div class="foot">
+    <label class="sw"><input type="checkbox" id="noteToggle" /> Design notes</label>
+    <span id="combo"></span>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   STATE
+   ============================================================ */
+const PLACEMENTS = [
+  {id:'insights', label:'A · Insights › Scheduled tab'},
+  {id:'settings', label:'B · Settings › Workflow Automation'}
+];
+const SCREENS = [
+  {id:'empty',     label:'1 · Empty state'},
+  {id:'templates', label:'2 · Template picker'},
+  {id:'configure', label:'3 · Configure'},
+  {id:'preview',   label:'4 · Preview / test run'},
+  {id:'manage',    label:'5 · Manage list'}
+];
+
+
+const TESTRUNS = [
+  {id:'t1', label:'T1 · Illustrative sample (direction)'},
+  {id:'t2', label:'T2 · Live preview (backup)'}
+];
+
+const OVERLAYS = [
+  {id:'default', label:'Default'},
+  {id:'menu',    label:'Row menu open'},
+  {id:'hover',   label:'Recipient hover list'},
+  {id:'send',    label:'“Send to…” modal'},
+  {id:'error',   label:'Error banner'}
+];
+
+/* The four things that can go wrong, and who has to fix each one. */
+const ERRKINDS = [
+  {id:'delivery',   label:'B1 · Delivery failed'},
+  {id:'generation', label:'B2 · Report generation failed'},
+  {id:'prompt',     label:'B3 · Invalid or bad prompt'},
+  {id:'many',       label:'B4 · Several at once'}
+];
+
+const SOURCES_OF_PROMPT = [
+  {id:'template', label:'From a template'},
+  {id:'scratch',  label:'From scratch'}
+];
+
+const state = {placement:'insights', screen:'empty', source:'template', tmpl:0, testrun:'t1', overlay:'default', errkind:'delivery', picked:null, prevPicked:null, sortKey:'name', sortDir:'asc', extras:[], q:'', subIdx:0, notes:false};
+
+/* ============================================================
+   CONTENT
+   ============================================================ */
+const TEMPLATES = [
+  {q:'Who viewed our Trust Center documents?',
+   n:'Trust Center monthly report',
+   d:'Eight health metrics, then top domains, top documents and every AI conversation — each table followed by written analysis, closing with actions tagged Content, Sales or Agent.',
+   p:`Report on how our Trust Center performed over the reporting period. The reader is the security or GRC owner, who needs to answer three questions: is the Trust Center working, who specifically is looking, and what should I change.
+
+Cover:
+• A health snapshot — external interactions, unique visitors, active domains, new connections, document views and downloads, Q&A views, agent conversations, new subscribers.
+• Who is visiting — top domains by engagement, with the visitor emails behind each.
+• Content performance — the most viewed documents, and any document we expected to matter that is seeing little or no traffic.
+• Every Trust Center AI conversation — domain, date, length and topic — and the questions the agent could not answer.
+• New subscribers and new connections created in the period.
+
+Exclude anyone internal to us from every figure. Never mix internal and external activity in the same number.
+
+After each section, say what the data means rather than restating it. Commit to the interpretation the data supports instead of hedging. If engagement is concentrated in a few accounts, name them and say what their behaviour suggests — a full compliance package downloaded in one session reads as an active security review. Where a visitor asked something the agent could not answer, say whether we are missing the content or failing to surface content we already have.
+
+Finish with actions, each tagged Content, Sales or Agent, and each pointing at the specific number behind it.`},
+
+  {q:'How accurate were our AI answers?',
+   n:'Conveyor answer quality',
+   d:'Perfect / Accurate Edited / Inaccurate / Unanswered rates over the period, split by questionnaire type, with failures grouped by root cause and quoted in full — plus the knowledge base changes that fix the most answers per unit of effort.',
+   p:`Analyse how well ConveyorAI answered customer security questionnaires and RFPs over the reporting period. The audience is the team that maintains the knowledge base behind the answering system — they do not need questionnaires explained. What they need is which entries are wrong, which are missing, and which are costing the most reviewer time.
+
+Cover:
+• Scope — how many answers were graded, how many carry no grade at all, and anything excluded.
+• The four rates: Perfect, Accurate Edited, Inaccurate, Unanswered. Split Security Questionnaire from RFP when both appear; they fail differently.
+• Whether failures cluster in a few questionnaires or spread evenly, and separately whether they cluster by topic. One stale entry surfacing across five customers is a higher-leverage fix than one bad questionnaire.
+• Which subjects the AI handles well and badly, named specifically enough to act on.
+• Every inaccurate and unanswered answer, grouped by root cause, quoted in full — question, AI draft, final answer.
+• The Accurate Edited answers, diffed against their finals, to find the mechanical edits that are one style rule away from Perfect.
+• Process and format problems, kept separate from knowledge base problems.
+
+Counting rules:
+An answer a human did not edit is Perfect — silence is approval. Count every graded answer with no review-intensity threshold.
+Where the AI's text was accepted verbatim and only a structured picklist was wrong, that is a format failure, not a content one. Report the corrected content-inaccuracy rate as the real number.
+
+Read the failures rather than inferring them from metadata. Do not recommend model, prompt or retrieval changes — every recommendation should be a knowledge base content change. Close with a prioritised list ordered by failures resolved per unit of effort, and an "if only three things get done" box.`},
+
+  {q:'What did AI answer in our Trust Center?',
+   n:'Trust Center AI answers',
+   d:'Answered vs. deflected share of visitor questions, split by month. Plus the 20 most-asked questions AI could not answer, grouped by topic.',
+   p:`Report on what our Trust Center AI answered for visitors over the reporting period.
+
+Include: the share of questions answered versus deflected, by month; the twenty most-asked questions AI could not answer, grouped by topic; and which of those we could resolve by adding knowledge.`},
+
+  {q:'Which answers needed a human edit?',
+   n:'Human edit volume',
+   d:'Bar chart of edited vs. untouched AI answers by week. Plus the 10 most-edited questions with edit counts, as a review workload estimate.',
+   p:`Report on how much AI-drafted content our team edited over the reporting period.
+
+Include: edited versus untouched answers by week; the ten most-edited questions with edit counts; and an estimate of the review workload this represents.`},
+
+  {q:'Where are the gaps in our knowledge?',
+   n:'Knowledge gap analysis',
+   d:'Questions with no confident answer, clustered into topics and ranked by how often each topic came up. No chart — a prioritized list.',
+   p:`Identify gaps in our knowledge base over the reporting period.
+
+Include: the questions we could not answer confidently, clustered into topics and ranked by how often each topic came up. For each topic, suggest what knowledge would close the gap.`}
+];
+
+const SCOPE = [
+  'Questionnaires &amp; questions','Knowledge base &amp; topics',
+  'Trust Center activity','Trust Center AI conversations',
+  'One-off questions','Documents &amp; product lines',
+  'Visitor feedback','Connections &amp; access'
+];
+
+const SCRATCH_PLACEHOLDER =
+`Describe the report you want. For example:
+
+“Show me how many questionnaires we completed last month, how
+long each one took, and which topics slowed us down the most.”`;
+
+/* Which template is selected. Set by clicking a row in the picker, and read
+   again in configure so step 2 shows the prompt you actually chose. */
+function tmpl(){
+  /* -1 is "start from scratch"; if step 2 is flipped back to a template, fall
+     back to the first one rather than reading past the end of the list. */
+  return TEMPLATES[state.tmpl] || TEMPLATES[0];
+}
+
+const ORG = ['Priya Nadkarni','Marcus Lehane','Dana Whitfield','Tomás Rivera','Aisha Karim',
+  'Ben Osei','Clara Mendes','Dev Patel','Erin Volkov','Farid Haddad','Grace Lin','Hugo Bianchi',
+  'Ivana Tso','Jonah Weiss','Keiko Mori','Liam Doherty','Maya Sharma','Noah Byrne','Olga Petrova',
+  'Pablo Ruiz','Quinn Adeyemi','Rosa Iglesias'
+].map(n => ({n, e:n.toLowerCase().split(' ')[0]+'@acme.com'}));
+
+const EXT = [
+  {n:'audit@northwind.com', e:'audit@northwind.com', ext:true},
+  {n:'kai@northwind.com',   e:'kai@northwind.com',   ext:true}
+];
+
+const R = (a,b) => ORG.slice(a,b);
+
+const REPORTS = [
+  {n:'Monthly Trust Center digest', t:'Who viewed our Trust Center documents?', s:'Monthly on the 1st, 9:00 AM ET', to:R(0,13).concat(EXT), l:'Sep 1, 2026', lt:20260901, ls:'ok', st:'Active', nx:'Oct 1, 2026'},
+  {n:'AI answer accuracy',          t:'How accurate were our AI answers?',      s:'Weekly on Monday, 8:00 AM ET',   to:R(12,13),l:'Sep 7, 2026', lt:20260907, ls:'ok', st:'Active', nx:'Sep 14, 2026'},
+  {n:'Trust Center AI answers',     t:'What did AI answer in our Trust Center?',s:'Weekly on Wednesday, 7:00 AM ET',to:R(3,9),  l:'Aug 26, 2026',lt:20260826, st:'Error', sd:'Sep 2, 2026', nx:'Sep 9, 2026',
+   fail:{kind:'delivery', when:'Sep 2, 2026', what:'2 of 7 addresses bounced', who:'dana.reyes@acme.com, t.okafor@northwind.io'}},
+  {n:'Knowledge gap analysis',      t:'Where are the gaps in our knowledge?',   s:'Monthly on the 15th, 9:00 AM ET',to:R(0,2),  l:'Jul 15, 2026',lt:20260715, st:'Paused', pd:'Aug 16, 2026',
+   fail:{kind:'generation', when:'Aug 15, 2026', what:'no data returned for the period'}},
+  {n:'Questionnaire throughput',    t:'How much time did Conveyor save us?',    s:'Weekly on Friday, 4:00 PM ET',   to:R(2,7),  l:'Aug 29, 2026',lt:20260829, st:'Paused', pd:'Aug 30, 2026',
+   fail:{kind:'prompt', when:'Sep 5, 2026', what:'the prompt asks for data Conveyor does not hold'}}
+];
+
+/* ============================================================
+   CHROME
+   ============================================================ */
+const RAIL = [
+  {g:'', items:[['Getting Started',0],['Launchpad',0],['Insights','insights']]},
+  {g:'Knowledge', items:[['Knowledge Base',0],['Documents',0],['Topics',0],['Knowledge Library',0]]},
+  {g:'Trust Center', items:[['Designer',0],['Audience',0]]},
+  {g:'Requests', items:[['Security Questionnaires',0],['RFPs',0]]}
+];
+
+const SET_NAV = [
+  ['User',                 ['Settings','Security','Notifications','Accessibility']],
+  ['Organization',         ['Settings','Integrations','Members &amp; Access','Notifications']],
+  ['Knowledge Management', ['Auto-Ingest Knowledge']],
+  ['Answering',            ['Sources in Scope','Custom Instructions']],
+  ['Workflow Automation',  ['Automation Rules','Team Routing','Self-Serve via Slack','Scheduled Insights']],
+  ['Trust Center',         ['Settings','NDA &amp; Access','Trust Center Agent &amp; MCP','Visitor Feedback']],
+  ['RFPs',                 ['Red Flag Detection','Manage Templates']]
+];
+
+function rail(activeInsights, activeSettings){
+  let h = `<nav class="rail"><div class="brand"><div class="mark"></div><div class="wm"></div></div>`;
+  RAIL.forEach(sec=>{
+    if(sec.g) h += `<div class="grp">${sec.g}</div>`;
+    sec.items.forEach(([label,key])=>{
+      const on = (key==='insights' && activeInsights) ? ' on':'';
+      h += `<a class="${on.trim()}"><span class="dot"></span>${label}</a>`;
+    });
+  });
+  h += `<div class="foot"><a class="${activeSettings?'on':''}"><span class="dot"></span>Settings</a></div></nav>`;
+  return h;
+}
+
+function settingsNav(){
+  let h = `<nav class="set-rail"><a class="backlink">&larr; Back to app</a>`;
+  SET_NAV.forEach(([g,items])=>{
+    h += `<div class="grp">${g}</div>`;
+    items.forEach(i=>{
+      const on = i==='Scheduled Insights' ? ' class="on"' : '';
+      h += `<a${on}>${i}</a>`;
+    });
+  });
+  return h + `</nav>`;
+}
+
+/* Wraps page content in the correct navigation placement. */
+function frame(content, opts){
+  opts = opts || {};
+  if(state.placement==='insights'){
+    return rail(true,false) + `<div class="main">
+      <div class="topbar"><h2>Insights</h2>${opts.action||''}</div>
+      <div class="tabs"><span>Dashboard</span><span class="on">Scheduled</span></div>
+      <div class="body ${opts.tight?'tight':''}">${content}</div>
+    </div>`;
+  }
+  return settingsNav() + `<div class="main">
+    <div class="topbar" style="padding-bottom:16px;border-bottom:1px solid var(--line);align-items:center">
+      <h2 style="font-size:var(--h2)">Scheduled Insights</h2>
+      ${opts.action||''}
+    </div>
+    <div class="body ${opts.tight?'tight':''}">${content}</div>
+  </div>`;
+}
+
+/* ============================================================
+   SHARED BLOCKS
+   ============================================================ */
+const newBtn = `<button class="btn pri"><span class="ic"></span>New scheduled report</button>`;
+
+
+/* The four configuration blocks, reused by all three variants. */
+/* ============================================================
+   PROMPT BLOCK  —  name + body, both plainly editable
+   ============================================================ */
+function promptBlock(){
+  const scratch = state.source==='scratch';
+  const t = tmpl();
+  const name = scratch
+    ? `<div class="input editable ph" style="min-height:36px">Name this report</div>`
+    : `<div class="input editable" style="min-height:36px">${t.n}</div>`;
+  const body = scratch
+    ? `<div class="textarea editable ph" style="min-height:152px"><span class="caret"></span>${SCRATCH_PLACEHOLDER}</div>`
+    : `<div class="textarea editable" style="min-height:152px">${t.p}<span class="caret"></span></div>`;
+  /* names the template chosen in step 1, so the prompt keeps its provenance */
+  const note = scratch
+    ? 'Describe what you want to know. Plain language works.'
+    : `Edit <b class="promptname">${t.q}</b> below to change what this report covers.`;
+  return `<div class="field">
+      <label class="label">Report name</label>
+      ${name}
+    </div>
+    <div class="field">
+      <div class="lblrow">
+        <label class="label">Prompt</label>
+        ${scratch?'':`<button class="btn icon" title="Reset to template"
+            aria-label="Reset to template">&#8634;</button>`}
+      </div>
+      <p class="editnote">${note}</p>
+      ${body}
+    </div>`;
+}
+
+function fPrompt(){
+  return promptBlock();
+}
+
+
+function fSchedule(){
+  return `<div class="field">
+    <label class="label">Schedule</label>
+    <div class="row">
+      <div class="select" style="flex:1.1">Weekly</div>
+      <div class="select" style="flex:1">Monday</div>
+      <div class="select" style="flex:.9">8:00 AM</div>
+    </div>
+    <div class="row" style="margin-top:8px"><div class="select">Eastern Time (US &amp; Canada)</div></div>
+    <p class="hint">Next run: Monday, Sep 14, 2026 at 8:00 AM ET</p>
+  </div>`;
+}
+function fRecipients(){
+  return `<div class="field">
+    <label class="label">Send to</label>
+    <div class="chips">
+      <span class="chip">ivana.tso@conveyor.com <span class="x">×</span></span>
+      <span class="chip">security@acme.com <span class="x">×</span></span>
+      <span class="ghosttext">Add an email…</span>
+    </div>
+    <p class="hint">Delivered as a PDF attachment. Slack and in-app delivery come later.</p>
+  </div>`;
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+const HEAD = 'Get your Conveyor data on a schedule';
+const SUB  = `Tell ConveyorAI what you want to know and how often. It builds a report from your
+  Conveyor data and emails it to your team. <span class="lnk">See what's included &rarr;</span>`;
+
+
+function scEmpty(){
+  const content = `<div style="max-width:760px;margin:72px auto 0;text-align:center">
+      <div class="ph-box" style="width:150px;height:104px;margin:0 auto 22px">illustration</div>
+      <p class="h2">${HEAD}</p>
+      <p class="muted" style="max-width:660px;margin:0 auto 22px">${SUB}</p>
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button class="btn">See examples</button>
+        <button class="btn pri"><span class="ic"></span>Create scheduled report</button>
+      </div>
+    </div>`;
+  return frame(content, {});
+}
+
+/* Left list + right detail. The prompt is readable before you commit. */
+/* state.tmpl of -1 means "Start from scratch" — the same list, a different row. */
+function pickerDetail(){
+  const scratch = state.tmpl === -1;
+  const sel = scratch ? -1 : (state.tmpl || 0);
+  const list = `<div class="plist">
+    ${TEMPLATES.map((t,i)=>`<div class="pitem${i===sel?' on':''}"
+      data-tmpl="${i}">${t.q}</div>`).join('')}
+    <div class="pitem scratch${scratch?' on':''}" data-tmpl="-1">＋ Start from scratch</div>
+  </div>`;
+
+  const detail = scratch ? `<div class="pdetail">
+    <p class="h3">Start from scratch</p>
+    <p class="muted sm" style="margin:6px 0 0">Write your own prompt in the next step.
+      Conveyor picks the charts and tables that fit what you ask for.</p>
+
+    <p class="kicker" style="margin:18px 0 6px">What makes a good prompt</p>
+    <ul class="tips">
+      <li>Name the period you care about — last month, last quarter.</li>
+      <li>Say what to include: a trend, a ranked list, a comparison.</li>
+      <li>Ask for a shape — a chart by week, a table by company.</li>
+    </ul>
+
+    <p class="kicker" style="margin:18px 0 6px">Example</p>
+    <div class="promptview">Show me how many questionnaires we completed last month, how long each one took, and which topics slowed us down the most. Compare against the month before.</div>
+
+    <p class="hint">Reports can draw on your Conveyor data.
+      <span class="lnk">See what's included &rarr;</span></p>
+  </div>` : (() => {
+    const t = TEMPLATES[sel];
+    return `<div class="pdetail">
+      <p class="h3">${t.q}</p>
+      <p class="kicker" style="margin:14px 0 5px">What you get</p>
+      <p class="muted sm" style="margin:0">${t.d}</p>
+      <p class="kicker" style="margin:16px 0 5px">Prompt</p>
+      <div class="promptview">${t.p}</div>
+      <p class="hint">You can edit this in the next step.</p>
+    </div>`;
+  })();
+
+  return `<div class="pwrap">${list}${detail}</div>`;
+}
+
+function scTemplates(){
+  return frame(listBehind(true), {action:newBtn}) + `
+    <div class="scrim roomy"><div class="modal sheet">
+      <header>
+        <div><h3>What do you want to know?</h3>
+        <p class="muted sm" style="margin-top:4px">Pick a starting prompt. You can edit it in the next step.</p></div>
+        <span style="color:var(--text-3)">×</span>
+      </header>
+      <div class="mbody" style="padding:0">${pickerDetail()}</div>
+      <footer>
+        <span class="muted sm">Step 1 of 3</span>
+        <button class="btn pri">Continue</button>
+      </footer>
+    </div></div>`;
+}
+
+
+
+function scConfigure(){ return cfgModal(); }
+
+function cfgModal(){
+  const modal = `<div class="scrim roomy"><div class="modal sheet">
+    <header>
+      <div><h3>New scheduled report</h3></div>
+      <span style="color:var(--text-3)">×</span>
+    </header>
+    <div class="mbody"><div class="formcol">
+      ${fPrompt()}${fSchedule()}${fRecipients()}
+    </div></div>
+    <footer>
+      <span class="muted sm">Step 2 of 3</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn">Previous</button>
+        <button class="btn pri">Continue</button>
+      </div>
+    </footer>
+  </div></div>`;
+  return frame(listBehind(true), {action:newBtn}) + modal;
+}
+
+function paper(sample){
+  return `<div class="paper">
+    <div class="plogo"></div>
+    <h4>AI answer accuracy</h4>
+    <p class="pmeta">${sample ? 'Northwind Example Co · Aug 11 – Sep 7, 2026'
+                              : 'Acme Corp · Aug 11 – Sep 7, 2026 · Generated Sep 8, 2026'}</p>
+    <div class="stack"><div class="bar l"></div><div class="bar l"></div><div class="bar m"></div></div>
+    <p class="pkick">Accuracy over time</p>
+    <div class="ph-box" style="height:120px">chart</div>
+    <p class="pkick">Lowest-scoring topics</p>
+    <div class="stack"><div class="bar l"></div><div class="bar m"></div><div class="bar m"></div><div class="bar s"></div></div>
+    <p class="pkick">Most-edited answers</p>
+    <div class="ph-box" style="height:96px">table</div>
+  </div>`;
+}
+
+/* Abstract, obviously-not-data depiction of the report's shape. */
+function sampleArt(){
+  return `<div class="art">
+    <div class="artpage">
+      <div class="artbar w40"></div>
+      <div class="artbar w70" style="height:14px;margin-bottom:16px"></div>
+      <div class="artline"></div><div class="artline"></div><div class="artline w60"></div>
+      <div class="artchart">
+        <div class="artcol" style="height:38%"></div><div class="artcol" style="height:62%"></div>
+        <div class="artcol" style="height:48%"></div><div class="artcol" style="height:80%"></div>
+        <div class="artcol" style="height:55%"></div><div class="artcol" style="height:71%"></div>
+      </div>
+      <div class="arttable">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function scPreview(){
+  const T = state.testrun;
+  const behind = listBehind(true);
+  let head, body;
+
+  /* T1 — illustrative art + send a test to yourself (the direction) */
+  if(T==='t1'){
+    head = ['Send yourself a test report',
+            'Reports are generated and delivered by email. We\u2019ll send one to you now so you can check it before it goes to anyone else.'];
+    body = `<div class="mbody centred" style="background:var(--surface-2);text-align:center">
+      ${sampleArt()}
+      <p class="muted sm" style="max-width:420px;margin:16px auto 0">
+        An illustration of the report\u2019s shape — a written summary, a chart, and a ranked
+        table. Your test report will use your real data.</p>
+      <p class="muted sm" style="margin:6px auto 0;color:var(--text-3)">
+        Test reports go to ivana.tso@conveyor.com</p>
+    </div>`;
+  }
+
+  /* T2 — the real thing, held as a backup if on-demand generation turns out to be possible */
+  else {
+    head = ['Example report',
+            'Generated just now from your last 30 days of data. Nothing has been sent.'];
+    body = `<div class="mbody" style="background:var(--surface-2)">
+      <div class="bodybar"><span class="muted sm">PDF · 3 pages</span>
+        <button class="btn sm">Regenerate</button></div>
+      ${paper(false)}</div>`;
+  }
+
+  const modal = `<div class="scrim roomy"><div class="modal sheet">
+    <header>
+      <div><h3>${head[0]}</h3>
+      <p class="muted sm" style="margin-top:4px;max-width:520px">${head[1]}</p></div>
+      <span style="color:var(--text-3)">×</span>
+    </header>
+    ${body}
+    <footer>
+      <button class="btn">Back to edit</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn"><span class="ic"></span>Send me a test</button>
+        <button class="btn pri">Create scheduled report</button>
+      </div>
+    </footer>
+  </div></div>`;
+  return frame(behind, {action:newBtn}) + modal;
+}
+
+/* ---------- manage list ---------- */
+function initials(n){
+  if(n.includes('@')) return n.split('@')[0].slice(0,2).toUpperCase();
+  return n.split(' ').map(w=>w[0]).slice(0,2).join('');
+}
+
+function recipientChips(to, cap){
+  const shown = to.slice(0, cap), rest = to.length - shown.length;
+  return `<div class="rchips">
+    ${shown.map(x=>`<span class="rchip${x.ext?' ext':''}" title="${x.n} · ${x.e}">${initials(x.n)}</span>`).join('')}
+    ${rest>0 ? `<span class="rmore">+${rest} more</span>` : ''}
+  </div>`;
+}
+
+function recipientTip(to, up){
+  return `<div class="rtip${up?' up':''}">
+    <div class="rtiphead">${to.length} recipients</div>
+    <div class="rtiplist">
+      ${to.map(x=>`<div class="rtiprow">
+        <span class="rchip${x.ext?' ext':''}">${initials(x.n)}</span>
+        <div><div class="t">${x.n}${x.ext?' <span class="extbadge">External</span>':''}</div>
+          <div class="s">${x.e}</div></div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+const STATUS_ORDER = {Error:0, Active:1, Paused:2};
+const SORTS = {
+  name:   r => r.n.toLowerCase(),
+  sched:  r => r.s,
+  rcp:    r => r.to.length,
+  last:   r => r.lt,
+  status: r => STATUS_ORDER[r.st]
+};
+
+function sortedReports(){
+  const key = state.sortKey || 'name';
+  const dir = state.sortDir === 'desc' ? -1 : 1;
+  const f = SORTS[key] || SORTS.name;
+  return [...REPORTS].sort((a,b) => {
+    const x = f(a), y = f(b);
+    return (x < y ? -1 : x > y ? 1 : 0) * dir;
+  });
+}
+
+function th(key, label, align){
+  const on = (state.sortKey || 'name') === key;
+  const dir = state.sortDir === 'desc' ? '▾' : '▴';
+  return `<th data-sort="${key}" class="sortable${on?' on':''}"${align?` style="${align}"`:''}>
+    ${label}<span class="caretsort">${on ? dir : '↕'}</span></th>`;
+}
+
+function statusPill(st){
+  const cls = st==='Error' ? ' err' : st==='Paused' ? ' off' : ' ok';
+  return `<span class="pill${cls}"><span class="d"></span>${st}</span>`;
+}
+
+/* The chip flags WHICH report needs attention. It never says what went wrong —
+   that is the banner's job, so the cell stays one short, neutral line. */
+function statusCell(r){
+  const note = r.st==='Active' ? `Next run ${r.nx}`
+             : r.st==='Paused' ? `Since ${r.pd}`
+             : `Since ${r.sd}`;
+  return `${statusPill(r.st)}<div class="sub">${note}</div>`;
+}
+
+/* "Last delivered", not "Last run" — a run that failed delivered nothing, and
+   failures belong in the banner rather than in the row. */
+function lastRun(r){
+  return `${r.l}<div class="sub">Delivered to ${r.to.length}</div>`;
+}
+
+/* One banner above the list, built as the <Banner> component composes: variant tint,
+   icon, title, description. Actions live inline in the description as links — the
+   component's own action slot is the close button — and paragraphs stack for the
+   several-at-once case. */
+const B_ICON = {
+  caution:'M96.52-112.65q-11.82 0-20.59-5.7-8.76-5.69-13.89-14.39-5.13-8.69-5.63-19.02t5.63-21.15L445.52-835q6.13-10.26 15.18-14.89 9.04-4.63 19.3-4.63 10.26 0 19.3 4.63 9.05 4.63 15.18 14.89l383.48 662.09q6.13 10.82 5.63 21.15-.5 10.33-5.63 19.02-5.13 8.7-13.89 14.39-8.77 5.7-20.59 5.7H96.52Zm410.39-134.83q9.35-9.35 9.35-22.91 0-13.57-9.35-22.63-9.34-9.07-22.91-9.07t-22.91 9.07q-9.35 9.06-9.35 22.63 0 13.56 9.35 22.91 9.34 9.35 22.91 9.35t22.91-9.35ZM505.5-356.5Q514-365 514-378v-159.48q0-13-8.5-21.5t-21.5-8.5q-13 0-21.5 8.5t-8.5 21.5V-378q0 13 8.5 21.5T484-348q13 0 21.5-8.5Z',
+  failure:'M512.54-278.33q12.9-12.46 12.9-32.26 0-19.8-12.75-32.98-12.74-13.17-32.54-13.17-19.8 0-32.69 13.16-12.9 13.15-12.9 32.95 0 19.8 12.75 32.28 12.74 12.48 32.54 12.48 19.8 0 32.69-12.46Zm-1.26-165.56q11.33-11.45 11.33-28.15v-183.39q0-16.71-11.5-28.16t-28.29-11.45q-16.78 0-28.1 11.45-11.33 11.45-11.33 28.16v183.39q0 16.7 11.5 28.15 11.5 11.46 28.29 11.46 16.78 0 28.1-11.46ZM480.27-65.87q-86.13 0-161.43-32.39-75.3-32.4-131.74-88.84-56.44-56.44-88.84-131.81-32.39-75.38-32.39-161.59 0-86.21 32.39-161.59 32.4-75.37 88.84-131.31 56.44-55.94 131.81-88.62 75.38-32.68 161.59-32.68 86.21 0 161.59 32.68 75.37 32.68 131.31 88.62 55.94 55.94 88.62 131.47 32.68 75.54 32.68 161.66 0 86.13-32.68 161.43-32.68 75.3-88.62 131.56-55.94 56.25-131.47 88.83-75.54 32.58-161.66 32.58Z',
+  close:'M480-424.43 276.78-221.22q-11.82 11.83-27.78 11.83t-27.78-11.83q-11.83-11.82-11.83-27.78t11.83-27.78L424.43-480 221.22-683.22q-11.83-11.82-11.83-27.78t11.83-27.78q11.82-11.83 27.78-11.83t27.78 11.83L480-535.57l203.22-203.21q11.82-11.83 27.78-11.83t27.78 11.83q11.83 11.82 11.83 27.78t-11.83 27.78L535.57-480l203.21 203.22q11.83 11.82 11.83 27.78t-11.83 27.78q-11.82 11.83-27.78 11.83t-27.78-11.83L480-424.43Z'
+};
+
+function bIcon(name, cls){
+  return `<svg class="${cls}" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"
+    width="100%" height="100%"><path d="${B_ICON[name]}"></path></svg>`;
+}
+
+/* Severity: a run that failed for some people, or a schedule that cannot run at all,
+   is `failure`. A run that produced nothing but will try again is `caution`. */
+const ERR_VARIANT = {delivery:'failure', generation:'caution', prompt:'failure', many:'failure'};
+
+function errorBanner(){
+  const R_DEL = REPORTS.find(r=>r.fail && r.fail.kind==='delivery');
+  const R_GEN = REPORTS.find(r=>r.fail && r.fail.kind==='generation');
+  const R_PRM = REPORTS.find(r=>r.fail && r.fail.kind==='prompt');
+  const K = state.errkind, V = ERR_VARIANT[K];
+  const link = t => `<span class="blink">${t}</span>`;
+  const name = r => `<span class="bname">${r.n}</span>`;
+  let title, desc;
+
+  if(K==='delivery'){
+    title = `${name(R_DEL)} didn\u2019t reach everyone`;
+    desc  = `<p>Sep 2, 2026 \u2014 2 of 7 addresses bounced. Everyone else received it. ${link('Fix recipients')}</p>`;
+  }
+  else if(K==='generation'){
+    title = `${name(R_GEN)} couldn\u2019t be generated`;
+    desc  = `<p>Aug 15, 2026 \u2014 no data for the period, so nothing was sent. ${link('View run')}</p>`;
+  }
+  else if(K==='prompt'){
+    title = `${name(R_PRM)} can\u2019t run as written`;
+    desc  = `<p>Sep 5, 2026 \u2014 the prompt asks for data Conveyor doesn\u2019t hold, so the schedule is held. ${link('Edit prompt')}</p>`;
+  }
+  else {
+    title = '3 scheduled reports need attention';
+    desc  = `<p>${name(R_DEL)} \u2014 delivery failed, 2 of 7 addresses bounced. ${link('Fix recipients')}</p>
+      <p>${name(R_GEN)} \u2014 generation failed, no data for the period. ${link('View run')}</p>
+      <p>${name(R_PRM)} \u2014 held, the prompt asks for data Conveyor doesn\u2019t hold. ${link('Edit prompt')}</p>`;
+  }
+
+  return `<div class="banner ${V}" role="alert">
+    ${bIcon(V, 'bicon')}
+    <div class="bt">${title}</div>
+    <div class="bs${K==='many' ? ' rows' : ''}">${desc}</div>
+    <span class="bclose">${bIcon('close','')}</span>
+  </div>`;
+}
+
+function rowMenu(){
+  return `<div class="menu" style="right:26px;top:74px">
+    <div>Send to…</div><div>Edit</div><div>Duplicate</div>
+    <div class="sep"></div><div>Pause</div><div>Delete</div>
+  </div>`;
+}
+
+/* M1 — columns, recipients always as chips with the full list on hover. */
+/* The hover demo sits on the report the note is about, wherever sorting puts it,
+   rather than on whichever row happens to be first. */
+const HOVER_ROW = 'Trust Center AI answers';
+
+function listTable(dim){
+  const list = sortedReports();
+  const hv = state.overlay==='hover' ? list.findIndex(r=>r.n===HOVER_ROW) : 0;
+  const rows = list.map((r,i)=>`<tr class="${!dim && i===hv ? 'hl':''}">
+    <td class="name">${r.n}<div class="sub">${r.t}</div></td>
+    <td>${r.s}</td>
+    <td style="position:relative">
+      ${recipientChips(r.to, 5)}
+      ${!dim && i===hv && state.overlay==='hover'
+        ? recipientTip(r.to, i > list.length/2) : ''}
+    </td>
+    <td>${lastRun(r)}</td>
+    <td>${statusCell(r)}</td>
+    <td style="text-align:right;color:var(--text-3)">⋯</td>
+  </tr>`).join('');
+  return `<div class="card" style="padding:16px 4px 0;position:relative">
+    <table class="tbl">
+      <thead><tr>
+        ${th('name','Report','padding-left:12px')}
+        ${th('sched','Schedule')}
+        ${th('rcp','Recipients')}
+        ${th('last','Last delivered')}
+        ${th('status','Status')}
+        <th></th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    ${!dim && state.overlay==='menu' ? rowMenu() : ''}
+  </div>`;
+}
+
+function listBody(dim){
+  return listTable(dim);
+}
+
+function listContent(dim){
+  const blurb = state.placement==='settings'
+    ? 'Reports Conveyor generates on a schedule and emails to your team. Visible to admins and anyone with Insights access.'
+    : 'Reports Conveyor generates on a schedule and emails to your team.';
+  return `<div style="${dim?'opacity:.55;':''}position:relative">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+      <p class="muted" style="max-width:520px">${blurb}</p>${newBtn}</div>
+    ${!dim && state.overlay==='error' ? errorBanner() : ''}
+    ${listBody(dim)}
+    <p class="hint" style="margin-top:12px">Reports are not stored in Conveyor — each run lives wherever it was delivered.</p>
+  </div>`;
+}
+
+function listBehind(dim){ return listContent(dim); }
+
+/* ============================================================
+   SEND TO — one selection set. "Only me" and "Everyone" are shortcuts
+   onto it; "Choose people" is that same set, edited by hand. Unchecking
+   anywhere simply stops matching a shortcut.
+   ============================================================ */
+const ME = 'o12';
+const ORG_IDS = ORG.map((_,i)=>'o'+i);
+const REPORT_IDS = ORG_IDS.slice(0,13).concat(['x0','x1']);
+
+/* The modal opens with the report's own recipients already selected. */
+if(state.picked === null) state.picked = [...REPORT_IDS];
+
+function directory(){
+  return ORG.map((p,i)=>({...p, id:'o'+i}))
+    .concat(EXT.map((p,i)=>({...p, id:'x'+i})))
+    .concat(state.extras);
+}
+
+/* "Only me" and "Everyone at Acme" are shortcuts onto the one selection set,
+   not modes — the chips simply light up when the set happens to match. */
+function isOnlyMe(){
+  return state.picked.length===1 && state.picked[0]===ME;
+}
+
+function isEveryone(){
+  return state.picked.length===ORG_IDS.length
+      && ORG_IDS.every(id => state.picked.includes(id));
+}
+
+/* Bold the typed run inside a name or address, the way Gmail does. */
+function mark(text, q){
+  if(!q) return text;
+  const i = text.toLowerCase().indexOf(q);
+  if(i < 0) return text;
+  return text.slice(0,i) + '<b>' + text.slice(i, i+q.length) + '</b>' + text.slice(i+q.length);
+}
+
+/* The typeahead menu. It only exists while you are typing. */
+function menuRows(){
+  const q = (state.q||'').trim().toLowerCase();
+  if(!q) return '';
+
+  const hits = directory()
+    .filter(x => !state.picked.includes(x.id))
+    .filter(x => x.n.toLowerCase().includes(q) || x.e.toLowerCase().includes(q))
+    .slice(0, 6);
+
+  const isEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(q);
+  const known = directory().some(x => x.e.toLowerCase() === q);
+  const addRow = (isEmail && !known) ? `<div class="gmrow" data-add="${q}">
+      <span class="addplus">＋</span>
+      <div><div class="t">Add <b>${q}</b></div>
+        <div class="s">Not in Acme · will be sent as an external recipient</div></div>
+    </div>` : '';
+
+  const rows = hits.map((x,i) => `<div class="gmrow${i===0 && !addRow ? ' on' : ''}" data-toggle="${x.id}">
+      <span class="rchip${x.ext?' ext':''}">${initials(x.n)}</span>
+      <div><div class="t">${mark(x.n, q)}${x.ext?' <span class="extbadge">External</span>':''}</div>
+        <div class="s">${mark(x.e, q)}</div></div>
+    </div>`).join('');
+
+  const body = addRow + rows;
+  return `<div class="gmenu">${body || `<div class="gmempty">No one matches
+    \u201c${q}\u201d. Type a full email address to invite someone outside Acme.</div>`}</div>`;
+}
+
+/* One pattern: the field holds the recipients, and typing opens a menu under it. */
+function sendPattern(sel, n, extN){
+  const q = state.q || '';
+  return `<div class="lblrow">
+      <label class="label">Send to</label>
+      <span class="muted sm">Sending to ${n}${extN
+        ? ` · <span class="extcount">${extN} external</span>` : ''}</span>
+    </div>
+    <div class="tokenfield" id="tokenfield">
+      ${sel.map(x=>`<span class="spill${x.ext?' ext':''}" data-toggle="${x.id}">
+        ${x.ext ? x.e : x.n}<span class="x">×</span></span>`).join('')}
+      <input class="tokeninput" id="pplsearch" value="${q}" autocomplete="off"
+        placeholder="${n ? '' : 'Type a name or email address'}" />
+    </div>
+    <div id="pplmenu">${menuRows()}</div>
+    <div class="srows">
+      <div class="srow${isOnlyMe()?' on':''}" data-preset="me">
+        <span class="cbox${isOnlyMe()?' on':''}"></span>
+        <span class="rchip">You</span>
+        <span class="t">Only me</span>
+        <span class="s">ivana.tso@conveyor.com</span>
+      </div>
+      <div class="srow${isEveryone()?' on':''}" data-preset="all">
+        <span class="cbox${isEveryone()?' on':''}"></span>
+        <span class="rchip">All</span>
+        <span class="t">Send to all</span>
+        <span class="s">Everyone at Acme · ${ORG_IDS.length} users</span>
+      </div>
+    </div>
+    <p class="hint">Type a name to find someone in Acme, or a full email address to send
+      to someone outside it. Anyone added here gets this report only — the schedule does not change.</p>
+    </div>`;
+}
+
+function sendModal(){
+  const r = REPORTS[0];
+  const n = state.picked.length;
+  const extN = state.picked.filter(id => !id.startsWith('o')).length;
+  const byId = Object.fromEntries(directory().map(x => [x.id, x]));
+  const sel = state.picked.map(id => byId[id]).filter(Boolean);
+  return `<div class="scrim"><div class="modal">
+    <header>
+      <div><h3>Send this report now</h3>
+      <p class="muted sm" style="margin-top:4px">${r.n}, generated from your current data.</p></div>
+      <span style="color:var(--text-3)">×</span>
+    </header>
+    <div class="mbody">
+      ${sendPattern(sel, n, extN)}
+
+    <footer>
+      <span class="muted sm" style="color:var(--text-3)">Recipients receive it within a few minutes.</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn">Cancel</button>
+        <button class="btn pri">Send report</button>
+      </div>
+    </footer>
+  </div></div>`;
+}
+
+function scManage(){
+  const over = state.overlay==='send';
+  return frame(listContent(over), {}) + (over ? sendModal() : '');
+}
+
+/* ============================================================
+   NOTES
+   ============================================================ */
+const NOTES = {
+  empty: [
+    'Empty state does the selling: one sentence of value and a clear way in. Whether the templates appear here or wait in the picker is the layout question below.',
+    '“See examples” answers the biggest unknown before anyone commits — what does the artifact actually look like? (open question #4 in the brief).',
+    'The scope answer is folded into the subhead rather than sitting as its own line, so one paragraph carries what the feature does, what it reads, and where to learn more \u2014 set on two rows.',
+    '<span class="ref">Ref: Semrush ready-to-use templates + Start from scratch; Basecamp “Choose a Report”.</span>'
+  ],
+  templates: [
+    'Templates are phrased as questions, not feature names — this is the single biggest lever on activation for non-expert users, and it maps directly to the real customer asks in the brief.',
+    'Every template maps to a report a CSM is pulling by hand today: accuracy (Liveperson), Trust Center AI (Hootsuite/Qualtrics/Notion), doc views (MongoDB), human edits (Clari), gap analysis (David P.).',
+    '“Start from scratch” is now the sixth tile, closing a clean 2×3 grid. It stays visually secondary — dashed border, muted fill — so the curated path still wins, but it no longer sits alone on a third row looking like an afterthought.',
+    'Two of the five are now the <b>real prompts</b>, condensed from the <b>tc-monthly-report</b> and <b>conveyor-answer-quality</b> skills rather than invented: <b>Who viewed our Trust Center documents?</b> and <b>How accurate were our AI answers?</b>. They lead the list for that reason \u2014 the three below them are still placeholders, and ordering by what is real keeps the demo honest. They carry the things that actually make those reports good \u2014 exclude internal traffic from every figure, commit to an interpretation instead of hedging, an unedited answer counts as Perfect, a structured-field miss is a format failure not a content one. The other three are still placeholders.',
+    'Those two are much longer than a placeholder prompt, which is the useful finding: a real template prompt runs 200\u2013300 words with a bulleted section list and explicit counting rules. Both are longer than any sheet can show at once, so the detail pane and the step-2 field scroll rather than growing \u2014 the modal keeps its shape whatever the prompt length.',
+    'Clicking a row in the list selects it, and the choice carries into step 2 \u2014 the report name, the \u201cEdit \u2026 below\u201d line and the prompt all follow what you picked. Worth trying both long ones to see how step 2 handles them.',
+    'Card subtext now describes the actual artifact — chart type, what is on each axis, how the number is calculated — so people can tell these apart without generating one first. <b>These metrics are proposals, not confirmed:</b> they are shaped from the MCP analytics endpoints, and Anner owns the real template definitions.',
+    'One picker, not two. <b>Start from scratch</b> is the sixth row of the same list, and selecting it swaps the right pane from a prompt preview to prompt guidance \u2014 the two-pane shape never changes, so there is no second layout to build and no moment where the screen reorganises under you.',
+    'Nothing becomes editable in this pane. Writing still happens in step 2, whichever row you pick, so the two-step model holds. The choice also carries forward: picking a template opens step 2 on that prompt, picking scratch opens it on the empty one.',
+    'The scratch pane is the one screen in the flow that can teach prompt-writing to someone who has never used the MCP \u2014 three concrete habits plus a worked example in the same styling as the template prompts, so the example reads as a peer of the curated ones. That directly serves the brief\u2019s \u201cdon\u2019t know what to report on\u201d problem.',
+    'The full prompt is visible before you commit, and scanning stays cheap because the left list carries only the questions. Fair question it raises: if step 1 shows the prompt and step 2 lets you edit it, should these be one step?',
+    'I re-introduced the <b>See what\u2019s included</b> link in the scratch pane only. You had it removed from the picker as redundant with the empty state \u2014 but this is the one path where nobody has a template telling them what is reachable. Say the word and it comes out.',
+    'Every step of the create flow is an <b>inset sheet</b> — the full frame minus a 44px margin — rather than a centred dialog. The app stays visible behind it, so it reads as a mode you are in and can leave, not a page you navigated to. Steps 1, 2 and 3 all use it, so the frame never resizes between steps.',
+    '<span class="ref">Ref: Klaviyo templates-as-questions; Mixpanel “Use a Template”; Zendesk “Select a dataset”.</span>'
+  ],
+  configure: [
+    'One sheet, four fields, no steps within the step. Closest to Intercom, which is the leanest flow in the research set and the honest scope for a spike-week v1. The side-panel alternative is cut \u2014 at 472px it could not hold a real template prompt, which the two skill-derived ones settled.',
+    '\u201cSend test report\u201d lives in the footer as a peer of Create, not buried \u2014 validating output is the whole trust mechanism for AI-generated content.',
+    'At sheet size the prompt box is no longer cramped, which was this pattern\u2019s main cost. The form still sits in a 620px column so the fields stay readable \u2014 which leaves wide empty margins either side. Worth deciding whether the second column earns its place here (period and filters, or a preview) or whether the quiet margin is the better answer.',
+    '<span class="ref">Ref: Intercom, Workable, Amplitude subscribe modal.</span>'
+  ],
+  preview: [
+    'The test run is a modal over whatever you were doing, so it reads as a check, not a destination — consistent with “no in-app report viewer” in the non-goals.',
+    'Both treatments below answer one question: how do you build confidence in an AI-written report when the artifact only exists in an inbox? T1 assumes we cannot generate on demand and leans on the test send; T2 is the version we get if we can.',
+    'Copy explicitly says nothing was sent. The fear with AI reports is emailing something wrong to a customer.',
+    'This screen is also where open question #4 — the artifact format — gets settled: a paginated PDF with a title, period, narrative summary, chart, ranked list and table.',
+    '<span class="ref">Ref: incident.io Example report; Docusign flow.</span>'
+  ],
+  manage: [
+    'Deliberately minimal table — the brief rules out history and dashboards, so the list only answers: what runs, how often, to whom, did it work.',
+    'Status is its own column \u2014 <b>Active</b>, <b>Paused</b> or <b>Error</b> \u2014 with no toggle. The <b>Error</b> chip is the row-level flag: it says <i>this</i> report needs you, and nothing more. Underneath it reads <b>Since Sep 2</b>, matching the Paused row\u2019s <b>Since Aug 16</b>, so the cell never names a cause. Pausing lives in the row menu (<b>Send to\u2026</b>, Edit, Duplicate, Pause, Delete), so it costs a click more than it did; worth deciding whether pausing is common enough to deserve the shortcut back.',
+    'No “Run now” in that menu — every run here has an audience, and the label has to say so.',
+    'Each column says one thing, and the failure column is gone. <b>Last delivered</b> \u2014 renamed from Last run \u2014 is now literally true: it shows the last run that actually reached someone, and the count it reached. A run that failed delivered nothing, so it does not belong under a date in this column. <b>Status</b> describes the report now: the chip, then <b>Next run Sep 14</b> or <b>Since Aug 16</b>.',
+    '<b>The chip flags, the banner explains.</b> The row says which report needs attention and since when; the banner above says what happened, in what class, and offers the one action that fixes it. That split is what keeps failure detail out of the rows without losing the ability to scan or sort for trouble \u2014 sorting on Status puts Error at the top.',
+    'Costs of the split: the same failure is stated twice, so the two must never disagree, and a report in <b>Error</b> after the banner is dismissed still has to look wrong on its own. The chip carries that weight, which is the reason it survived.',
+    'The banner is the <b>&lt;Banner&gt;</b> component from <b>@conveyorhq/react-components</b>, not a new pattern: 4px radius, no border, 12/16 padding, 12px/18px text, a 16px variant icon in its own column, title over description, close button top-right. Two things follow from the component rather than from us \u2014 the <b>action is an inline link inside the description</b> (the component\u2019s action slot is the close button, and its own Composed story puts \u201cLearn more\u201d in the body), and multiple items stack as <b>paragraphs</b> rather than as a table inside the banner.',
+    '<b>\u00d7</b> should mean \u201chide until the next failed run\u201d rather than \u201cmark as read\u201d \u2014 dismissing a banner should never be how a failure gets resolved. With the chip in place the stakes are lower, since the row still shows Error after the banner is gone. Worth confirming that reading with engineering.',
+    'Every column header sorts — click to sort, click again to flip. Live in this prototype, so try it. Sorting on Status is what replaces a fixed grouped-by-status layout.',
+    'Whatever the banner says, the report owner should also get an email \u2014 not all recipients. Nobody on the distribution list needs to know a run failed; the person who set it up does.',
+    'Footer line sets expectations that Conveyor does not archive reports, so nobody comes looking for one. The brief rules out history, a viewer, and an archive — so there is nothing to download here, only something new to send.',
+    '<span class="ref">Ref: Hex Scheduled runs; Manus scheduled tasks; Apollo workflow toggles; Copilot Paused pill; Okta minimal table.</span>'
+  ]
+};
+
+const PLACEMENT_NOTES = {
+  insights: [
+    'Makes the most sense to be in another tab next to the insights dashboard. However, it might be strange that the information in scheduled is not shown within the dashboard.',
+    'Proposing to have these scheduled insights shown here in the Insights tab and in Settings, in this case'
+  ],
+  settings: [
+    'Placement B — <b>Settings › Workflow Automation</b>, sitting with Automation Rules and Team Routing. Cheapest to build (drop a page into the existing settings IA), and “configure a recurring thing” matches the mental model of its neighbors. Risk: it is three clicks from anywhere and nobody browses Settings for value — which is exactly the concern raised in the brief.'
+  ]
+};
+
+/* Retired after round 2: source chips, @-insert tokens, and click-to-insert all
+   implied user control over data scope that v1 will not have. The structured-slot
+   prompt builder went with them, since its first slot was a source picker. */
+
+const SOURCE_NOTES = {
+  template: [
+    'Prompt and name arrive filled in, from whichever template you picked in step 1.',
+    'The prompt box takes every pixel the sheet has left below its label \u2014 368px, which is exactly where the sheet\u2019s fold falls \u2014 so the whole box is visible with nothing clipped, and Schedule sits immediately under it as the cue that there is more. That shows about 60% of the Trust Center prompt and half of the answer-quality one in a single view.',
+    'Deliberately not a full-height editor. Making the box any taller would push Schedule and Send to further out of sight, and step 2 is still a form with four fields, not a writing surface. If reviewing the whole prompt at once turns out to matter more than seeing the form, the answer is a separate expand rather than a taller box.',
+    'The subtext names the template you picked, semibold, so the prompt keeps its provenance without a separate chip or a “seeded from” line.',
+    'Reset is an icon button rather than a text link — it is a rare, recoverable action, and as a link it competed with the label beside it.'
+  ],
+  scratch: [
+    'Name and prompt both start empty, with grey placeholder text carrying an example of what a good prompt looks like — the closest thing to prompt training we can offer without a doc.',
+    'No <b>Reset to template</b> link, since there is no template behind it. Nothing else in the flow changes.',
+    'This is the path for the users the brief is really about — no MCP, no AI proficiency. Worth watching whether the placeholder example alone is enough, or whether this state needs the data list expanded by default.'
+  ]
+};
+
+const TEST_NOTES = {
+  t1: [
+    'The chosen direction. An abstract, obviously-not-real depiction of the report\u2019s shape, drawn in dashed outline so nobody mistakes it for data, with the test-send as the primary action.',
+    'The caption does the honest work: it says this is the shape, and your test will use real data. Without that line an illustration like this reads as a fake preview, which costs more trust than it buys.',
+    'Cheapest to build and the safest claim to make. Weakest at answering \u201cwill this be any good?\u201d \u2014 the art shows structure, not quality, which is what the test send is there to settle.'
+  ],
+  t2: [
+    'Held as a backup, and only possible if a report can be generated on demand inside the app \u2014 the illustrative direction assumes it cannot.',
+    'Strongest confidence-builder \u2014 you see your real numbers before anything is scheduled \u2014 and the best demo moment in the whole flow.',
+    'Worth revisiting if on-demand generation lands: this becomes the preview and the test send stays as confirmation that delivery works.'
+  ]
+};
+
+const MANAGE_NOTES = [
+  'Columns, with recipients always shown as initial chips \u2014 five, then <b>+10 more</b>, and the full list with names and addresses on hover. A bare count told you nothing about who, so the column layouts collapsed into this one.',
+  'External addresses carry a warm tint, so before you send or edit you can see whether this report leaves the company without opening anything.',
+  'Status is its own column \u2014 Active, Paused, Error \u2014 and every header sorts, which is what a grouped-by-status layout was doing by hand. Sorting on Status gives you the same \u201cwhat is running right now\u201d read without freezing the list into fixed groups.',
+  'Cost: chips need a real avatar or initials source, and 24px circles are a weak target on touch. The hover list needs a click-to-open equivalent for keyboard and mobile.',
+  'Watch this one in Placement B \u2014 the settings content column is narrower than the full Insights page, so the recipient chips are the first thing that will feel cramped there.'
+];
+
+const ERR_NOTES = {
+  delivery: [
+    'Variant: <b>danger</b>. A send genuinely failed for named people and will not retry itself \u2014 that is the component\u2019s \u201csomething went wrong\u201d case.',
+    'The report was generated and most people got it \u2014 only some addresses bounced. So the banner leads with \u201cdidn\u2019t reach everyone\u201d rather than \u201cfailed\u201d, and names the addresses, because the fix is a recipient edit and nothing else needs redoing.',
+    'This is the only one of the four where a partial success happened. Saying so matters: an owner who reads \u201cfailed\u201d may re-send to everyone and duplicate a report fifteen people already have.'
+  ],
+  generation: [
+    'Variant: <b>warning</b>, not danger \u2014 the only one of the four. Nothing is broken and the schedule retries on its own, which is exactly what caution is for. Using danger here would cry wolf on what is usually a quiet month.',
+    'Nothing was produced, so nothing was sent \u2014 and the banner says that explicitly, because the first fear with an AI report is that something wrong went out.',
+    '\u201cNo data returned for the period\u201d is often not a fault at all: a quiet month looks exactly like this. The copy stays neutral and the schedule keeps running, rather than treating a quiet period as a breakage.'
+  ],
+  prompt: [
+    'Variant: <b>danger</b>. It cannot resolve without a person, so it should read as loudly as a failed send.',
+    'The one failure that will not fix itself. A prompt asking for data Conveyor does not hold fails identically every run, so retrying is pointless and the schedule is <b>held</b> instead \u2014 a third state that the two-state Status chip deliberately does not show.',
+    'Open question on this variant: <b>Error</b> means \u201cstill scheduled, last run failed\u201d, and a held report is not that \u2014 it will not even attempt. It currently shows as <b>Paused</b>, which is honest about the outcome but hides that Conveyor stopped it rather than a person. A fourth <b>Held</b> chip is the alternative, at the cost of a four-state column.',
+    'Action is <b>Edit prompt</b>, which drops the owner straight into step 3 of the flow they already know.'
+  ],
+  many: [
+    'Variant: <b>danger</b> \u2014 the most severe present wins. Mixing tints in one banner is not an option the component offers, and would not help anyone triage.',
+    'The realistic case once a team has a dozen reports: one banner, a count, and a row per report naming the cause and its own action. No stacked banners.',
+    'The three causes read differently on purpose \u2014 <b>Delivery failed</b>, <b>Generation failed</b>, <b>Held</b> \u2014 so the owner can triage without opening anything.',
+    'Above roughly five, this wants to become \u201c8 reports need attention \u2014 Review\u201d with a filtered view behind it, or the banner starts to push the table off the screen.'
+  ]
+};
+
+const SEND_NOTES = [
+  'The recipients live in the field itself, as chips \u2014 the Gmail compose pattern, and the one most people already know. Typing opens a menu underneath with the matched run bolded in both the name and the address; picking a row turns it into a chip and clears what you typed.',
+  'The whole modal is now one object plus two shortcuts, instead of a search row, a checkbox list and a pills tray all showing the same fifteen people. That duplication is what made the earlier version feel busy.',
+  '<b>Enter</b> takes the highlighted row and <b>Backspace</b> on an empty field removes the last chip, because anyone who has used an email client will try both.',
+  'Typing an address Conveyor does not know offers <b>Add \u2026</b> with an <b>External</b> badge and a line saying what that means, so adding someone outside Acme is a deliberate act rather than a side effect of pressing Enter.',
+  '<b>Only me</b> and <b>Send to all</b> sit under the field as rows rather than pills \u2014 they are entries in the same list the field is drawing from, and a pill read as a filter chip instead of a choice.',
+  'Both are shortcuts onto the one selection set, not modes: they light up when the set happens to match, and unpicking anyone simply stops matching. Both remember what you had selected before, so a test send never costs you an audience you just built.',
+  '<b>Send to all</b> is the whole directory (22), deliberately larger than this report\u2019s own 15 \u2014 worth confirming that sending to every user in the org should be one click away, and whether it should mean every Conveyor user or only those with Insights access.',
+  'Cost: with 15 chips the field is three rows tall before you type, and there is no way to browse the org without typing something first. A directory is one more click behind the field if that turns out to matter.'
+];
+
+function currentNotes(){
+  const items = NOTES[state.screen];
+  const errBlock = (state.screen==='manage' && state.overlay==='error')
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">Error banner — ${ERRKINDS.find(x=>x.id===state.errkind).label}</h4>
+        <ul>${ERR_NOTES[state.errkind].map(i=>`<li>${i}</li>`).join('')}</ul>
+        </div>`
+    : '';
+  const sendBlock = (state.screen==='manage' && state.overlay==='send')
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">Send to — chips field</h4>
+        <ul>${SEND_NOTES.map(i=>`<li>${i}</li>`).join('')}</ul>
+        </div>`
+    : '';
+  const manageBlock = state.screen==='manage'
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">List layout — columns with recipient chips</h4>
+        <ul>${MANAGE_NOTES.map(i=>`<li>${i}</li>`).join('')}</ul></div>`
+    : '';
+  const testBlock = state.screen==='preview'
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">Test run — ${TESTRUNS.find(x=>x.id===state.testrun).label}</h4>
+        <ul>${TEST_NOTES[state.testrun].map(i=>`<li>${i}</li>`).join('')}</ul>
+        </div>`
+    : '';
+  const promptBlock = state.screen==='configure'
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">Prompt source — ${SOURCES_OF_PROMPT.find(x=>x.id===state.source).label}</h4>
+        <ul>${SOURCE_NOTES[state.source].map(i=>`<li>${i}</li>`).join('')}</ul></div>`
+    : '';
+  return `<h4>Design notes</h4>
+    <ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul>
+    ${promptBlock}${testBlock}${manageBlock}${errBlock}${sendBlock}
+    <div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+      <h4 style="margin-bottom:6px">Navigation placement — ${
+        PLACEMENTS.find(x=>x.id===state.placement).label}</h4>
+      <ul>${PLACEMENT_NOTES[state.placement].map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const RENDER = {empty:scEmpty, templates:scTemplates, configure:scConfigure, preview:scPreview, manage:scManage};
+
+/* Which option groups belong to which screen. Anything not listed stays hidden. */
+const SUBS = {
+  empty:     [],
+  templates: [],
+  configure: [{gl:'Prompt source', items:()=>SOURCES_OF_PROMPT, key:'source'}],
+  preview:   [{gl:'Test run',       items:()=>TESTRUNS, key:'testrun'},
+],
+  manage:    [{gl:'Overlay',         items:()=>OVERLAYS, key:'overlay'},
+              {gl:'Error type',      items:()=>ERRKINDS, key:'errkind',
+               under:{key:'overlay', val:'error'}}]
+};
+
+/* A sub-group is visible when its own condition passes and, if it hangs off another
+   option, when that option is the one selected. */
+function subVisible(g){
+  return (!g.when || g.when()) && (!g.under || state[g.under.key] === g.under.val);
+}
+
+/* `nested` maps an option id to markup shown directly beneath that option, so a
+   dependent group sits under the thing it depends on rather than after the whole list. */
+function segHTML(items, key, nested){
+  return `<div class="seg stack">` + items.map(i =>
+    `<button data-k="${key}" data-v="${i.id}" class="${state[key]===i.id?'on':''}">${i.label}</button>`
+    + ((nested && nested[i.id]) || '')
+  ).join('') + `</div>`;
+}
+
+function sgrpHTML(g){
+  return `<div class="sgrp"><div class="gl">${g.gl}</div>${segHTML(g.items(), g.key)}</div>`;
+}
+
+/* Sub-options render inline, directly under the screen they belong to. */
+function buildPanel(){
+  let h = `<div class="grp"><div class="gl">Navigation placement</div>
+    ${segHTML(PLACEMENTS,'placement')}</div>`;
+
+  h += `<div class="grp"><div class="gl">Screen</div><div class="seg stack">`;
+  SCREENS.forEach(sc => {
+    h += `<button data-k="screen" data-v="${sc.id}" class="${state.screen===sc.id?'on':''}">${sc.label}</button>`;
+    const subs = SUBS[sc.id] || [];
+    const shown = subs.filter(subVisible);
+    if(state.screen===sc.id && shown.length){
+      const tops  = shown.filter(g => !g.under);
+      const kids  = shown.filter(g => g.under);
+      h += `<div class="subs">` + tops.map(g => {
+        const mine = kids.filter(k => k.under.key === g.key);
+        const nested = {};
+        mine.forEach(k => { nested[k.under.val] = `<div class="subs">${sgrpHTML(k)}</div>`; });
+        return `<div class="sgrp"><div class="gl">${g.gl}</div>${
+          segHTML(g.items(), g.key, nested)}</div>`;
+      }).join('') + `</div>`;
+    }
+  });
+  h += `</div></div>`;
+
+  const body = document.getElementById('ctlbody');
+  body.innerHTML = h;
+  [...body.querySelectorAll('button')].forEach(b => {
+    b.onclick = () => { state[b.dataset.k] = b.dataset.v; render(); };
+  });
+}
+
+function render(){
+  document.getElementById('stage').innerHTML = RENDER[state.screen]();
+
+  const p = PLACEMENTS.find(x=>x.id===state.placement).label;
+  const s = SCREENS.find(x=>x.id===state.screen).label;
+  const v = state.screen==='configure'
+    ? ' · ' + SOURCES_OF_PROMPT.find(x=>x.id===state.source).label
+    : state.screen==='preview' ? ' · ' + TESTRUNS.find(x=>x.id===state.testrun).label
+
+    : state.screen==='manage' ? ' · ' + OVERLAYS.find(x=>x.id===state.overlay).label
+        + (state.overlay==='error' ? ' · ' + ERRKINDS.find(x=>x.id===state.errkind).label : '')
+    : '';
+  document.getElementById('ablabel').innerHTML = `<b>${p}</b> · ${s}${v}`;
+  document.getElementById('combo').textContent =
+    state.placement==='insights' ? 'A' : 'B';
+
+  const notes = document.getElementById('notes');
+  notes.innerHTML = currentNotes();
+  notes.classList.toggle('hidden', !state.notes);
+
+  buildPanel();
+}
+
+/* Anything in the artboard carrying data-set="key:value" drives state, so wireframe
+   controls can be genuinely clickable without wiring each one by hand. */
+document.getElementById('stage').addEventListener('click', e => {
+  const set = e.target.closest('[data-set]');
+  if(set){
+    const [k, v] = set.dataset.set.split(':');
+    state[k] = v; render(); return;
+  }
+
+  const pre = e.target.closest('[data-preset]');
+  if(pre){
+    const m = pre.dataset.preset;
+    if(m==='me'){
+      if(isOnlyMe()){
+        state.picked = (state.prevPicked && state.prevPicked.length)
+          ? state.prevPicked : [...REPORT_IDS];
+      } else {
+        state.prevPicked = state.picked;
+        state.picked = [ME];
+      }
+    }
+    if(m==='all'){
+      if(isEveryone()){
+        state.picked = (state.prevPicked && state.prevPicked.length)
+          ? state.prevPicked : [...REPORT_IDS];
+      } else {
+        state.prevPicked = state.picked;
+        state.picked = [...ORG_IDS];
+      }
+    }
+    if(m==='none') state.picked = [];
+    state.q = '';
+    render();
+    document.getElementById('pplsearch')?.focus();
+    return;
+  }
+
+  /* Unchecking is not a special case — the selection simply stops matching
+     "Only me", and the row un-highlights on its own. */
+  const tog = e.target.closest('[data-toggle]');
+  if(tog){
+    const id = tog.dataset.toggle;
+    const inMenu = !!e.target.closest('#pplmenu');
+    state.picked = state.picked.includes(id)
+      ? state.picked.filter(x => x !== id)
+      : state.picked.concat(id);
+    if(inMenu) state.q = '';
+    render();
+    if(inMenu) document.getElementById('pplsearch')?.focus();
+    return;
+  }
+
+  const tm = e.target.closest('[data-tmpl]');
+  if(tm){
+    state.tmpl = +tm.dataset.tmpl;
+    state.source = state.tmpl === -1 ? 'scratch' : 'template';
+    render(); return;
+  }
+
+  const sort = e.target.closest('[data-sort]');
+  if(sort){
+    const k = sort.dataset.sort;
+    if((state.sortKey||'name') === k){
+      state.sortDir = state.sortDir === 'desc' ? 'asc' : 'desc';
+    } else { state.sortKey = k; state.sortDir = 'asc'; }
+    render(); return;
+  }
+
+  const add = e.target.closest('[data-add]');
+  if(add){
+    const mail = add.dataset.add;
+    const id = 'e' + state.extras.length;
+    state.extras = state.extras.concat({n:mail, e:mail, ext:true, id});
+    state.picked = state.picked.concat(id);
+    state.q = '';
+    render();
+    document.getElementById('pplsearch')?.focus();
+  }
+});
+
+/* Typing rebuilds the menu in place so the field keeps focus and the caret.
+   The container is always in the DOM, so the first keystroke has somewhere to go. */
+document.getElementById('stage').addEventListener('input', e => {
+  if(e.target.id !== 'pplsearch') return;
+  state.q = e.target.value;
+  const menu = document.getElementById('pplmenu');
+  if(menu) menu.innerHTML = menuRows();
+});
+
+/* Enter takes the highlighted row; Backspace on an empty field removes the last chip. */
+document.getElementById('stage').addEventListener('keydown', e => {
+  if(e.target.id !== 'pplsearch') return;
+  if(e.key === 'Enter'){
+    const first = document.querySelector('#pplmenu .gmrow');
+    if(first){ first.click(); e.preventDefault(); }
+    return;
+  }
+  if(e.key === 'Backspace' && !e.target.value && state.picked.length){
+    state.picked = state.picked.slice(0, -1);
+    render();
+    document.getElementById('pplsearch')?.focus();
+    e.preventDefault();
+  }
+});
+
+document.getElementById('noteToggle').onchange = e=>{ state.notes = e.target.checked; render(); };
+
+/* Every sub-option on the current screen, flattened, so ↑ ↓ can walk them
+   one setting at a time without the panel. */
+function subSequence(){
+  const groups = (SUBS[state.screen] || []).filter(subVisible);
+  const out = [];
+  groups.forEach(g => g.items().forEach(o => out.push([g.key, o.id])));
+  return out;
+}
+
+document.addEventListener('keydown', e=>{
+  const t = e.target;
+  if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;  /* let people type */
+
+  const i = SCREENS.findIndex(s=>s.id===state.screen);
+  if(e.key==='ArrowRight'){
+    state.screen = SCREENS[(i+1)%SCREENS.length].id; state.subIdx = 0; render(); e.preventDefault();
+  }
+  if(e.key==='ArrowLeft'){
+    state.screen = SCREENS[(i-1+SCREENS.length)%SCREENS.length].id; state.subIdx = 0; render(); e.preventDefault();
+  }
+
+  if(e.key==='ArrowDown' || e.key==='ArrowUp'){
+    const seq = subSequence();
+    if(!seq.length) return;
+    const step = e.key==='ArrowDown' ? 1 : -1;
+    /* skip past entries that are already the current value, so every press changes something */
+    let idx = state.subIdx || 0;
+    for(let n = 0; n < seq.length; n++){
+      idx = (idx + step + seq.length) % seq.length;
+      const [key, val] = seq[idx];
+      if(state[key] !== val){ state[key] = val; break; }
+    }
+    state.subIdx = idx;
+    render(); e.preventDefault();
+  }
+});
+
+render();
+</script>
+</body>
+</html>

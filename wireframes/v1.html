@@ -1,0 +1,2025 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scheduled Insights — Wireframes v1</title>
+<style>
+  :root{
+    --bg:#eceef0;
+    --surface:#ffffff;
+    --surface-2:#f6f7f8;
+    --line:#e2e4e7;
+    --line-2:#cbd0d5;
+    --line-dash:#c2c8ce;
+    --text:#1c1e21;
+    --text-2:#5b6169;
+    --text-3:#8b9199;
+    --fill:#eef0f2;
+    --fill-2:#e3e6e9;
+    --ink:#2f3a45;
+    --sel:#dfe6ee;
+    --sel-line:#9fb2c6;
+    --warn-fill:#f0ece4;
+    --warn-line:#d8ccb6;
+    --r:4px;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    /* type scale mirrors @conveyorhq/design-tokens */
+    --h1:26px; --h2:20px; --h3:16px; --h4:14px; --body:14px; --sm:12px; --xs:11px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    font-family:var(--font);
+    font-size:var(--body);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- workbench ---------- */
+  .workbench{padding:32px 32px 200px;max-width:1520px;margin:0 auto}
+  .wb-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .wb-head h1{font-size:var(--h2);margin:0;letter-spacing:-.01em}
+  .wb-head .tag{font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3)}
+  .wb-sub{font-size:var(--sm);color:var(--text-2);margin:0 0 20px}
+
+  .artboard-label{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:var(--xs);
+    text-transform:uppercase;letter-spacing:.08em;color:var(--text-3)}
+  .artboard-label b{color:var(--text-2);font-weight:600}
+
+  .artboard{
+    background:var(--surface);border:1px solid var(--line-2);border-radius:6px;
+    overflow:hidden;position:relative;box-shadow:0 1px 2px rgba(0,0,0,.04);
+    min-height:720px;display:flex;
+  }
+
+  /* ---------- notes ---------- */
+  .notes{
+    margin-top:12px;border:1px dashed var(--line-dash);border-radius:6px;background:var(--surface-2);
+    padding:14px 16px;font-size:var(--sm);color:var(--text-2);line-height:1.55;
+    padding-right:336px; /* clears the fixed ideation panel */
+  }
+  .notes h4{margin:0 0 8px;font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3)}
+  .notes ul{margin:0;padding-left:16px}
+  .notes li{margin-bottom:5px}
+  .notes li:last-child{margin-bottom:0}
+  .notes .ref{color:var(--text-3);font-style:italic}
+  .notes.hidden{display:none}
+
+  /* ---------- app chrome ---------- */
+  .rail{width:196px;flex:0 0 196px;background:var(--surface-2);border-right:1px solid var(--line);
+    padding:14px 10px;font-size:var(--sm)}
+  .rail .brand{display:flex;align-items:center;gap:8px;padding:2px 6px 14px}
+  .rail .brand .mark{width:20px;height:20px;border-radius:4px;background:var(--fill-2)}
+  .rail .brand .wm{width:64px;height:8px;border-radius:2px;background:var(--fill-2)}
+  .rail .grp{margin:12px 0 4px;padding:0 6px;font-size:var(--xs);text-transform:uppercase;
+    letter-spacing:.07em;color:var(--text-3)}
+  .rail a{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:var(--r);
+    color:var(--text-2);text-decoration:none}
+  .rail a .dot{width:12px;height:12px;border-radius:3px;background:var(--fill-2);flex:0 0 12px}
+  .rail a.on{background:var(--sel);color:var(--text);font-weight:600}
+  .rail a.on .dot{background:var(--sel-line)}
+  .rail .foot{margin-top:18px;padding-top:12px;border-top:1px solid var(--line)}
+
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--surface)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:16px 24px 0}
+  .topbar h2{font-size:var(--h1);margin:0;letter-spacing:-.015em}
+  .crumb{font-size:var(--sm);color:var(--text-3);margin:0 0 4px}
+  .tabs{display:flex;gap:20px;padding:14px 24px 0;border-bottom:1px solid var(--line)}
+  .tabs span{padding-bottom:9px;color:var(--text-2);font-size:var(--h4);cursor:default}
+  .tabs span.on{color:var(--text);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
+  .body{flex:1;overflow:auto;padding:24px}
+  .body.tight{padding:20px 24px}
+
+  /* settings takeover rail — replaces the app rail, per settings-nav.tsx */
+  .set-rail{width:240px;flex:0 0 240px;background:var(--surface-2);border-right:1px solid var(--line);
+    padding:12px 8px;font-size:var(--h4);overflow:auto}
+  .set-rail .backlink{display:flex;align-items:center;gap:6px;padding:4px 8px;margin-bottom:14px;
+    border-radius:var(--r);color:var(--text-2);font-weight:500;text-decoration:none}
+  .set-rail .grp{margin:16px 0 6px;padding:0 8px;font-size:var(--xs);letter-spacing:.02em;
+    color:var(--text-2);font-weight:600}
+  .set-rail .grp:first-of-type{margin-top:0}
+  .set-rail a:not(.backlink){display:block;padding:4px 8px;border-radius:var(--r);
+    color:var(--text-2);text-decoration:none;font-weight:500}
+  .set-rail a.on{background:var(--sel);color:var(--text)}
+
+  /* settings two-pane */
+  .set-wrap{flex:1;display:flex;min-height:0}
+  .set-nav{width:216px;flex:0 0 216px;border-right:1px solid var(--line);padding:20px 12px;
+    font-size:var(--sm);overflow:auto}
+  .set-nav .grp{margin:14px 0 4px;padding:0 8px;font-size:var(--xs);text-transform:uppercase;
+    letter-spacing:.07em;color:var(--text-3)}
+  .set-nav .grp:first-child{margin-top:0}
+  .set-nav a{display:block;padding:5px 8px;border-radius:var(--r);color:var(--text-2);text-decoration:none}
+  .set-nav a.on{background:var(--sel);color:var(--text);font-weight:600}
+
+  /* ---------- primitives ---------- */
+  .btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:var(--r);
+    border:1px solid var(--line-2);background:var(--surface);color:var(--text);font-size:var(--h4);
+    font-family:var(--font);white-space:nowrap}
+  .btn.pri{background:var(--ink);border-color:var(--ink);color:#fff}
+  .btn.sm{height:26px;font-size:var(--sm);padding:0 9px}
+  .btn.ghost{border-color:transparent;background:transparent;color:var(--text-2)}
+  .btn .ic{width:11px;height:11px;border-radius:2px;background:currentColor;opacity:.5}
+
+  .field{margin-bottom:16px}
+  .label{display:block;font-size:var(--h4);font-weight:600;margin-bottom:5px}
+  .hint{font-size:var(--sm);color:var(--text-3);margin:5px 0 0;line-height:1.5}
+  .input,.select,.textarea{
+    width:100%;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);
+    padding:8px 10px;font-size:var(--h4);color:var(--text-2);font-family:var(--font);min-height:34px;
+    display:flex;align-items:center;
+  }
+  .input.ph,.textarea.ph{color:var(--text-3)}
+  .select{justify-content:space-between}
+  .select:after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;
+    border-top:5px solid var(--line-2)}
+  .textarea{display:block;min-height:112px;line-height:1.6;white-space:pre-wrap}
+  .row{display:flex;gap:10px}
+  .row > *{flex:1}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1px solid var(--line-2);
+    border-radius:var(--r);padding:6px 8px;min-height:34px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--fill);border:1px solid var(--line);
+    border-radius:12px;padding:2px 8px;font-size:var(--sm);color:var(--text-2)}
+  .chip .x{color:var(--text-3)}
+  .chips .ghosttext{font-size:var(--sm);color:var(--text-3)}
+
+  .pill{display:inline-flex;align-items:center;gap:5px;border-radius:11px;padding:2px 9px;
+    font-size:var(--xs);border:1px solid var(--line-2);color:var(--text-2);background:var(--surface-2)}
+  .pill .d{width:6px;height:6px;border-radius:50%;background:var(--line-2)}
+  .pill.on .d{background:var(--ink)}
+  .pill.warn,.pill.err{background:var(--warn-fill);border-color:var(--warn-line)}
+  .pill.warn .d,.pill.err .d{background:#a8823c}
+  .pill.err{color:#8a6d34}
+  .pill.ok{background:var(--surface);border-color:var(--line-2);color:var(--text-2)}
+  .pill.ok .d{background:var(--ink)}
+  .pill.off{background:var(--surface-2);border-color:var(--line);color:var(--text-3)}
+  .pill.off .d{background:var(--line-2)}
+  table.tbl td .sub.warn{color:#8a6d34}
+
+  .toggle{width:30px;height:17px;border-radius:9px;background:var(--fill-2);border:1px solid var(--line-2);
+    position:relative;display:inline-block}
+  .toggle:after{content:"";position:absolute;top:1px;left:1px;width:13px;height:13px;border-radius:50%;
+    background:#fff;border:1px solid var(--line-2)}
+  .toggle.on{background:var(--ink);border-color:var(--ink)}
+  .toggle.on:after{left:auto;right:1px;border-color:var(--ink)}
+
+  .card{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:16px}
+  .sec{border:1px solid var(--line);border-radius:6px;margin-bottom:14px;overflow:hidden}
+  .sec > header{padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface-2);
+    display:flex;align-items:center;justify-content:space-between}
+  .sec > header h3{margin:0;font-size:var(--h4);font-weight:600}
+  .sec > header .step{font-size:var(--xs);color:var(--text-3);text-transform:uppercase;letter-spacing:.07em}
+  .sec .in{padding:16px}
+
+  .ph-box{border:1px dashed var(--line-dash);border-radius:var(--r);background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:var(--sm)}
+  .bar{height:8px;border-radius:2px;background:var(--fill-2)}
+  .bar.s{width:40%} .bar.m{width:65%} .bar.l{width:88%}
+  .stack > *{margin-bottom:7px} .stack > *:last-child{margin-bottom:0}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:var(--h4)}
+  table.tbl th{text-align:left;font-size:var(--xs);text-transform:uppercase;letter-spacing:.07em;
+    color:var(--text-3);font-weight:600;padding:0 12px 8px;border-bottom:1px solid var(--line)}
+  table.tbl th.sortable{cursor:pointer;user-select:none}
+  table.tbl th.sortable:hover{color:var(--text-2)}
+  table.tbl th.sortable.on{color:var(--text-2)}
+  .caretsort{margin-left:5px;font-size:9px;opacity:.55}
+  table.tbl th.sortable.on .caretsort{opacity:1}
+  table.tbl td{padding:13px 12px;border-bottom:1px solid var(--line);color:var(--text-2);vertical-align:middle}
+  table.tbl td.name{color:var(--text);font-weight:600}
+  table.tbl td .sub{font-size:var(--sm);color:var(--text-3);font-weight:400;margin-top:2px}
+  table.tbl tr.hl td{background:var(--surface-2)}
+
+  .kicker{font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin:0 0 8px}
+  .h3{font-size:var(--h3);font-weight:600;margin:0 0 4px}
+  .h2{font-size:var(--h2);font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+  .muted{color:var(--text-2);font-size:var(--h4);line-height:1.6;margin:0}
+  .muted.sm{font-size:var(--sm)}
+
+  /* template grid */
+  .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .tcard{border:1px solid var(--line);border-radius:6px;padding:14px;background:var(--surface);
+    display:flex;flex-direction:column;gap:8px;min-height:112px}
+  .tcard .q{font-size:var(--h4);font-weight:600;line-height:1.4}
+  .tcard .d{font-size:var(--sm);color:var(--text-3);line-height:1.5}
+  .tcard .thumb{height:8px;border-radius:2px;background:var(--fill-2);width:34%}
+  .tcard.sel{border-color:var(--sel-line);background:var(--sel);box-shadow:0 0 0 1px var(--sel-line)}
+  .tcard.sel .thumb{background:var(--sel-line)}
+  .tcard.scratch{border-style:dashed;background:var(--surface-2);align-items:center;justify-content:center;
+    text-align:center;color:var(--text-2)}
+
+  /* overlays */
+  .scrim{position:absolute;inset:0;background:rgba(28,30,33,.30);display:flex;align-items:center;
+    justify-content:center;padding:28px;z-index:5}
+  .modal{background:var(--surface);border-radius:8px;width:100%;max-width:620px;max-height:100%;
+    display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,.22);overflow:hidden}
+  .modal.wide{max-width:820px}
+  .modal > header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;
+    align-items:flex-start;justify-content:space-between;gap:12px}
+  .modal > header h3{margin:0;font-size:var(--h3);font-weight:600}
+  .modal > .mbody{padding:20px;overflow:auto}
+  .modal > footer{padding:14px 20px;border-top:1px solid var(--line);display:flex;
+    align-items:center;justify-content:space-between;gap:10px;background:var(--surface-2)}
+  .drawer-scrim{position:absolute;inset:0;background:rgba(28,30,33,.24);z-index:5}
+  .drawer{position:absolute;top:0;right:0;bottom:0;width:472px;background:var(--surface);
+    border-left:1px solid var(--line-2);box-shadow:-8px 0 32px rgba(0,0,0,.14);z-index:6;
+    display:flex;flex-direction:column}
+  .drawer > header{padding:18px 20px;border-bottom:1px solid var(--line)}
+  .drawer > .dbody{padding:20px;overflow:auto;flex:1}
+  .drawer > footer{padding:14px 20px;border-top:1px solid var(--line);display:flex;
+    justify-content:space-between;gap:10px;background:var(--surface-2)}
+
+  .menu{position:absolute;background:var(--surface);border:1px solid var(--line-2);border-radius:6px;
+    box-shadow:0 8px 24px rgba(0,0,0,.14);padding:4px;min-width:158px;font-size:var(--h4);z-index:4}
+  .menu div{padding:7px 10px;border-radius:var(--r);color:var(--text-2)}
+  .menu div.sep{border-top:1px solid var(--line);margin:4px 0;padding:0;height:0}
+
+  /* report artifact preview */
+  .paper{background:#fff;border:1px solid var(--line-2);box-shadow:0 2px 10px rgba(0,0,0,.07);
+    width:520px;padding:34px 38px;margin:0 auto}
+  .paper .plogo{width:78px;height:9px;background:var(--fill-2);border-radius:2px;margin-bottom:22px}
+  .paper h4{margin:0 0 4px;font-size:var(--h2);letter-spacing:-.01em}
+  .paper .pmeta{font-size:var(--sm);color:var(--text-3);margin:0 0 20px}
+  .paper .pkick{font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);
+    margin:22px 0 8px}
+
+  .callout{border:1px solid var(--line);background:var(--surface-2);border-radius:6px;padding:12px 14px;
+    font-size:var(--sm);color:var(--text-2);line-height:1.55}
+  .callout b{color:var(--text)}
+  .discl{border:1px solid var(--line);border-radius:6px;background:var(--surface-2);padding:10px 12px;
+    font-size:var(--sm);color:var(--text-2);display:flex;gap:8px;align-items:flex-start}
+
+  .scopegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 14px;margin-top:8px}
+  .scopegrid span{font-size:var(--sm);color:var(--text-2);display:flex;gap:7px;align-items:center}
+  .scopegrid span:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--line-2)}
+
+  /* an editable prompt canvas — full-contrast text, focus ring, caret, resize grip */
+  .textarea.editable{
+    color:var(--text);background:#fff;position:relative;
+    border-color:var(--ink);box-shadow:0 0 0 3px rgba(47,58,69,.09);
+    padding:11px 13px;
+  }
+  .textarea.editable:after{
+    content:"";position:absolute;right:4px;bottom:4px;width:7px;height:7px;
+    border-right:2px solid var(--line-2);border-bottom:2px solid var(--line-2);
+  }
+  .textarea.editable.ph,.input.editable.ph{color:var(--text-3)}
+  .caret{display:inline-block;width:1.5px;height:15px;background:var(--ink);
+    vertical-align:-3px;margin-left:1px}
+  .lblrow{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:3px}
+  .lblrow .label{margin-bottom:0}
+  .editnote{font-size:var(--sm);color:var(--text-2);margin:0 0 8px}
+  .editnote .promptname{font-weight:600;color:var(--text)}
+  .btn.icon{width:28px;height:28px;padding:0;justify-content:center;color:var(--text-2);
+    font-size:15px;line-height:1}
+
+  .scopeline{font-size:var(--sm);color:var(--text-2);margin:0;line-height:1.5}
+
+  .heropanel{max-width:820px;margin:26px auto 0;border:1px solid var(--line);border-radius:8px;
+    background:var(--surface);overflow:hidden}
+  .heropanel-foot{border-top:1px solid var(--line);background:var(--surface-2);padding:18px 30px 24px}
+  /* manage list */
+  .rchips{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+  .rchip{width:24px;height:24px;border-radius:50%;background:var(--fill-2);border:1px solid var(--line-2);
+    display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;
+    color:var(--text-2);letter-spacing:.02em;flex:0 0 24px}
+  .rchip.ext{background:var(--warn-fill);border-color:var(--warn-line)}
+  .rmore{font-size:var(--sm);color:var(--text-3);margin-left:2px}
+  .rcount{border-bottom:1px dotted var(--line-2);cursor:default}
+  .crow .rcount{color:var(--text-2)}
+  .rcwrap{position:relative;display:inline-block}
+  .rcwrap .rtip{top:24px}
+  .extbadge{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#8a6d34;
+    background:var(--warn-fill);border:1px solid var(--warn-line);border-radius:3px;padding:0 4px}
+  .rtip{position:absolute;left:0;top:46px;z-index:6;width:262px;background:#fff;
+    border:1px solid var(--line-2);border-radius:6px;box-shadow:0 10px 28px rgba(0,0,0,.16);overflow:hidden}
+  .rtiphead{padding:8px 12px;border-bottom:1px solid var(--line);background:var(--surface-2);
+    font-size:var(--xs);text-transform:uppercase;letter-spacing:.07em;color:var(--text-3)}
+  .rtiplist{max-height:196px;overflow:auto}
+  .rtiprow{display:flex;gap:9px;align-items:center;padding:6px 12px}
+  .rtiprow .t{font-size:var(--sm);font-weight:600;line-height:1.3}
+  .rtiprow .s{font-size:var(--xs);color:var(--text-3)}
+
+  .crow{display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid var(--line)}
+  .crow:last-child{border-bottom:none}
+  .crow.hl{background:var(--surface-2)}
+  .cname{font-size:var(--h4);font-weight:600}
+  .cmeta{font-size:var(--sm);color:var(--text-3);margin-top:2px}
+  .cfail{color:#8a6d34}
+
+  .segctl{display:flex;border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden}
+  .segctl button{flex:1;padding:9px 10px;cursor:pointer;font-size:var(--h4);font-family:var(--font);
+    border:none;border-right:1px solid var(--line-2);background:#fff;color:var(--text-2);
+    white-space:nowrap}
+  .segctl button:last-child{border-right:none}
+  .segctl button:hover{background:var(--surface-2)}
+  .segctl button.on,.segctl button.on:hover{background:var(--sel);color:var(--text);font-weight:600;
+    box-shadow:inset 0 0 0 1px var(--sel-line)}
+
+  .plist2{border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden}
+  .dirhead{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    margin:2px 0 8px}
+  .dirsearch{flex:1;border:1px solid var(--line-2);border-radius:var(--r);padding:7px 10px;
+    font-size:var(--sm);color:var(--text);font-family:var(--font);max-width:290px;background:#fff}
+  .dirsearch::placeholder{color:var(--text-3)}
+  .prow[data-toggle]{cursor:pointer}
+  .prow[data-toggle]:hover{background:var(--surface-2)}
+  .prow.addnew{cursor:pointer;background:var(--surface-2)}
+  .prow.addnew:hover{background:var(--sel)}
+  .segctl button{cursor:pointer}
+  .btn.dis{opacity:.42;pointer-events:none}
+  .btn.strong{border-color:var(--ink);color:var(--text);font-weight:600}
+  .bodybar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    max-width:520px;margin:0 auto 12px}
+  .dirlist{max-height:212px;overflow-y:auto}
+  .tray{border-top:1px solid var(--line);padding:11px 20px 12px;background:var(--surface)}
+  .trayhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+    font-size:var(--sm);color:var(--text-2);margin-bottom:8px}
+  .extcount{color:#8a6d34}
+  .traypills{display:flex;flex-wrap:wrap;gap:5px;max-height:86px;overflow-y:auto;
+    border:1px solid var(--line-2);border-radius:var(--r);padding:8px 9px;background:#fff}
+  .spill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);
+    background:var(--surface-2);border-radius:12px;padding:3px 8px;font-size:var(--sm);
+    color:var(--text-2);cursor:pointer;white-space:nowrap}
+  .spill:hover{border-color:var(--line-2);background:var(--fill-2)}
+  .spill.ext{background:var(--warn-fill);border-color:var(--warn-line)}
+  .spill .x{color:var(--text-3)}
+
+  .quickset{font-size:var(--sm);display:flex;gap:8px;align-items:center}
+  .qsep{color:var(--line-2)}
+  .tokenfield{display:flex;flex-wrap:wrap;gap:5px;align-items:center;border:1px solid var(--ink);
+    border-radius:var(--r);padding:7px 9px;min-height:40px;background:#fff;
+    box-shadow:0 0 0 3px rgba(47,58,69,.09);max-height:104px;overflow-y:auto}
+  .tokeninput{flex:1;min-width:150px;border:none;outline:none;font-size:var(--h4);
+    font-family:var(--font);color:var(--text);padding:2px 0}
+  .dropdown{margin-top:6px;border:1px solid var(--line-2);border-radius:var(--r);
+    max-height:190px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.10)}
+  .dropdown .prow{padding:8px 11px}
+  .qchips{display:flex;gap:6px;margin:2px 0 10px}
+  .qchip{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:14px;
+    padding:5px 12px;font-size:var(--sm);color:var(--text-2);background:#fff;cursor:pointer}
+  .qchip:hover{background:var(--sel);border-color:var(--sel-line);color:var(--text)}
+
+  .selall{display:flex;align-items:center;gap:10px;padding:9px 0;margin-top:4px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);cursor:pointer}
+  .selall .t{font-size:var(--h4);font-weight:600}
+  .selall .lnk{margin-left:auto;font-size:var(--sm)}
+
+  .prow.preset{background:var(--surface-2);cursor:pointer}
+  .prow.preset:hover{background:var(--sel)}
+  .prow.preset.on{background:var(--sel);box-shadow:inset 2px 0 0 var(--sel-line)}
+  .prow.preset .rchip{width:auto;padding:0 7px;border-radius:11px;font-size:9px}
+  .dropdown.static{box-shadow:none;max-height:none;overflow:visible}
+  .dim{opacity:.42;pointer-events:none;user-select:none}
+  .dirhead.dim .dirsearch{background:var(--surface-2)}
+  .prow,.addline{display:flex;align-items:center;gap:10px;padding:9px 12px;
+    border-bottom:1px solid var(--line)}
+  .dirlist > *:last-child .prow:last-child,
+  .dirlist > .prow:last-child{border-bottom:none}
+  .addline{border-bottom:none;color:var(--text-3);font-size:var(--sm)}
+  .prow .t{font-size:var(--h4)}
+  .prow .s{font-size:var(--sm);color:var(--text-3);margin-left:auto}
+  .addplus{width:22px;height:22px;border-radius:50%;border:1px dashed var(--line-dash);
+    display:inline-flex;align-items:center;justify-content:center;color:var(--text-3);
+    font-size:12px;flex:0 0 22px}
+
+  .cbox{width:14px;height:14px;border-radius:3px;border:1px solid var(--line-2);background:#fff;flex:0 0 14px}
+  .cbox.on{background:var(--ink);border-color:var(--ink)}
+
+  /* test-run treatments */
+  .art{display:flex;justify-content:center}
+  .artpage{width:300px;background:#fff;border:1px dashed var(--line-dash);border-radius:4px;
+    padding:22px 24px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  .artbar{height:9px;border-radius:2px;background:var(--fill-2);margin-bottom:8px}
+  .artbar.w40{width:40%} .artbar.w70{width:70%}
+  .artline{height:6px;border-radius:2px;background:var(--fill);margin-bottom:6px}
+  .artline.w60{width:60%}
+  .artchart{display:flex;align-items:flex-end;gap:7px;height:78px;margin:16px 0 14px;
+    padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .artcol{flex:1;background:var(--fill-2);border-radius:2px 2px 0 0}
+  .arttable{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+  .arttable div{height:6px;border-radius:2px;background:var(--fill)}
+
+  .mail{max-width:520px;margin:0 auto;background:#fff;border:1px solid var(--line-2);border-radius:6px;
+    overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  .mailhead{display:flex;gap:11px;align-items:flex-start;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .avatar{width:30px;height:30px;border-radius:50%;background:var(--fill-2);flex:0 0 30px}
+  .mailfrom{font-size:var(--sm);color:var(--text-2)}
+  .mailfrom span{color:var(--text-3)}
+  .mailsub{font-size:var(--h4);font-weight:600;margin-top:2px}
+  .mailbody{padding:16px}
+  .attach{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:var(--r);
+    padding:9px 11px;margin-top:14px;background:var(--surface-2)}
+  .attachicon{width:22px;height:26px;border-radius:2px;background:var(--fill-2);
+    border:1px solid var(--line-2);flex:0 0 22px}
+  .attach .t{font-size:var(--sm);font-weight:600}
+  .attach .s{font-size:var(--xs);color:var(--text-3);margin-top:1px}
+
+  /* two-pane template picker */
+  .pwrap{display:flex;min-height:376px}
+  .plist{width:252px;flex:0 0 252px;border-right:1px solid var(--line);background:var(--surface-2);
+    padding:10px 8px}
+  .pitem{padding:9px 10px;border-radius:var(--r);font-size:var(--h4);color:var(--text-2);
+    line-height:1.35;margin-bottom:2px}
+  .pitem.on{background:var(--sel);color:var(--text);font-weight:600;
+    box-shadow:0 0 0 1px var(--sel-line)}
+  .pitem.scratch{color:var(--text-3);border:1px dashed var(--line-dash);margin-top:8px}
+  .pitem.scratch.on{color:var(--text);background:var(--sel);border-style:solid;
+    border-color:var(--sel-line);font-weight:600}
+  .tips{margin:0;padding-left:17px;font-size:var(--sm);color:var(--text-2);line-height:1.55}
+  .tips li{margin-bottom:4px}
+  .pdetail{flex:1;min-width:0;padding:20px 22px;overflow:auto}
+  .promptview{border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);
+    padding:13px 15px;font-size:var(--h4);color:var(--text);line-height:1.6;white-space:pre-wrap}
+
+  /* read-only "Data included" disclosure — collapsed row, opens to the list */
+  .disc2{border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);overflow:hidden}
+  .disc2-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px}
+  .disc2-head b{font-size:var(--sm);color:var(--text)}
+  .disc2-sub{font-size:var(--sm);color:var(--text-3);margin-top:3px;line-height:1.45}
+  .disc2-chev{color:var(--text-3);font-size:var(--sm)}
+  .disc2-body{border-top:1px solid var(--line);background:var(--surface)}
+  .drow2{padding:7px 12px;border-bottom:1px solid var(--line)}
+  .drow2:last-child{border-bottom:none}
+  .drow2 .t{font-size:var(--sm);font-weight:600;color:var(--text);line-height:1.35}
+  .drow2 .s{font-size:var(--xs);color:var(--text-3);line-height:1.4;margin-top:1px}
+
+  /* prompt-block treatments */
+  .tmplbar{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .tmplchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--sel-line);background:var(--sel);
+    border-radius:13px;padding:3px 10px;font-size:var(--sm);color:var(--text);font-weight:600}
+  .tmplchip .x{color:var(--text-2);font-weight:400}
+  .lnk{font-size:var(--sm);color:var(--text-2);text-decoration:underline;text-underline-offset:2px}
+  .tok{background:var(--sel);border:1px solid var(--sel-line);border-radius:3px;padding:0 4px}
+  .ptool{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    border:1px solid var(--line-2);border-bottom:none;border-radius:var(--r) var(--r) 0 0;
+    padding:6px 8px;background:var(--surface-2);position:relative}
+  .ptool .grpb{display:flex;gap:6px;align-items:center}
+  .textarea.attached{border-radius:0 0 var(--r) var(--r)}
+  .dlist{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+  .dlist .drow{display:flex;gap:9px;padding:8px 10px;border-bottom:1px solid var(--line);align-items:flex-start}
+  .dlist .drow:last-child{border-bottom:none}
+  .dlist .drow .plus{color:var(--text-3);font-size:var(--sm);flex:0 0 auto;margin-top:1px}
+  .dlist .drow .t{font-size:var(--sm);font-weight:600;line-height:1.3}
+  .dlist .drow .s{font-size:var(--xs);color:var(--text-3);line-height:1.4;margin-top:1px}
+  .dlist.scroll{max-height:268px;overflow:auto}
+  .scopebar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+  .srcchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);background:var(--surface-2);
+    border-radius:12px;padding:2px 9px;font-size:var(--sm);color:var(--text-2)}
+  .srcchip .x{color:var(--text-3)}
+  .srcchip.add{border-style:dashed;color:var(--text-3)}
+  .slot{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .slot:last-of-type{border-bottom:none}
+  .slot .sl{font-size:var(--h4);color:var(--text-2);flex:0 0 auto}
+  .slot .sf{flex:1;min-width:0}
+  .assembled{border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);padding:11px 13px;
+    font-size:var(--sm);color:var(--text-2);line-height:1.6}
+
+  /* ---------- control panel ---------- */
+  #ctl{
+    position:fixed;right:20px;bottom:20px;z-index:100;background:#fff;border:1px solid var(--line-2);
+    border-radius:10px;box-shadow:0 10px 34px rgba(0,0,0,.18);width:288px;font-size:var(--sm);
+    overflow:hidden;
+  }
+  #ctl .ch{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;
+    border-bottom:1px solid var(--line);background:var(--surface-2);cursor:pointer;user-select:none}
+  #ctl .ch b{font-size:var(--xs);text-transform:uppercase;letter-spacing:.09em;color:var(--text-2)}
+  #ctl .ch .cv{color:var(--text-3);font-size:14px;line-height:1}
+  #ctl .cb{padding:12px;max-height:calc(100vh - 190px);overflow-y:auto}
+  #ctl.min .cb{display:none}
+  #ctl .grp{margin-bottom:12px}
+  #ctl .grp:last-child{margin-bottom:0}
+  #ctl .gl{font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);
+    margin-bottom:5px;display:flex;justify-content:space-between;align-items:center}
+  #ctl .seg{display:flex;flex-wrap:wrap;gap:4px}
+  #ctl .seg button{flex:1 1 auto;min-width:0;border:1px solid var(--line-2);background:#fff;border-radius:var(--r);
+    padding:6px 8px;font-size:var(--sm);color:var(--text-2);font-family:var(--font);cursor:pointer;
+    white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+  #ctl .seg button:hover{background:var(--surface-2)}
+  #ctl .seg button.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
+  #ctl .seg.stack button{flex:1 1 100%;text-align:left}
+  #ctl .seg.stack > .subs{flex:1 1 100%}
+  #ctl .subs{margin:6px 0 8px 9px;padding-left:11px;border-left:2px solid var(--line)}
+  #ctl .sgrp{margin-bottom:9px}
+  #ctl .sgrp:last-child{margin-bottom:2px}
+  #ctl .sgrp .gl{margin-bottom:4px;color:var(--text-3)}
+  #ctl .sgrp .seg button{font-size:11px;padding:5px 8px}
+  #ctl .foot{border-top:1px solid var(--line);padding:9px 12px;display:flex;align-items:center;
+    justify-content:space-between;color:var(--text-3);font-size:var(--xs)}
+  #ctl .sw{display:flex;align-items:center;gap:7px;color:var(--text-2);cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="workbench">
+  <div class="wb-head">
+    <h1>Scheduled Insights</h1>
+    <span class="tag">Wireframes · round 1 · greybox</span>
+  </div>
+  <p class="wb-sub">Use the panel in the bottom-right to switch between ideations. ← → step through screens; ↑ ↓ step through the states within a screen.</p>
+
+  <p class="artboard-label" id="ablabel"></p>
+  <div class="artboard" id="stage"></div>
+  <div class="notes" id="notes"></div>
+</div>
+
+<div id="ctl">
+  <div class="ch" onclick="document.getElementById('ctl').classList.toggle('min')">
+    <b>Ideations</b><span class="cv">▾</span>
+  </div>
+  <div class="cb" id="ctlbody"></div>
+  <div class="foot">
+    <label class="sw"><input type="checkbox" id="noteToggle" /> Design notes</label>
+    <span id="combo"></span>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   STATE
+   ============================================================ */
+const PLACEMENTS = [
+  {id:'insights', label:'A · Insights › Scheduled tab'},
+  {id:'settings', label:'B · Settings › Workflow Automation'}
+];
+const SCREENS = [
+  {id:'empty',     label:'1 · Empty state'},
+  {id:'templates', label:'2 · Template picker'},
+  {id:'configure', label:'3 · Configure'},
+  {id:'preview',   label:'4 · Preview / test run'},
+  {id:'manage',    label:'5 · Manage list'}
+];
+const VARIANTS = [
+  {id:'modal', label:'V1 · Modal (leanest)'},
+  {id:'panel', label:'V2 · Side panel over list'},
+  {id:'page',  label:'V3 · Full page + live preview'}
+];
+
+const PROMPTS = [
+  {id:'closed', label:'Collapsed'},
+  {id:'open',   label:'Expanded'}
+];
+
+const LAYOUTS = [
+  {id:'e1', label:'E1 · Hero only'},
+  {id:'e2', label:'E2 · Templates are the CTA'},
+  {id:'e3', label:'E3 · One contained panel'},
+  {id:'e4', label:'E4 · Question-led, no hero'}
+];
+
+const TESTRUNS = [
+  {id:'t1', label:'T1 · Live preview (baseline)'},
+  {id:'t2', label:'T2 · Illustrative sample'},
+  {id:'t3', label:'T3 · Curated sample report'},
+  {id:'t4', label:'T4 · Inbox mock'}
+];
+
+const MANAGES = [
+  {id:'m1', label:'M1 · Columns with recipient chips'},
+  {id:'m2', label:'M2 · Grouped by status'}
+];
+const SENDPATS = [
+  {id:'s1', label:'S1 · Three-option control'},
+  {id:'s2', label:'S2 · Two shortcuts + one list'},
+  {id:'s3', label:'S3 · Chips field, no modes'}
+];
+
+const OVERLAYS = [
+  {id:'default', label:'Default'},
+  {id:'menu',    label:'Row menu open'},
+  {id:'hover',   label:'Recipient hover list'},
+  {id:'send',    label:'“Send to…” modal'}
+];
+
+const PICKERS = [
+  {id:'detail',  label:'List — template selected'},
+  {id:'scratch', label:'List — scratch selected'},
+  {id:'cards',   label:'Cards only'}
+];
+
+const SOURCES_OF_PROMPT = [
+  {id:'template', label:'From a template'},
+  {id:'scratch',  label:'From scratch'}
+];
+
+const state = {placement:'insights', screen:'empty', variant:'modal', prompt:'closed', source:'template', picker:'detail', layout:'e1', testrun:'t2', manage:'m2', overlay:'default', sendpat:'s2', picked:null, prevPicked:null, sortKey:'name', sortDir:'asc', extras:[], q:'', subIdx:0, notes:false};
+
+/* ============================================================
+   CONTENT
+   ============================================================ */
+const TEMPLATES = [
+  {q:'How accurate were our AI answers?',
+   d:'Line chart of accuracy by week — answers kept as drafted ÷ all AI-drafted answers. Plus the 10 lowest-scoring topics, ranked.',
+   p:`Summarize how accurately ConveyorAI answered security questions over the
+reporting period.
+
+Include: the overall accuracy trend by week, the topics scoring lowest, and
+the five questions most often edited by a human. Call out anything that
+changed materially versus the previous period.`},
+
+  {q:'What did AI answer in our Trust Center?',
+   d:'Answered vs. deflected share of visitor questions, split by month. Plus the 20 most-asked questions AI could not answer, grouped by topic.',
+   p:`Report on what our Trust Center AI answered for visitors over the reporting
+period.
+
+Include: the share of questions answered versus deflected, by month; the
+twenty most-asked questions AI could not answer, grouped by topic; and which
+of those we could resolve by adding knowledge.`},
+
+  {q:'Who viewed our Trust Center documents?',
+   d:'Table of views per document by company, highest first. Bar chart of total views by week across the period.',
+   p:`Report on who viewed documents in our Trust Center over the reporting period.
+
+Include: views per document broken out by company, highest first; total views
+by week; and any company whose activity changed sharply versus the previous
+period.`},
+
+  {q:'Which answers needed a human edit?',
+   d:'Bar chart of edited vs. untouched AI answers by week. Plus the 10 most-edited questions with edit counts, as a review workload estimate.',
+   p:`Report on how much AI-drafted content our team edited over the reporting
+period.
+
+Include: edited versus untouched answers by week; the ten most-edited
+questions with edit counts; and an estimate of the review workload this
+represents.`},
+
+  {q:'Where are the gaps in our knowledge?',
+   d:'Questions with no confident answer, clustered into topics and ranked by how often each topic came up. No chart — a prioritized list.',
+   p:`Identify gaps in our knowledge base over the reporting period.
+
+Include: the questions we could not answer confidently, clustered into topics
+and ranked by how often each topic came up. For each topic, suggest what
+knowledge would close the gap.`}
+];
+
+const SCOPE = [
+  'Questionnaires &amp; questions','Knowledge base &amp; topics',
+  'Trust Center activity','Trust Center AI conversations',
+  'One-off questions','Documents &amp; product lines',
+  'Visitor feedback','Connections &amp; access'
+];
+
+/* Each maps to analytics the MCP already exposes. */
+const SOURCES = [
+  {n:'Questionnaires',      d:'Every questionnaire, question, and answer, with timing.'},
+  {n:'Knowledge base',      d:'Your approved answers, topics, and how often each is used.'},
+  {n:'Trust Center activity', d:'Visits, document views, and access requests by company.'},
+  {n:'Trust Center AI',     d:'Visitor conversations — what AI answered and deflected.'},
+  {n:'One-off questions',   d:'Ad-hoc questions your sales team sent through Conveyor.'},
+  {n:'Documents',           d:'Files in your Trust Center, by product line.'},
+  {n:'Visitor feedback',    d:'Thumbs and comments left on AI answers.'},
+  {n:'Access reviews',      d:'Who has access to which documents, and when it was granted.'}
+];
+
+const SCRATCH_PLACEHOLDER =
+`Describe the report you want. For example:
+
+“Show me how many questionnaires we completed last month, how
+long each one took, and which topics slowed us down the most.”`;
+
+const PROMPT_SEED = TEMPLATES[0].p;
+
+const ORG = ['Priya Nadkarni','Marcus Lehane','Dana Whitfield','Tomás Rivera','Aisha Karim',
+  'Ben Osei','Clara Mendes','Dev Patel','Erin Volkov','Farid Haddad','Grace Lin','Hugo Bianchi',
+  'Ivana Tso','Jonah Weiss','Keiko Mori','Liam Doherty','Maya Sharma','Noah Byrne','Olga Petrova',
+  'Pablo Ruiz','Quinn Adeyemi','Rosa Iglesias'
+].map(n => ({n, e:n.toLowerCase().split(' ')[0]+'@acme.com'}));
+
+const EXT = [
+  {n:'audit@northwind.com', e:'audit@northwind.com', ext:true},
+  {n:'kai@northwind.com',   e:'kai@northwind.com',   ext:true}
+];
+
+const R = (a,b) => ORG.slice(a,b);
+
+const REPORTS = [
+  {n:'Monthly Trust Center digest', t:'Who viewed our Trust Center documents?', s:'Monthly on the 1st, 9:00 AM ET', to:R(0,13).concat(EXT), l:'Sep 1, 2026', lt:20260901, ls:'ok', st:'Active', nx:'Oct 1, 2026'},
+  {n:'AI answer accuracy',          t:'How accurate were our AI answers?',      s:'Weekly on Monday, 8:00 AM ET',   to:R(12,13),l:'Sep 7, 2026', lt:20260907, ls:'ok', st:'Active', nx:'Sep 14, 2026'},
+  {n:'Trust Center AI answers',     t:'What did AI answer in our Trust Center?',s:'Weekly on Wednesday, 7:00 AM ET',to:R(3,9),  l:'Sep 2, 2026', lt:20260902, ls:'failed', st:'Error', sd:'Sep 2, 2026', err:'Delivery failed — 2 addresses bounced'},
+  {n:'Knowledge gap analysis',      t:'Where are the gaps in our knowledge?',   s:'Monthly on the 15th, 9:00 AM ET',to:R(0,2),  l:'Aug 15, 2026',lt:20260815, ls:'failed', st:'Paused', pd:'Aug 16, 2026', err:'No data returned for the period'},
+  {n:'Questionnaire throughput',    t:'How much time did Conveyor save us?',    s:'Weekly on Friday, 4:00 PM ET',   to:R(2,7),  l:'Aug 29, 2026',lt:20260829, ls:'ok',     st:'Paused', pd:'Aug 30, 2026'}
+];
+
+/* ============================================================
+   CHROME
+   ============================================================ */
+const RAIL = [
+  {g:'', items:[['Getting Started',0],['Launchpad',0],['Insights','insights']]},
+  {g:'Knowledge', items:[['Knowledge Base',0],['Documents',0],['Topics',0],['Knowledge Library',0]]},
+  {g:'Trust Center', items:[['Designer',0],['Audience',0]]},
+  {g:'Requests', items:[['Security Questionnaires',0],['RFPs',0]]}
+];
+
+const SET_NAV = [
+  ['User',                 ['Settings','Security','Notifications','Accessibility']],
+  ['Organization',         ['Settings','Integrations','Members &amp; Access','Notifications']],
+  ['Knowledge Management', ['Auto-Ingest Knowledge']],
+  ['Answering',            ['Sources in Scope','Custom Instructions']],
+  ['Workflow Automation',  ['Automation Rules','Team Routing','Self-Serve via Slack','Scheduled Insights']],
+  ['Trust Center',         ['Settings','NDA &amp; Access','Trust Center Agent &amp; MCP','Visitor Feedback']],
+  ['RFPs',                 ['Red Flag Detection','Manage Templates']]
+];
+
+function rail(activeInsights, activeSettings){
+  let h = `<nav class="rail"><div class="brand"><div class="mark"></div><div class="wm"></div></div>`;
+  RAIL.forEach(sec=>{
+    if(sec.g) h += `<div class="grp">${sec.g}</div>`;
+    sec.items.forEach(([label,key])=>{
+      const on = (key==='insights' && activeInsights) ? ' on':'';
+      h += `<a class="${on.trim()}"><span class="dot"></span>${label}</a>`;
+    });
+  });
+  h += `<div class="foot"><a class="${activeSettings?'on':''}"><span class="dot"></span>Settings</a></div></nav>`;
+  return h;
+}
+
+function settingsNav(){
+  let h = `<nav class="set-rail"><a class="backlink">&larr; Back to app</a>`;
+  SET_NAV.forEach(([g,items])=>{
+    h += `<div class="grp">${g}</div>`;
+    items.forEach(i=>{
+      const on = i==='Scheduled Insights' ? ' class="on"' : '';
+      h += `<a${on}>${i}</a>`;
+    });
+  });
+  return h + `</nav>`;
+}
+
+/* Wraps page content in the correct navigation placement. */
+function frame(content, opts){
+  opts = opts || {};
+  if(state.placement==='insights'){
+    return rail(true,false) + `<div class="main">
+      <div class="topbar"><h2>Insights</h2>${opts.action||''}</div>
+      <div class="tabs"><span>Dashboard</span><span class="on">Scheduled</span></div>
+      <div class="body ${opts.tight?'tight':''}">${content}</div>
+    </div>`;
+  }
+  return settingsNav() + `<div class="main">
+    <div class="topbar" style="padding-bottom:16px;border-bottom:1px solid var(--line);align-items:center">
+      <h2 style="font-size:var(--h2)">Scheduled Insights</h2>
+      ${opts.action||''}
+    </div>
+    <div class="body ${opts.tight?'tight':''}">${content}</div>
+  </div>`;
+}
+
+/* ============================================================
+   SHARED BLOCKS
+   ============================================================ */
+const newBtn = `<button class="btn pri"><span class="ic"></span>New scheduled report</button>`;
+
+function templateGrid(selectedIdx){
+  let h = `<div class="tgrid">`;
+  TEMPLATES.forEach((t,i)=>{
+    h += `<div class="tcard${i===selectedIdx?' sel':''}">
+      <div class="thumb"></div>
+      <div class="q">${t.q}</div>
+      <div class="d">${t.d}</div>
+    </div>`;
+  });
+  h += `<div class="tcard scratch">
+    <div style="font-size:20px;color:var(--text-3);line-height:1">＋</div>
+    <div class="q" style="font-weight:600">Start from scratch</div>
+    <div class="d">Write your own prompt. Conveyor picks the charts and tables that fit.</div>
+  </div></div>`;
+  return h;
+}
+
+/* The four configuration blocks, reused by all three variants. */
+/* ============================================================
+   PROMPT BLOCK  —  name + body, both plainly editable
+   ============================================================ */
+function promptBlock(){
+  const scratch = state.source==='scratch';
+  const name = scratch
+    ? `<div class="input editable ph" style="min-height:36px">Name this report</div>`
+    : `<div class="input editable" style="min-height:36px">AI answer accuracy</div>`;
+  const body = scratch
+    ? `<div class="textarea editable ph" style="min-height:152px"><span class="caret"></span>${SCRATCH_PLACEHOLDER}</div>`
+    : `<div class="textarea editable" style="min-height:152px">${PROMPT_SEED}<span class="caret"></span></div>`;
+  /* names the template chosen in step 1, so the prompt keeps its provenance */
+  const note = scratch
+    ? 'Describe what you want to know. Plain language works.'
+    : `Edit <b class="promptname">${TEMPLATES[0].q}</b> below to change what this report covers.`;
+  return `<div class="field">
+      <label class="label">Report name</label>
+      ${name}
+    </div>
+    <div class="field">
+      <div class="lblrow">
+        <label class="label">Prompt</label>
+        ${scratch?'':`<button class="btn icon" title="Reset to template"
+            aria-label="Reset to template">&#8634;</button>`}
+      </div>
+      <p class="editnote">${note}</p>
+      ${body}
+    </div>`;
+}
+
+/* ============================================================
+   DATA INCLUDED  —  read-only disclosure. Collapses to one row, opens to the list.
+   ============================================================ */
+const DATA_LINE = 'Every scheduled report can use all of this data.';
+
+function dataDisclosure(open){
+  return `<div class="field">
+    <div class="disc2">
+      <div class="disc2-head">
+        <div>
+          <b>Data included</b>
+          <div class="disc2-sub">${DATA_LINE} 8 sources.</div>
+        </div>
+        <span class="disc2-chev">${open?'\u25B4':'\u25BE'}</span>
+      </div>
+      ${open ? `<div class="disc2-body">
+        ${SOURCES.map(s=>`<div class="drow2">
+          <div class="t">${s.n}</div><div class="s">${s.d}</div>
+        </div>`).join('')}
+      </div>` : ``}
+    </div>
+  </div>`;
+}
+
+function fPrompt(){
+  return promptBlock() + dataDisclosure(state.prompt==='open');
+}
+
+
+function fSchedule(){
+  return `<div class="field">
+    <label class="label">Schedule</label>
+    <div class="row">
+      <div class="select" style="flex:1.1">Weekly</div>
+      <div class="select" style="flex:1">Monday</div>
+      <div class="select" style="flex:.9">8:00 AM</div>
+    </div>
+    <div class="row" style="margin-top:8px"><div class="select">Eastern Time (US &amp; Canada)</div></div>
+    <p class="hint">Next run: Monday, Sep 14, 2026 at 8:00 AM ET</p>
+  </div>`;
+}
+function fRecipients(){
+  return `<div class="field">
+    <label class="label">Send to</label>
+    <div class="chips">
+      <span class="chip">ivana.tso@conveyor.com <span class="x">×</span></span>
+      <span class="chip">security@acme.com <span class="x">×</span></span>
+      <span class="ghosttext">Add an email…</span>
+    </div>
+    <p class="hint">Delivered as a PDF attachment. Slack and in-app delivery come later.</p>
+  </div>`;
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+const HEAD = 'Get your Conveyor data on a schedule';
+const SUB  = `Tell ConveyorAI what you want to know and how often. It builds a report from your
+  Conveyor data and emails it to your team. <span class="lnk">See what's included &rarr;</span>`;
+
+function tcard(t){
+  return `<div class="tcard"><div class="thumb"></div>
+    <div class="q">${t.q}</div><div class="d">${t.d}</div></div>`;
+}
+function scratchCard(){
+  return `<div class="tcard scratch">
+    <div style="font-size:20px;color:var(--text-3);line-height:1">＋</div>
+    <div class="q" style="font-weight:600">Start from scratch</div>
+    <div class="d">Write your own prompt.</div></div>`;
+}
+function fullGrid(){
+  return `<div class="tgrid" style="text-align:left">
+    ${TEMPLATES.map(tcard).join('')}${scratchCard()}</div>`;
+}
+
+function scEmpty(){
+  const L = state.layout;
+  let content;
+
+  /* E1 — hero only. Templates live in the picker, one click away. */
+  if(L==='e1'){
+    content = `<div style="max-width:760px;margin:72px auto 0;text-align:center">
+      <div class="ph-box" style="width:150px;height:104px;margin:0 auto 22px">illustration</div>
+      <p class="h2">${HEAD}</p>
+      <p class="muted" style="max-width:660px;margin:0 auto 22px">${SUB}</p>
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button class="btn">See examples</button>
+        <button class="btn pri"><span class="ic"></span>Create scheduled report</button>
+      </div>
+    </div>`;
+  }
+
+  /* E2 — no primary button; the cards are the call to action */
+  else if(L==='e2'){
+    content = `<div style="max-width:880px;margin:20px auto 0">
+      <div style="text-align:center;margin-bottom:26px">
+        <div class="ph-box" style="width:120px;height:82px;margin:0 auto 18px">illustration</div>
+        <p class="h2">${HEAD}</p>
+        <p class="muted" style="max-width:620px;margin:0 auto">${SUB}</p>
+      </div>
+      ${fullGrid()}
+      <p class="muted sm" style="text-align:center;margin-top:18px">
+        Not sure yet? <span class="lnk">See examples &rarr;</span></p>
+    </div>`;
+  }
+
+  /* E4 — everything inside one panel, so it reads as a single object */
+  else if(L==='e3'){
+    content = `<div class="heropanel">
+      <div style="text-align:center;padding:30px 30px 26px">
+        <div class="ph-box" style="width:128px;height:88px;margin:0 auto 20px">illustration</div>
+        <p class="h2">${HEAD}</p>
+        <p class="muted" style="max-width:600px;margin:0 auto 20px">${SUB}</p>
+        <div style="display:flex;gap:8px;justify-content:center">
+          <button class="btn">See examples</button>
+          <button class="btn pri"><span class="ic"></span>Create scheduled report</button>
+        </div>
+      </div>
+      <div class="heropanel-foot">
+        <p class="kicker" style="margin-bottom:10px">Or start from a template</p>
+        <div class="tgrid" style="text-align:left">${TEMPLATES.slice(0,3).map(tcard).join('')}</div>
+      </div>
+    </div>`;
+  }
+
+  /* E5 — the headline asks, the cards answer */
+  else {
+    content = `<div style="max-width:880px;margin:44px auto 0">
+      <div style="text-align:center;margin-bottom:24px">
+        <p class="h2" style="font-size:var(--h1)">What do you want to know?</p>
+        <p class="muted" style="max-width:620px;margin:6px auto 0">
+          Pick a starting point and choose how often. ConveyorAI builds the report from your
+          Conveyor data and emails it to your team.
+          <span class="lnk">See what\u2019s included &rarr;</span></p>
+      </div>
+      ${fullGrid()}
+      <p class="muted sm" style="text-align:center;margin-top:18px">
+        <span class="lnk">See examples &rarr;</span></p>
+    </div>`;
+  }
+
+  return frame(content, {});
+}
+
+/* Left list + right detail. The prompt is readable before you commit. */
+function pickerDetail(scratch){
+  const sel = scratch ? -1 : 0;
+  const list = `<div class="plist">
+    ${TEMPLATES.map((t,i)=>`<div class="pitem${i===sel?' on':''}">${t.q}</div>`).join('')}
+    <div class="pitem scratch${scratch?' on':''}">＋ Start from scratch</div>
+  </div>`;
+
+  const detail = scratch ? `<div class="pdetail">
+    <p class="h3">Start from scratch</p>
+    <p class="muted sm" style="margin:6px 0 0">Write your own prompt in the next step.
+      Conveyor picks the charts and tables that fit what you ask for.</p>
+
+    <p class="kicker" style="margin:18px 0 6px">What makes a good prompt</p>
+    <ul class="tips">
+      <li>Name the period you care about — last month, last quarter.</li>
+      <li>Say what to include: a trend, a ranked list, a comparison.</li>
+      <li>Ask for a shape — a chart by week, a table by company.</li>
+    </ul>
+
+    <p class="kicker" style="margin:18px 0 6px">Example</p>
+    <div class="promptview">Show me how many questionnaires we completed last month, how
+long each one took, and which topics slowed us down the most.
+Compare against the month before.</div>
+
+    <p class="hint">Reports can draw on your Conveyor data.
+      <span class="lnk">See what's included &rarr;</span></p>
+  </div>` : (() => {
+    const t = TEMPLATES[sel];
+    return `<div class="pdetail">
+      <p class="h3">${t.q}</p>
+      <p class="kicker" style="margin:14px 0 5px">What you get</p>
+      <p class="muted sm" style="margin:0">${t.d}</p>
+      <p class="kicker" style="margin:16px 0 5px">Prompt</p>
+      <div class="promptview">${t.p}</div>
+      <p class="hint">You can edit this in the next step.</p>
+    </div>`;
+  })();
+
+  return `<div class="pwrap">${list}${detail}</div>`;
+}
+
+function scTemplates(){
+  const behind = listBehind(true);
+  const body = state.picker==='cards'
+    ? templateGrid(0)
+    : pickerDetail(state.picker==='scratch');
+  const modal = `<div class="scrim"><div class="modal wide">
+    <header>
+      <div><h3>What do you want to know?</h3>
+      <p class="muted sm" style="margin-top:4px">Pick a starting prompt. You can edit it in the next step.</p></div>
+      <span style="color:var(--text-3)">×</span>
+    </header>
+    <div class="mbody"${state.picker!=='cards'?' style="padding:0"':''}>
+      ${body}
+    </div>
+    <footer>
+      <span class="muted sm">Step 1 of 3</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn pri">Continue</button>
+      </div>
+    </footer>
+  </div></div>`;
+  return frame(behind, {action:newBtn}) + modal;
+}
+
+function scConfigure(){
+  if(state.variant==='modal')  return cfgModal();
+  if(state.variant==='page')   return cfgPage();
+  return cfgPanel();
+}
+
+function cfgModal(){
+  const wide = '';
+  const modal = `<div class="scrim"><div class="modal${wide}">
+    <header>
+      <div><h3>New scheduled report</h3></div>
+      <span style="color:var(--text-3)">×</span>
+    </header>
+    <div class="mbody">
+      ${fPrompt()}${fSchedule()}${fRecipients()}
+    </div>
+    <footer>
+      <span class="muted sm">Step 2 of 3</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn">Previous</button>
+        <button class="btn pri">Continue</button>
+      </div>
+    </footer>
+  </div></div>`;
+  return frame(listBehind(true), {action:newBtn}) + modal;
+}
+
+function cfgPage(){
+  const content = `
+  <div style="display:flex;gap:20px;align-items:flex-start">
+    <div style="flex:1.15;min-width:0">
+      <p class="crumb" style="margin-bottom:10px">← Back to scheduled reports</p>
+      <div class="sec">
+        <header><h3>Report</h3><span class="step">Step 1</span></header>
+        <div class="in">${fPrompt()}</div>
+      </div>
+      <div class="sec">
+        <header><h3>Period &amp; filters</h3><span class="step">Step 2</span></header>
+        <div class="in">
+          <p class="muted sm" style="margin-bottom:10px">How much history each run should look at.</p>
+          <div class="row" style="max-width:360px">
+            <div class="select">Last 30 days</div><div class="select">All product lines</div></div>
+        </div>
+      </div>
+      <div class="sec">
+        <header><h3>Schedule &amp; delivery</h3><span class="step">Step 3</span></header>
+        <div class="in">${fSchedule()}${fRecipients()}</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding-bottom:8px">
+        <span class="muted sm">Step 2 of 3</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn">Previous</button>
+          <button class="btn pri">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <aside style="flex:.85;min-width:0;position:sticky;top:0">
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:12px 14px;border-bottom:1px solid var(--line);display:flex;
+             align-items:center;justify-content:space-between;background:var(--surface-2)">
+          <b style="font-size:var(--h4)">Example report</b>
+          <button class="btn sm">Regenerate</button>
+        </div>
+        <div style="padding:16px;background:var(--surface-2)">
+          <div style="background:#fff;border:1px solid var(--line);padding:20px 22px">
+            <div class="plogo" style="width:60px;height:8px;background:var(--fill-2);border-radius:2px;margin-bottom:16px"></div>
+            <p class="h3" style="font-size:var(--h4)">AI answer accuracy</p>
+            <p class="muted sm" style="margin-bottom:14px">Aug 11 – Sep 7, 2026</p>
+            <div class="stack" style="margin-bottom:14px">
+              <div class="bar l"></div><div class="bar l"></div><div class="bar m"></div></div>
+            <div class="ph-box" style="height:92px;margin-bottom:12px">chart</div>
+            <div class="stack"><div class="bar l"></div><div class="bar m"></div><div class="bar s"></div></div>
+          </div>
+        </div>
+        <div style="padding:11px 14px;border-top:1px solid var(--line)">
+          <p class="muted sm" style="margin:0">Generated from your last 30 days of real data. Updates as you edit the prompt.</p>
+        </div>
+      </div>
+      <div style="margin-top:12px"><button class="btn" style="width:100%;justify-content:center">Email me this test report</button></div>
+    </aside>
+  </div>`;
+  return frame(content, {});
+}
+
+function cfgPanel(){
+  return frame(listBehind(false), {action:newBtn})
+    + `<div class="drawer-scrim"></div>
+    <aside class="drawer">
+      <header>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div><h3 style="margin:0;font-size:var(--h3)">New scheduled report</h3></div>
+          <span style="color:var(--text-3)">×</span>
+        </div>
+      </header>
+      <div class="dbody">${fPrompt()}${fSchedule()}${fRecipients()}</div>
+      <footer>
+        <span class="muted sm">Step 2 of 3</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn">Previous</button>
+          <button class="btn pri">Continue</button>
+        </div>
+      </footer>
+    </aside>`;
+}
+
+function paper(sample){
+  return `<div class="paper">
+    <div class="plogo"></div>
+    <h4>AI answer accuracy</h4>
+    <p class="pmeta">${sample ? 'Northwind Example Co · Aug 11 – Sep 7, 2026'
+                              : 'Acme Corp · Aug 11 – Sep 7, 2026 · Generated Sep 8, 2026'}</p>
+    <div class="stack"><div class="bar l"></div><div class="bar l"></div><div class="bar m"></div></div>
+    <p class="pkick">Accuracy over time</p>
+    <div class="ph-box" style="height:120px">chart</div>
+    <p class="pkick">Lowest-scoring topics</p>
+    <div class="stack"><div class="bar l"></div><div class="bar m"></div><div class="bar m"></div><div class="bar s"></div></div>
+    <p class="pkick">Most-edited answers</p>
+    <div class="ph-box" style="height:96px">table</div>
+  </div>`;
+}
+
+/* Abstract, obviously-not-data depiction of the report's shape. */
+function sampleArt(){
+  return `<div class="art">
+    <div class="artpage">
+      <div class="artbar w40"></div>
+      <div class="artbar w70" style="height:14px;margin-bottom:16px"></div>
+      <div class="artline"></div><div class="artline"></div><div class="artline w60"></div>
+      <div class="artchart">
+        <div class="artcol" style="height:38%"></div><div class="artcol" style="height:62%"></div>
+        <div class="artcol" style="height:48%"></div><div class="artcol" style="height:80%"></div>
+        <div class="artcol" style="height:55%"></div><div class="artcol" style="height:71%"></div>
+      </div>
+      <div class="arttable">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function scPreview(){
+  const T = state.testrun;
+  const behind = listBehind(true);
+  let head, body, wide = ' wide';
+
+  /* T1 — the real thing, if in-app generation is ever possible */
+  if(T==='t1'){
+    head = ['Example report',
+            'Generated just now from your last 30 days of data. Nothing has been sent.'];
+    body = `<div class="mbody" style="background:var(--surface-2)">
+      <div class="bodybar"><span class="muted sm">PDF · 3 pages</span>
+        <button class="btn sm">Regenerate</button></div>
+      ${paper(false)}</div>`;
+  }
+
+  /* T2 — illustrative art + send a test to yourself */
+  else if(T==='t2'){
+    head = ['Send yourself a test report',
+            'Reports are generated and delivered by email. We\u2019ll send one to you now so you can check it before it goes to anyone else.'];
+    body = `<div class="mbody" style="background:var(--surface-2);text-align:center">
+      ${sampleArt()}
+      <p class="muted sm" style="max-width:420px;margin:16px auto 0">
+        An illustration of the report\u2019s shape — a written summary, a chart, and a ranked
+        table. Your test report will use your real data.</p>
+      <p class="muted sm" style="margin:6px auto 0;color:var(--text-3)">
+        Test reports go to ivana.tso@conveyor.com</p>
+    </div>`;
+  }
+
+  /* T3 — a real Conveyor-authored sample built from demo data */
+  else if(T==='t3'){
+    head = ['Sample report',
+            'A finished report for this template, built from example data — not yours.'];
+    body = `<div class="mbody" style="background:var(--surface-2)">
+      <div class="bodybar"><span class="pill"><span class="d"></span>Example data</span>
+        <button class="btn sm">Download sample</button></div>
+      ${paper(true)}
+    </div>`;
+  }
+
+  /* T4 — show the email, not the PDF */
+  else {
+    head = ['What lands in your inbox',
+            'Every Monday at 8:00 AM ET, this arrives for the people you listed.'];
+    body = `<div class="mbody" style="background:var(--surface-2)">
+      <div class="mail">
+        <div class="mailhead">
+          <div class="avatar"></div>
+          <div style="flex:1;min-width:0">
+            <div class="mailfrom">Conveyor Insights <span>&lt;insights@conveyor.com&gt;</span></div>
+            <div class="mailsub">AI answer accuracy — Aug 11 to Sep 7, 2026</div>
+          </div>
+          <div class="muted sm" style="color:var(--text-3)">Mon 8:00 AM</div>
+        </div>
+        <div class="mailbody">
+          <div class="stack"><div class="bar l"></div><div class="bar l"></div><div class="bar m"></div></div>
+          <div class="attach">
+            <span class="attachicon"></span>
+            <div><div class="t">ai-answer-accuracy-2026-09-07.pdf</div>
+              <div class="s">PDF · 3 pages · 412 KB</div></div>
+          </div>
+        </div>
+      </div>
+      <p class="muted sm" style="text-align:center;margin-top:14px">
+        The report is attached. Conveyor does not keep a copy.
+        Test reports go to ivana.tso@conveyor.com</p>
+    </div>`;
+  }
+
+  const modal = `<div class="scrim"><div class="modal${wide}">
+    <header>
+      <div><h3>${head[0]}</h3>
+      <p class="muted sm" style="margin-top:4px;max-width:520px">${head[1]}</p></div>
+      <span style="color:var(--text-3)">×</span>
+    </header>
+    ${body}
+    <footer>
+      <button class="btn">Back to edit</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn"><span class="ic"></span>Send me a test</button>
+        <button class="btn pri">Create scheduled report</button>
+      </div>
+    </footer>
+  </div></div>`;
+  return frame(behind, {action:newBtn}) + modal;
+}
+
+/* ---------- manage list ---------- */
+function initials(n){
+  if(n.includes('@')) return n.split('@')[0].slice(0,2).toUpperCase();
+  return n.split(' ').map(w=>w[0]).slice(0,2).join('');
+}
+
+function recipientChips(to, cap){
+  const shown = to.slice(0, cap), rest = to.length - shown.length;
+  return `<div class="rchips">
+    ${shown.map(x=>`<span class="rchip${x.ext?' ext':''}" title="${x.n} · ${x.e}">${initials(x.n)}</span>`).join('')}
+    ${rest>0 ? `<span class="rmore">+${rest} more</span>` : ''}
+  </div>`;
+}
+
+function recipientTip(to){
+  return `<div class="rtip">
+    <div class="rtiphead">${to.length} recipients</div>
+    <div class="rtiplist">
+      ${to.map(x=>`<div class="rtiprow">
+        <span class="rchip${x.ext?' ext':''}">${initials(x.n)}</span>
+        <div><div class="t">${x.n}${x.ext?' <span class="extbadge">External</span>':''}</div>
+          <div class="s">${x.e}</div></div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+const STATUS_ORDER = {Error:0, Active:1, Paused:2};
+const SORTS = {
+  name:   r => r.n.toLowerCase(),
+  sched:  r => r.s,
+  rcp:    r => r.to.length,
+  last:   r => r.lt,
+  status: r => STATUS_ORDER[r.st]
+};
+
+function sortedReports(){
+  const key = state.sortKey || 'name';
+  const dir = state.sortDir === 'desc' ? -1 : 1;
+  const f = SORTS[key] || SORTS.name;
+  return [...REPORTS].sort((a,b) => {
+    const x = f(a), y = f(b);
+    return (x < y ? -1 : x > y ? 1 : 0) * dir;
+  });
+}
+
+function th(key, label, align){
+  const on = (state.sortKey || 'name') === key;
+  const dir = state.sortDir === 'desc' ? '▾' : '▴';
+  return `<th data-sort="${key}" class="sortable${on?' on':''}"${align?` style="${align}"`:''}>
+    ${label}<span class="caretsort">${on ? dir : '↕'}</span></th>`;
+}
+
+function statusPill(st){
+  const cls = st==='Error' ? ' err' : st==='Paused' ? ' off' : ' ok';
+  return `<span class="pill${cls}"><span class="d"></span>${st}</span>`;
+}
+
+function statusCell(r){
+  const note = r.st==='Active' ? `Next run ${r.nx}`
+             : r.st==='Paused' ? `Since ${r.pd}`
+             : `Since ${r.sd}`;
+  return `${statusPill(r.st)}<div class="sub">${note}</div>`;
+}
+
+function lastRun(r){
+  return r.ls==='failed'
+    ? `${r.l}<div class="sub warn">${r.err}</div>`
+    : `${r.l}<div class="sub">Delivered to ${r.to.length}</div>`;
+}
+
+function rowMenu(){
+  return `<div class="menu" style="right:26px;top:74px">
+    <div>Send to…</div><div>Edit</div><div>Duplicate</div>
+    <div class="sep"></div><div>Pause</div><div>Delete</div>
+  </div>`;
+}
+
+/* M1 — columns, recipients always as chips with the full list on hover. */
+function listTable(dim){
+  const rows = sortedReports().map((r,i)=>`<tr class="${!dim && i===0 ? 'hl':''}">
+    <td class="name">${r.n}<div class="sub">${r.t}</div></td>
+    <td>${r.s}</td>
+    <td style="position:relative">
+      ${recipientChips(r.to, 5)}
+      ${!dim && i===0 && state.overlay==='hover' ? recipientTip(r.to) : ''}
+    </td>
+    <td>${lastRun(r)}</td>
+    <td>${statusCell(r)}</td>
+    <td style="text-align:right;color:var(--text-3)">⋯</td>
+  </tr>`).join('');
+  return `<div class="card" style="padding:16px 4px 0;position:relative">
+    <table class="tbl">
+      <thead><tr>
+        ${th('name','Report','padding-left:12px')}
+        ${th('sched','Schedule')}
+        ${th('rcp','Recipients')}
+        ${th('last','Last run')}
+        ${th('status','Status')}
+        <th></th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    ${!dim && state.overlay==='menu' ? rowMenu() : ''}
+  </div>`;
+}
+
+/* M3 — grouped by status, each report two lines of plain language. */
+function metaLine(r, tip){
+  const label = `${r.to.length}${r.to.length===1 ? ' recipient' : ' recipients'}`;
+  const bits = [r.s, `<span class="rcwrap"><span class="rcount">${label}</span>${
+    tip ? recipientTip(r.to) : ''}</span>`];
+  if(r.ls==='failed') bits.push(`<span class="cfail">${r.err} · ${r.l}</span>`);
+  else bits.push(`Last sent ${r.l}`);
+  if(r.st==='Paused') bits.push(`Paused since ${r.pd}`);
+  else if(r.st==='Active') bits.push(`next ${r.nx}`);
+  return bits.join(' · ');
+}
+
+function compactRow(r, hl, tip){
+  return `<div class="crow${hl?' hl':''}">
+    <div style="flex:1;min-width:0">
+      <div class="cname">${r.n}</div>
+      <div class="cmeta">${metaLine(r, tip)}</div>
+    </div>
+    <span class="toggle${r.st==='Active'?' on':''}"></span>
+    <span style="color:var(--text-3);width:16px;text-align:right">⋯</span>
+  </div>`;
+}
+
+function listGrouped(dim){
+  const grp = (title, list, off) => list.length ? `
+    <p class="kicker" style="margin:${off?'22px':'0'} 0 8px">${title} · ${list.length}</p>
+    <div class="card" style="padding:4px 0;${off?'background:var(--surface-2)':''}">
+      ${list.map((r,i)=>compactRow(r, !dim && !off && i===0,
+          !dim && !off && i===0 && state.overlay==='hover')).join('')}
+    </div>` : '';
+  return `<div style="position:relative">
+    ${grp('Active', REPORTS.filter(r=>r.st==='Active'), false)}
+    ${grp('Paused', REPORTS.filter(r=>r.st!=='Active'), true)}
+    ${!dim && state.overlay==='menu' ? rowMenu() : ''}
+  </div>`;
+}
+
+function listBody(dim){
+  return state.manage==='m2' ? listGrouped(dim) : listTable(dim);
+}
+
+function listContent(dim){
+  const blurb = state.placement==='settings'
+    ? 'Reports Conveyor generates on a schedule and emails to your team. Visible to admins and anyone with Insights access.'
+    : 'Reports Conveyor generates on a schedule and emails to your team.';
+  return `<div style="${dim?'opacity:.55;':''}position:relative">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+      <p class="muted" style="max-width:520px">${blurb}</p>${newBtn}</div>
+    ${listBody(dim)}
+    <p class="hint" style="margin-top:12px">Reports are not stored in Conveyor — each run lives wherever it was delivered.</p>
+  </div>`;
+}
+
+function listBehind(dim){ return listContent(dim); }
+
+/* ============================================================
+   SEND TO — one selection set. "Only me" and "Everyone" are shortcuts
+   onto it; "Choose people" is that same set, edited by hand. Unchecking
+   anywhere simply stops matching a shortcut.
+   ============================================================ */
+const ME = 'o12';
+const ORG_IDS = ORG.map((_,i)=>'o'+i);
+const REPORT_IDS = ORG_IDS.slice(0,13).concat(['x0','x1']);
+
+/* The modal opens with the report's own recipients already selected. */
+if(state.picked === null) state.picked = [...REPORT_IDS];
+
+function directory(){
+  return ORG.map((p,i)=>({...p, id:'o'+i}))
+    .concat(EXT.map((p,i)=>({...p, id:'x'+i})))
+    .concat(state.extras);
+}
+
+function sendMode(){
+  const p = state.picked;
+  if(p.length===1 && p[0]===ME) return 'me';
+  if(p.length===REPORT_IDS.length && REPORT_IDS.every(id=>p.includes(id))) return 'all';
+  return 'choose';
+}
+
+function peopleRows(){
+  const q = (state.q||'').trim().toLowerCase();
+  const list = directory().filter(x =>
+    !q || x.n.toLowerCase().includes(q) || x.e.toLowerCase().includes(q));
+
+  /* typing an address that is not in the directory offers to add it */
+  const isEmail = q.includes('@') && q.length>3;
+  const known = directory().some(x => x.e.toLowerCase()===q);
+  const addRow = (isEmail && !known) ? `<div class="prow addnew" data-add="${q}">
+      <span class="addplus">＋</span>
+      <span class="t">Add ${q} <span class="extbadge">External</span></span>
+      <span class="s">Not in Acme</span>
+    </div>` : '';
+
+  const rows = list.map(x => `<label class="prow" data-toggle="${x.id}">
+      <span class="cbox${state.picked.includes(x.id)?' on':''}"></span>
+      <span class="rchip${x.ext?' ext':''}">${initials(x.n)}</span>
+      <span class="t">${x.ext ? x.n + ' <span class="extbadge">External</span>' : x.n}</span>
+      <span class="s">${x.ext ? '' : x.e}</span>
+    </label>`).join('');
+
+  return addRow + (rows || `<div class="prow" style="color:var(--text-3);font-size:var(--sm)">
+    No one matches “${q}”. Type a full email address to add someone outside Acme.</div>`);
+}
+
+/* Shared pieces: the searchable directory, and the selected-recipients tray. */
+function dirBlock(){
+  const me = isOnlyMe();
+  return `<div class="dirhead${me?' dim':''}">
+      <input class="dirsearch" id="pplsearch" value="${state.q||''}"
+        ${me?'disabled':''} placeholder="Search people or add an email address" />
+      <span class="muted sm">${state.picked.length} selected</span>
+    </div>
+    <div class="plist2">
+      <div class="dirlist">
+        ${presetRows()}
+        <div class="peoplewrap${me?' dim':''}" id="ppllist">${peopleRows()}</div>
+      </div>
+    </div>`;
+}
+
+function trayBlock(sel, n, extN){
+  return `<div class="tray">
+    <div class="trayhead">
+      <span><b>Sending to ${n}</b>${extN?` · <b class="extcount">${extN} external</b>`:''}</span>
+      ${n ? `<span class="lnk" data-preset="none">Clear all</span>` : ''}
+    </div>
+    <div class="traypills">
+      ${n ? sel.map(x=>`<span class="spill${x.ext?' ext':''}" data-toggle="${x.id}">
+          ${x.ext ? x.e : x.n}<span class="x">×</span></span>`).join('')
+          : `<span class="muted sm" style="color:var(--text-3)">Nobody selected yet.</span>`}
+    </div>
+  </div>`;
+}
+
+/* The two shortcuts are the first rows of the list. Selecting "Only me" is
+   exclusive — it is the safe choice, so it takes the whole audience. */
+function isOnlyMe(){
+  return state.picked.length===1 && state.picked[0]===ME;
+}
+function presetRows(){
+  const me = isOnlyMe();
+  return `<div class="prow preset${me?' on':''}" data-preset="me">
+      <span class="cbox${me?' on':''}"></span>
+      <span class="rchip">You</span>
+      <span class="t">Only me</span>
+      <span class="s">ivana.tso@conveyor.com</span>
+    </div>`;
+}
+
+/* Three ways to express the same choice. */
+function sendPattern(mode, seg, sel, n, extN){
+  const P = state.sendpat;
+  const hint = `<p class="hint">An address you add here receives this report only — the schedule
+    and its saved recipients do not change.</p>`;
+
+  /* S2 — no modes. Two shortcuts set the list; the list is always editable. */
+  if(P==='s2'){
+    return `<label class="label">Send to</label>
+      ${dirBlock()}${hint}</div>
+      ${trayBlock(sel, n, extN)}`;
+  }
+
+  /* S3 — the field holds the recipients. No list until you type. */
+  if(P==='s3'){
+    return `<div class="lblrow">
+        <label class="label">Send to</label>
+        <span class="muted sm"><b>Sending to ${n}</b>${extN
+          ? ` · <b class="extcount">${extN} external</b>` : ''}</span>
+      </div>
+      <div class="tokenfield${isOnlyMe()?' dim':''}">
+        ${sel.map(x=>`<span class="spill${x.ext?' ext':''}" data-toggle="${x.id}">
+          ${x.ext ? x.e : x.n}<span class="x">×</span></span>`).join('')}
+        <input class="tokeninput" id="pplsearch" value="${state.q||''}"
+          placeholder="${n?'':'Add people or email addresses'}" />
+      </div>
+      <div class="dropdown static">
+        ${presetRows()}
+        ${state.q ? `<div class="peoplewrap${isOnlyMe()?' dim':''}" id="ppllist">${peopleRows()}</div>` : ''}
+      </div>
+      ${state.q ? '' : `<p class="hint">Or type a name to find someone in Acme, and a full email
+        address to add someone outside it.</p>`}
+      </div>`;
+  }
+
+  /* S1 — the three-option control. */
+  return `<label class="label">Send to</label>
+    <div class="segctl">
+      ${seg.map(([id,label])=>`<button data-preset="${id}"
+        class="${mode===id?'on':''}">${label}</button>`).join('')}
+    </div>
+    ${dirBlock()}${hint}</div>
+    ${trayBlock(sel, n, extN)}`;
+}
+
+function sendModal(){
+  const r = REPORTS[0];
+  const mode = sendMode();
+  const n = state.picked.length;
+  const extN = state.picked.filter(id => !id.startsWith('o')).length;
+  const byId = Object.fromEntries(directory().map(x => [x.id, x]));
+  const sel = state.picked.map(id => byId[id]).filter(Boolean);
+  const seg = [['me','Only me'],['all',`Everyone · ${REPORT_IDS.length}`],['choose','Choose people']];
+  return `<div class="scrim"><div class="modal">
+    <header>
+      <div><h3>Send this report now</h3>
+      <p class="muted sm" style="margin-top:4px">${r.n}, generated from your current data.</p></div>
+      <span style="color:var(--text-3)">×</span>
+    </header>
+    <div class="mbody">
+      ${sendPattern(mode, seg, sel, n, extN)}
+
+    <footer>
+      <span class="muted sm" style="color:var(--text-3)">Recipients receive it within a few minutes.</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn">Cancel</button>
+        <button class="btn pri">Send report</button>
+      </div>
+    </footer>
+  </div></div>`;
+}
+
+function scManage(){
+  const over = state.overlay==='send';
+  return frame(listContent(over), {}) + (over ? sendModal() : '');
+}
+
+/* ============================================================
+   NOTES
+   ============================================================ */
+const NOTES = {
+  empty: [
+    'Empty state does the selling: one sentence of value and a clear way in. Whether the templates appear here or wait in the picker is the layout question below.',
+    '“See examples” answers the biggest unknown before anyone commits — what does the artifact actually look like? (open question #4 in the brief).',
+    'The scope answer is folded into the subhead rather than sitting as its own line, so one paragraph carries what the feature does, what it reads, and where to learn more \u2014 set on two rows.',
+    '<span class="ref">Ref: Semrush ready-to-use templates + Start from scratch; Basecamp “Choose a Report”.</span>'
+  ],
+  templates: [
+    'Templates are phrased as questions, not feature names — this is the single biggest lever on activation for non-expert users, and it maps directly to the real customer asks in the brief.',
+    'Every template maps to a report a CSM is pulling by hand today: accuracy (Liveperson), Trust Center AI (Hootsuite/Qualtrics/Notion), doc views (MongoDB), human edits (Clari), gap analysis (David P.).',
+    '“Start from scratch” is now the sixth tile, closing a clean 2×3 grid. It stays visually secondary — dashed border, muted fill — so the curated path still wins, but it no longer sits alone on a third row looking like an afterthought.',
+    'Card subtext now describes the actual artifact — chart type, what is on each axis, how the number is calculated — so people can tell these apart without generating one first. <b>These metrics are proposals, not confirmed:</b> they are shaped from the MCP analytics endpoints, and Anner owns the real template definitions.',
+    '<span class="ref">Ref: Klaviyo templates-as-questions; Mixpanel “Use a Template”; Zendesk “Select a dataset”.</span>'
+  ],
+  configure: {
+    modal: [
+      'V1 — one modal, four fields, no steps. Closest to Intercom, which is the leanest flow in the research set and the honest scope for a spike-week v1.',
+      '“Send test report” lives in the footer as a peer of Create, not buried — validating output is the whole trust mechanism for AI-generated content.',
+      'Cost: no room for a live preview, and the prompt box is cramped for anyone writing from scratch.',
+      '<span class="ref">Ref: Intercom, Workable, Amplitude subscribe modal.</span>'
+    ],
+    page: [
+      'V3 — full page with a persistent example report on the right. The preview is the differentiator: users see the artifact change as they edit the prompt, which is exactly the “magical” demo moment the brief calls a stretch goal.',
+      'Adds an explicit “Data in scope” step, which resolves the brief’s open question about surfacing available data without a help-doc detour.',
+      'Cost: most build effort, and it needs a route. Heaviest thing to ask for in a spike — ordered last here because it is the least likely to ship.',
+      '<span class="ref">Ref: incident.io config + Example report preview; Hex add scheduled run; Stripe schedule + subscribers.</span>'
+    ],
+    panel: [
+      'V2 — side panel over the list. Uses the SlideOutPanel pattern the Insights page already ships, so it costs the least net-new component work of the three.',
+      'Keeps the list in view, which makes create → verify → create-again feel continuous. Good for the “set up three reports at once” first session.',
+      'Cost: 472px is tight for a long prompt, and there is no room for a preview beside the form — test-send has to carry validation on its own.',
+      '<span class="ref">Ref: Salesforce edit subscription; Zendesk schedule delivery.</span>'
+    ]
+  },
+  preview: [
+    'The test run is a modal over whatever you were doing, so it reads as a check, not a destination — consistent with “no in-app report viewer” in the non-goals.',
+    'The five treatments below answer one question: how do you build confidence in an AI-written report when the artifact only exists in an inbox? T1 assumes we can generate on demand; T2–T4 assume we cannot.',
+    'Copy explicitly says nothing was sent. The fear with AI reports is emailing something wrong to a customer.',
+    'This screen is also where open question #4 — the artifact format — gets settled: a paginated PDF with a title, period, narrative summary, chart, ranked list and table.',
+    '<span class="ref">Ref: incident.io Example report; Docusign flow.</span>'
+  ],
+  manage: [
+    'Deliberately minimal table — the brief rules out history and dashboards, so the list only answers: what runs, how often, to whom, did it work.',
+    'Status is its own column now — a chip reading <b>Active</b>, <b>Paused</b> or <b>Error</b>, with no toggle. Pausing moves into the row menu (<b>Send to…</b>, Edit, Duplicate, Pause, Delete), so it costs a click more than it did; worth deciding whether pausing is common enough to deserve the shortcut back.',
+    'No “Run now” in that menu — every run here has an audience, and the label has to say so.',
+    'Each column now says one thing. <b>Last run</b> describes that run — the date, then either <b>Delivered to 15</b> or the actual cause of failure. <b>Status</b> describes the report now — the chip, then <b>Next run Oct 1</b>, <b>Since Aug 16</b>, or <b>Since Sep 2</b>. Before, a paused report was showing a failure under its last-run date and saying nothing about when it stopped.',
+    'The two failures name different causes on purpose: <b>Delivery failed — 2 addresses bounced</b> and <b>No data returned for the period</b>. Those are the two classes the brief\u2019s open question is really asking about — generation produced nothing, versus generation worked and delivery did not — and they want different handling. A bounce should tell the owner which address failed; an empty period may just mean nothing happened that month, which is not an error at all.',
+    '<b>Error is a judgement call, not a fact.</b> A schedule is really Active or Paused, and a <i>run</i> succeeds or fails — two axes, not three. Error here means “still scheduled, but the last run failed”, i.e. needs attention. A report that failed and was then paused shows as <b>Paused</b>, with the failure in Last run, because paused is its actual current state. If the team disagrees, the alternative is a two-state chip plus a separate warning icon.',
+    'Every column header sorts — click to sort, click again to flip. Live in this prototype, so try it. Sorting is the main thing the grouped layout gives up.',
+    'Failed runs surface inline on the row with a reason, rather than silently skipping — a first answer to the brief’s open question on failures. Suggest also emailing the report owner, not all recipients.',
+    'Footer line sets expectations that Conveyor does not archive reports, so nobody comes looking for one. The brief rules out history, a viewer, and an archive — so there is nothing to download here, only something new to send.',
+    '<span class="ref">Ref: Hex Scheduled runs; Manus scheduled tasks; Apollo workflow toggles; Copilot Paused pill; Okta minimal table.</span>'
+  ]
+};
+
+const PLACEMENT_NOTES = {
+  insights: [
+    'Makes the most sense to be in another tab next to the insights dashboard. However, it might be strange that the information in scheduled is not shown within the dashboard.',
+    'Proposing to have these scheduled insights shown here in the Insights tab and in Settings, in this case'
+  ],
+  settings: [
+    'Placement B — <b>Settings › Workflow Automation</b>, sitting with Automation Rules and Team Routing. Cheapest to build (drop a page into the existing settings IA), and “configure a recurring thing” matches the mental model of its neighbors. Risk: it is three clicks from anywhere and nobody browses Settings for value — which is exactly the concern raised in the brief.'
+  ]
+};
+
+const PROMPT_NOTES = {
+  closed: [
+    'Default state — one quiet row: <b>Data included · 8 sources</b>. The whole create flow stays above the fold, which is what keeps the modal pattern viable.',
+    'The summary line does real work on its own: it says every report sees all of this, so anyone who only runs a template never needs to open it.',
+    'Risk: the people who most need the list — writing from scratch, no MCP experience — are the least likely to open a collapsed row. Worth watching in the first weeks.'
+  ],
+  open: [
+    'Opens in place to the full list, at the same small type as the summary row — 12px names, 11px descriptions — so it reads as reference material, not another set of fields.',
+    'No chips, no checkboxes, no insert affordances anywhere. Nothing here can be changed, and the styling should never imply otherwise.',
+    'Adds roughly 300px, so schedule and recipients scroll below the fold while it is open. Acceptable because it is a deliberate, reversible action.'
+  ]
+};
+
+/* Retired after round 2: source chips, @-insert tokens, and click-to-insert all
+   implied user control over data scope that v1 will not have. The structured-slot
+   prompt builder went with them, since its first slot was a source picker. */
+
+const SOURCE_NOTES = {
+  template: [
+    'Prompt and name arrive filled in. The fastest path, and the one the demo should show.',
+    'The subtext names the template you picked, semibold, so the prompt keeps its provenance without a separate chip or a “seeded from” line.',
+    'Reset is an icon button rather than a text link — it is a rare, recoverable action, and as a link it competed with the label beside it.'
+  ],
+  scratch: [
+    'Name and prompt both start empty, with grey placeholder text carrying an example of what a good prompt looks like — the closest thing to prompt training we can offer without a doc.',
+    'No <b>Reset to template</b> link, since there is no template behind it. Nothing else in the flow changes.',
+    'This is the path for the users the brief is really about — no MCP, no AI proficiency. Worth watching whether the placeholder example alone is enough, or whether this state needs the data list expanded by default.'
+  ]
+};
+
+const PICKER_NOTES = {
+  detail: [
+    'Full prompt visible before you commit. Scanning stays cheap because the left list carries only the questions — you read one prompt at a time, the one you are actually considering.',
+    'The real payoff is prompt literacy: five well-written prompts, read in context, are the cheapest training we can give the people who will later write their own. That directly serves the brief\u2019s “don\u2019t know what to report on” problem.',
+    'Cost: a wider modal, a second layout to build, and a step that now takes longer to move through. It also raises a fair question — if step 1 shows the prompt and step 2 lets you edit it, should these be one step?'
+  ],
+  scratch: [
+    'Selecting <b>Start from scratch</b> keeps the same two-pane shape — the right side switches from a prompt preview to prompt guidance. Nothing becomes editable here; writing still happens in step 2, so the two-step model stays consistent.',
+    'This is the one screen in the flow where we can teach prompt-writing to someone who has never used the MCP: three concrete habits plus a worked example in the same styling as the template prompts, so the example reads as a peer of the curated ones.',
+    'I re-introduced the <b>See what\u2019s included</b> link here, only in this pane. You had it removed from the picker as redundant with the empty state — but this is the one path where nobody has a template telling them what is reachable. Say the word and it comes out.'
+  ],
+  cards: [
+    'Question plus a description of the artifact. Fastest to scan, cheapest to build, and enough to choose between six known reports.',
+    'The prompt stays one click away in step 2, where it is editable — arguably the better place to read it, since that is where you can act on it.',
+    'Cost: someone who wants to know exactly what will be asked has to commit to a template first.'
+  ]
+};
+
+const LAYOUT_NOTES = {
+  e1: [
+    'Hero only — the template section is gone. One headline, one sentence, two buttons, and nothing competing with them.',
+    'Templates are not lost: they are the first thing behind <b>Create scheduled report</b>, and the picker shows all six with full descriptions. The empty state stops previewing a screen you reach in one click.',
+    'Cost: someone scanning the page no longer sees examples of what a report can be. The subhead and “See examples” have to carry that on their own.'
+  ],
+  e2: [
+    'Removes the primary button entirely — the six cards <b>are</b> the call to action, so there is only one thing to do and no competing hierarchy.',
+    'Honest about behaviour: almost nobody starts from a blank prompt on their first visit, so promoting the templates matches what people will actually do.',
+    'Cost: loses the single obvious button that a demo can point at, and “See examples” drops to a text link.'
+  ],
+  e3: [
+    'Same content as the old two-section version, wrapped in one bordered panel with the templates on a tinted foot. Containment alone does the merging.',
+    '“Or start from a template” makes the relationship explicit — a second option, not a second section.',
+    'Cost: a large panel on an otherwise empty page can read as heavy. Worth checking against the empty states in your other surfaces.'
+  ],
+  e4: [
+    'Drops the illustration and reframes the headline as the question the picker already asks — the cards below are the answers, so copy and content are one unit by construction.',
+    'The tightest of the four and the most consistent with step 2, which uses the same question. Also the most information-dense first screen.',
+    'Cost: no illustration means less warmth, and losing the value headline gives up the one line that explains what the feature is to someone who wandered in.'
+  ]
+};
+
+const TEST_NOTES = {
+  t1: [
+    'The baseline, and only possible if a report can be generated on demand inside the app. Everything below assumes it cannot.',
+    'Strongest confidence-builder — you see your real numbers before anything is scheduled — and the best demo moment in the whole flow.'
+  ],
+  t2: [
+    'Your Option 2. An abstract, obviously-not-real depiction of the report\u2019s shape, drawn in dashed outline so nobody mistakes it for data, with the test-send as the primary action.',
+    'The caption does the honest work: it says this is the shape, and your test will use real data. Without that line an illustration like this reads as a fake preview, which costs more trust than it buys.',
+    'Cheapest to build and the safest claim to make. Weakest at answering “will this be any good?” — the art shows structure, not quality.'
+  ],
+  t3: [
+    'A finished, Conveyor-authored report for this template rendered from demo data, viewable in-app and downloadable. No generation needed — we ship five of these alongside the five templates.',
+    'Highest fidelity of the non-generated options: real layout, real typography, real chart shapes, clearly badged as example data. Doubles as sales collateral and demo material.',
+    'Cost: five sample PDFs to produce and keep current. If a template changes and the sample does not, it becomes a lie — that maintenance burden is the real risk.'
+  ],
+  t4: [
+    'Shows the <b>email</b> rather than the PDF — sender, subject line, body, attachment name and size.',
+    'Sets the expectation that actually matters day to day: what this looks like when it lands, and what to search for later. The brief says Conveyor keeps no copy, so the inbox is the product surface.',
+    'Pairs naturally with any of the others — it answers a different question than “what is in the report”. Cost: says nothing about the content itself.'
+  ]
+};
+
+const MANAGE_NOTES = {
+  m1: [
+    'Columns, with recipients always shown as initial chips — five, then <b>+10 more</b>, and the full list with names and addresses on hover. A bare count told you nothing about who, so the two column layouts collapsed into this one.',
+    'External addresses carry a warm tint, so before you send or edit you can see whether this report leaves the company without opening anything.',
+    'Cost: chips need a real avatar or initials source, and 24px circles are a weak target on touch. The hover list needs a click-to-open equivalent for keyboard and mobile.'
+  ],
+  m2: [
+    'Grouping and the compact row treatment merged into one option. No columns — each report is a name plus a plain-language meta line, and Active sits above Paused with a count on each group.',
+    'Answers the first question someone actually has: what is running right now. Paused rows recess onto a tinted card so they read as deliberately off rather than broken.',
+    'A paused row states when it was paused, and a failed row says so on the same line — so <b>Knowledge gap analysis</b> reads as “it failed on Aug 15, someone paused it on Aug 16”, which is the whole story in one sentence.',
+    'The recipient count is still the hover target — dotted underline, same list of names and addresses as the column layout — so grouping does not cost you the recipient detail.',
+    'Also the best fit for Placement B, where the settings content column is narrower than the full Insights page. Cost: nothing is sortable down a column, and there are no chips to scan at a glance.'
+  ]
+};
+
+const SEND_NOTES = {
+  s1: [
+    'Three options as a segmented control. Explicit, but it implies three <i>places</i> when there is only one selection, and “Choose people” has to be styled as a peer of two things that are really shortcuts.'
+  ],
+  s2: [
+    '<b>Only me</b> is the first row of the list — tinted, checkable, showing what it resolves to. Nothing floats above the list, because the shortcut <b>is</b> a list entry. A preset later (a team, a distribution list) is one more row rather than another control.',
+    'The modal opens with the report\u2019s own recipients already selected, so the default matches what the schedule would have sent. <b>Only me</b> is the single shortcut, and it is exclusive — selecting it greys out and disables everything below, including search, because “only” should mean only.',
+    'Toggling <b>Only me</b> back off restores whatever was selected before it, not the report default — so testing on yourself never costs you a custom audience you had just built.',
+    'Worth naming the tradeoff: the full audience is now the default, so <b>Send report</b> is the only thing standing between a click and fifteen inboxes. The pills tray and the external count in the footer are what carry that weight — they should never be hidden or collapsed.',
+    'Your suggestion, and the strongest of the three. It also removes the awkward question of what “Choose people” means when you have not chosen anyone yet.'
+  ],
+  s3: [
+    'The recipients live in the field itself, as tokens — the Gmail / Figma / Google Drive share pattern, and the one most people already know. The directory only appears while you type, with the same preset row pinned under the field.',
+    'Merges the pills tray into the input, so the audience and the editor are the same object. Most compact of the three.',
+    'Cost: with 15 recipients the field grows tall and scrolls, and there is no way to browse the org without typing something first.'
+  ]
+};
+
+function currentNotes(){
+  const items = state.screen==='configure' ? NOTES.configure[state.variant] : NOTES[state.screen];
+  const sendBlock = (state.screen==='manage' && state.overlay==='send')
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">Send to — ${SENDPATS.find(x=>x.id===state.sendpat).label}</h4>
+        <ul>${SEND_NOTES[state.sendpat].map(i=>`<li>${i}</li>`).join('')}</ul>
+        </div>`
+    : '';
+  const manageBlock = state.screen==='manage'
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">List layout — ${MANAGES.find(x=>x.id===state.manage).label}</h4>
+        <ul>${MANAGE_NOTES[state.manage].map(i=>`<li>${i}</li>`).join('')}</ul></div>`
+    : '';
+  const testBlock = state.screen==='preview'
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">Test run — ${TESTRUNS.find(x=>x.id===state.testrun).label}</h4>
+        <ul>${TEST_NOTES[state.testrun].map(i=>`<li>${i}</li>`).join('')}</ul>
+        </div>`
+    : '';
+  const layoutBlock = state.screen==='empty'
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">Layout — ${LAYOUTS.find(x=>x.id===state.layout).label}</h4>
+        <ul>${LAYOUT_NOTES[state.layout].map(i=>`<li>${i}</li>`).join('')}</ul></div>`
+    : '';
+  const pickerBlock = state.screen==='templates'
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">Picker layout — ${PICKERS.find(x=>x.id===state.picker).label}</h4>
+        <ul>${PICKER_NOTES[state.picker].map(i=>`<li>${i}</li>`).join('')}</ul></div>`
+    : '';
+  const promptBlock = state.screen==='configure'
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+        <h4 style="margin-bottom:6px">Prompt source — ${SOURCES_OF_PROMPT.find(x=>x.id===state.source).label}</h4>
+        <ul>${SOURCE_NOTES[state.source].map(i=>`<li>${i}</li>`).join('')}</ul>
+        <h4 style="margin:10px 0 6px">Data included — ${PROMPTS.find(p=>p.id===state.prompt).label}</h4>
+        <ul>${PROMPT_NOTES[state.prompt].map(i=>`<li>${i}</li>`).join('')}</ul></div>`
+    : '';
+  return `<h4>Design notes</h4>
+    <ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul>
+    ${promptBlock}${pickerBlock}${layoutBlock}${testBlock}${manageBlock}${sendBlock}
+    <div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-dash)">
+      <h4 style="margin-bottom:6px">Navigation placement — ${
+        PLACEMENTS.find(x=>x.id===state.placement).label}</h4>
+      <ul>${PLACEMENT_NOTES[state.placement].map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const RENDER = {empty:scEmpty, templates:scTemplates, configure:scConfigure, preview:scPreview, manage:scManage};
+
+/* Which option groups belong to which screen. Anything not listed stays hidden. */
+const SUBS = {
+  empty:     [{gl:'Empty state layout', items:()=>LAYOUTS,  key:'layout'}],
+  templates: [{gl:'Picker layout',      items:()=>PICKERS,  key:'picker'}],
+  configure: [{gl:'Configure pattern',  items:()=>VARIANTS, key:'variant'},
+              {gl:'Prompt source',      items:()=>SOURCES_OF_PROMPT, key:'source'},
+              {gl:'Data included',      items:()=>PROMPTS,  key:'prompt'}],
+  preview:   [{gl:'Test run',       items:()=>TESTRUNS, key:'testrun'},
+],
+  manage:    [{gl:'List layout', items:()=>MANAGES,  key:'manage'},
+              {gl:'Overlay',     items:()=>OVERLAYS, key:'overlay'},
+              {gl:'Send to pattern', items:()=>SENDPATS, key:'sendpat',
+               when:()=>state.overlay==='send'}]
+};
+
+function segHTML(items, key){
+  return `<div class="seg stack">` + items.map(i =>
+    `<button data-k="${key}" data-v="${i.id}" class="${state[key]===i.id?'on':''}">${i.label}</button>`
+  ).join('') + `</div>`;
+}
+
+/* Sub-options render inline, directly under the screen they belong to. */
+function buildPanel(){
+  let h = `<div class="grp"><div class="gl">Navigation placement</div>
+    ${segHTML(PLACEMENTS,'placement')}</div>`;
+
+  h += `<div class="grp"><div class="gl">Screen</div><div class="seg stack">`;
+  SCREENS.forEach(sc => {
+    h += `<button data-k="screen" data-v="${sc.id}" class="${state.screen===sc.id?'on':''}">${sc.label}</button>`;
+    const subs = SUBS[sc.id] || [];
+    const shown = subs.filter(g => !g.when || g.when());
+    if(state.screen===sc.id && shown.length){
+      h += `<div class="subs">` + shown.map(g =>
+        `<div class="sgrp"><div class="gl">${g.gl}</div>${segHTML(g.items(), g.key)}</div>`
+      ).join('') + `</div>`;
+    }
+  });
+  h += `</div></div>`;
+
+  const body = document.getElementById('ctlbody');
+  body.innerHTML = h;
+  [...body.querySelectorAll('button')].forEach(b => {
+    b.onclick = () => { state[b.dataset.k] = b.dataset.v; render(); };
+  });
+}
+
+function render(){
+  document.getElementById('stage').innerHTML = RENDER[state.screen]();
+
+  const p = PLACEMENTS.find(x=>x.id===state.placement).label;
+  const s = SCREENS.find(x=>x.id===state.screen).label;
+  const v = state.screen==='configure'
+    ? ' · ' + VARIANTS.find(x=>x.id===state.variant).label
+      + ' · ' + SOURCES_OF_PROMPT.find(x=>x.id===state.source).label
+      + ' · ' + PROMPTS.find(x=>x.id===state.prompt).label
+    : state.screen==='templates' ? ' · ' + PICKERS.find(x=>x.id===state.picker).label
+    : state.screen==='empty' ? ' · ' + LAYOUTS.find(x=>x.id===state.layout).label
+    : state.screen==='preview' ? ' · ' + TESTRUNS.find(x=>x.id===state.testrun).label
+
+    : state.screen==='manage' ? ' · ' + MANAGES.find(x=>x.id===state.manage).label
+        + ' · ' + OVERLAYS.find(x=>x.id===state.overlay).label
+        + (state.overlay==='send' ? ' · ' + SENDPATS.find(x=>x.id===state.sendpat).label
+            : '')
+    : '';
+  document.getElementById('ablabel').innerHTML = `<b>${p}</b> · ${s}${v}`;
+  document.getElementById('combo').textContent =
+    state.placement==='insights' ? 'A' : 'B';
+
+  const notes = document.getElementById('notes');
+  notes.innerHTML = currentNotes();
+  notes.classList.toggle('hidden', !state.notes);
+
+  buildPanel();
+}
+
+/* Anything in the artboard carrying data-set="key:value" drives state, so wireframe
+   controls can be genuinely clickable without wiring each one by hand. */
+document.getElementById('stage').addEventListener('click', e => {
+  const set = e.target.closest('[data-set]');
+  if(set){
+    const [k, v] = set.dataset.set.split(':');
+    state[k] = v; render(); return;
+  }
+
+  const pre = e.target.closest('[data-preset]');
+  if(pre){
+    const m = pre.dataset.preset;
+    if(m==='me'){
+      if(isOnlyMe()){
+        state.picked = (state.prevPicked && state.prevPicked.length)
+          ? state.prevPicked : [...REPORT_IDS];
+      } else {
+        state.prevPicked = state.picked;
+        state.picked = [ME];
+      }
+    }
+    if(m==='none') state.picked = [];
+    render();
+    if(m==='choose') document.getElementById('pplsearch')?.focus();
+    return;
+  }
+
+  /* Unchecking inside "Everyone" is not a special case — the selection simply
+     stops matching that shortcut and the control follows it to "Choose people". */
+  const tog = e.target.closest('[data-toggle]');
+  if(tog){
+    const id = tog.dataset.toggle;
+    state.picked = state.picked.includes(id)
+      ? state.picked.filter(x => x !== id)
+      : state.picked.concat(id);
+    render(); return;
+  }
+
+  const sort = e.target.closest('[data-sort]');
+  if(sort){
+    const k = sort.dataset.sort;
+    if((state.sortKey||'name') === k){
+      state.sortDir = state.sortDir === 'desc' ? 'asc' : 'desc';
+    } else { state.sortKey = k; state.sortDir = 'asc'; }
+    render(); return;
+  }
+
+  const add = e.target.closest('[data-add]');
+  if(add){
+    const mail = add.dataset.add;
+    const id = 'e' + state.extras.length;
+    state.extras = state.extras.concat({n:mail, e:mail, ext:true, id});
+    state.picked = state.picked.concat(id);
+    state.q = '';
+    render();
+    document.getElementById('pplsearch')?.focus();
+  }
+});
+
+/* Typing filters in place so the field keeps focus and the caret. */
+document.getElementById('stage').addEventListener('input', e => {
+  if(e.target.id !== 'pplsearch') return;
+  state.q = e.target.value;
+  const list = document.getElementById('ppllist');
+  if(list) list.innerHTML = peopleRows();
+});
+
+document.getElementById('noteToggle').onchange = e=>{ state.notes = e.target.checked; render(); };
+
+/* Every sub-option on the current screen, flattened, so ↑ ↓ can walk them
+   one setting at a time without the panel. */
+function subSequence(){
+  const groups = (SUBS[state.screen] || []).filter(g => !g.when || g.when());
+  const out = [];
+  groups.forEach(g => g.items().forEach(o => out.push([g.key, o.id])));
+  return out;
+}
+
+document.addEventListener('keydown', e=>{
+  const t = e.target;
+  if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;  /* let people type */
+
+  const i = SCREENS.findIndex(s=>s.id===state.screen);
+  if(e.key==='ArrowRight'){
+    state.screen = SCREENS[(i+1)%SCREENS.length].id; state.subIdx = 0; render(); e.preventDefault();
+  }
+  if(e.key==='ArrowLeft'){
+    state.screen = SCREENS[(i-1+SCREENS.length)%SCREENS.length].id; state.subIdx = 0; render(); e.preventDefault();
+  }
+
+  if(e.key==='ArrowDown' || e.key==='ArrowUp'){
+    const seq = subSequence();
+    if(!seq.length) return;
+    const step = e.key==='ArrowDown' ? 1 : -1;
+    /* skip past entries that are already the current value, so every press changes something */
+    let idx = state.subIdx || 0;
+    for(let n = 0; n < seq.length; n++){
+      idx = (idx + step + seq.length) % seq.length;
+      const [key, val] = seq[idx];
+      if(state[key] !== val){ state[key] = val; break; }
+    }
+    state.subIdx = idx;
+    render(); e.preventDefault();
+  }
+});
+
+render();
+</script>
+</body>
+</html>
