@@ -1,0 +1,252 @@
+<svg width="588" height="200" viewBox="0 0 588 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+@keyframes kf_Vector_4_opacity_0 {
+  0% {
+    animation-timing-function: linear;
+    opacity: 0;
+  }
+  34% {
+    animation-timing-function: ease;
+    opacity: 0;
+  }
+  42% {
+    animation-timing-function: linear;
+    opacity: 1;
+  }
+  88% {
+    animation-timing-function: ease;
+    opacity: 1;
+  }
+  95% {
+    animation-timing-function: linear;
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+#Vector_4 {
+  animation: kf_Vector_4_opacity_0 5s linear infinite;
+}
+@keyframes kf_Frame_2_transform_0 {
+  0% {
+    transform: translateX(0px) translateY(16px);
+  }
+  44% {
+    animation-timing-function: cubic-bezier(0.3, 0.7, 0.3, 1);
+    transform: translateX(0px) translateY(16px);
+  }
+  60% {
+    transform: translateX(0px) translateY(0px);
+  }
+  86% {
+    animation-timing-function: cubic-bezier(0.3, 0.7, 0.3, 1);
+    transform: translateX(0px) translateY(0px);
+  }
+  98% {
+    transform: translateX(0px) translateY(16px);
+  }
+  100% {
+    transform: translateX(0px) translateY(16px);
+  }
+}
+#Frame_2 {
+  transform-origin: 0 0;
+  animation: kf_Frame_2_transform_0 5s linear infinite;
+}
+@keyframes kf_Vector_21_opacity_0 {
+  0% {
+    animation-timing-function: linear;
+    opacity: 0;
+  }
+  60% {
+    animation-timing-function: ease;
+    opacity: 0;
+  }
+  68% {
+    animation-timing-function: linear;
+    opacity: 1;
+  }
+  86% {
+    animation-timing-function: ease;
+    opacity: 1;
+  }
+  94% {
+    animation-timing-function: linear;
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+#Vector_21 {
+  animation: kf_Vector_21_opacity_0 5s linear infinite;
+}
+@keyframes kf_Frame_3_opacity_0 {
+  0% {
+    animation-timing-function: linear;
+    opacity: 0;
+  }
+  66% {
+    animation-timing-function: ease;
+    opacity: 0;
+  }
+  68% {
+    animation-timing-function: linear;
+    opacity: 1;
+  }
+  90% {
+    animation-timing-function: ease;
+    opacity: 1;
+  }
+  94% {
+    animation-timing-function: linear;
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+#Frame_3 {
+  animation: kf_Frame_3_opacity_0 5s linear infinite;
+}
+@keyframes kf_Frame_4_transform_0 {
+  0% {
+    transform: translateX(0px) translateY(0px);
+  }
+  68% {
+    animation-timing-function: ease;
+    transform: translateX(0px) translateY(0px);
+  }
+  86% {
+    transform: translateX(182px) translateY(0px);
+  }
+  90% {
+    animation-timing-function: ease;
+    transform: translateX(182px) translateY(0px);
+  }
+  96% {
+    transform: translateX(0px) translateY(0px);
+  }
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+}
+#Frame_4 {
+  transform-origin: 0 0;
+  animation: kf_Frame_4_transform_0 5s linear infinite;
+}
+@keyframes kf_Frame_5_transform_0 {
+  0% {
+    animation-timing-function: ease-in-out;
+    transform: translateX(119px) translateY(106px) translateX(46px) translateY(40px);
+  }
+  28% {
+    animation-timing-function: ease-in-out;
+    transform: translateX(119px) translateY(106px) translateX(0px) translateY(0px);
+  }
+  33% {
+    animation-timing-function: ease-in-out;
+    transform: translateX(119px) translateY(106px) translateX(2px) translateY(3px);
+  }
+  38% {
+    transform: translateX(119px) translateY(106px) translateX(0px) translateY(0px);
+  }
+  84% {
+    animation-timing-function: ease-in-out;
+    transform: translateX(119px) translateY(106px) translateX(0px) translateY(0px);
+  }
+  94% {
+    transform: translateX(119px) translateY(106px) translateX(14px) translateY(14px);
+  }
+  100% {
+    transform: translateX(119px) translateY(106px) translateX(14px) translateY(14px);
+  }
+}
+@keyframes kf_Frame_5_opacity_0 {
+  0% {
+    animation-timing-function: ease-in-out;
+    opacity: 0;
+  }
+  12% {
+    animation-timing-function: linear;
+    opacity: 1;
+  }
+  84% {
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+  }
+  94% {
+    animation-timing-function: linear;
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+#Frame_5 {
+  transform-origin: 0 0;
+  animation:
+    kf_Frame_5_transform_0 5s linear infinite,
+    kf_Frame_5_opacity_0 5s linear infinite;
+}
+</style>
+<g id="_18-word-answer-banner_1" clip-path="url(#clip0_1168_1281)">
+<path id="Vector" transform="translate(2 1)" d="M574 0H10C4.47715 0 0 4.47715 0 10V188C0 193.523 4.47715 198 10 198H574C579.523 198 584 193.523 584 188V10C584 4.47715 579.523 0 574 0Z" fill="url(#paint0_radial_1168_1281)"/>
+<path id="Vector_2" transform="translate(86 32)" d="M400 0H16C7.16344 0 0 7.16344 0 16V120C0 128.837 7.16344 136 16 136H400C408.837 136 416 128.837 416 120V16C416 7.16344 408.837 0 400 0Z" fill="white" fill-opacity="0.55"/>
+<path id="Vector_3" transform="translate(108 50)" d="M46 0H6C2.68629 0 0 2.68629 0 6V94C0 97.3137 2.68629 100 6 100H46C49.3137 100 52 97.3137 52 94V6C52 2.68629 49.3137 0 46 0Z" fill="white"/>
+<path id="Vector_4" transform="translate(111 103)" d="M41 0H3C1.34315 0 0 1.34315 0 3V11C0 12.6569 1.34315 14 3 14H41C42.6569 14 44 12.6569 44 11V3C44 1.34315 42.6569 0 41 0Z" fill="#ECE1F8"/>
+<path id="Vector_5" transform="translate(114.2 59.2)" d="M2.8 5.6C4.3464 5.6 5.60001 4.3464 5.60001 2.8C5.60001 1.2536 4.3464 0 2.8 0C1.25361 0 0 1.2536 0 2.8C0 4.3464 1.25361 5.6 2.8 5.6Z" fill="#C3CEC8"/>
+<path id="Vector_6" transform="translate(124 60)" d="M26.5 0H1.5C0.671573 0 0 0.671573 0 1.5V2.5C0 3.32843 0.671573 4 1.5 4H26.5C27.3284 4 28 3.32843 28 2.5V1.5C28 0.671573 27.3284 0 26.5 0Z" fill="#DDE4E0"/>
+<path id="Vector_7" transform="translate(114.2 75.2)" d="M2.8 5.60001C4.3464 5.60001 5.60001 4.3464 5.60001 2.8C5.60001 1.25361 4.3464 0 2.8 0C1.25361 0 0 1.25361 0 2.8C0 4.3464 1.25361 5.60001 2.8 5.60001Z" fill="#C3CEC8"/>
+<path id="Vector_8" transform="translate(124 76)" d="M26.5 0H1.5C0.671573 0 0 0.671573 0 1.5V2.5C0 3.32843 0.671573 4 1.5 4H26.5C27.3284 4 28 3.32843 28 2.5V1.5C28 0.671573 27.3284 0 26.5 0Z" fill="#DDE4E0"/>
+<path id="Vector_9" transform="translate(114.2 91.2)" d="M2.8 5.60001C4.3464 5.60001 5.60001 4.3464 5.60001 2.8C5.60001 1.25361 4.3464 0 2.8 0C1.25361 0 0 1.25361 0 2.8C0 4.3464 1.25361 5.60001 2.8 5.60001Z" fill="#C3CEC8"/>
+<path id="Vector_10" transform="translate(124 92)" d="M26.5 0H1.5C0.671573 0 0 0.671573 0 1.5V2.5C0 3.32843 0.671573 4 1.5 4H26.5C27.3284 4 28 3.32843 28 2.5V1.5C28 0.671573 27.3284 0 26.5 0Z" fill="#DDE4E0"/>
+<path id="Vector_11" transform="translate(114.2 107.2)" d="M2.8 5.60001C4.3464 5.60001 5.60001 4.3464 5.60001 2.8C5.60001 1.25361 4.3464 0 2.8 0C1.25361 0 0 1.25361 0 2.8C0 4.3464 1.25361 5.60001 2.8 5.60001Z" fill="#C3CEC8"/>
+<path id="Vector_12" transform="translate(124 108)" d="M26.5 0H1.5C0.671573 0 0 0.671573 0 1.5V2.5C0 3.32843 0.671573 4 1.5 4H26.5C27.3284 4 28 3.32843 28 2.5V1.5C28 0.671573 27.3284 0 26.5 0Z" fill="#C3CEC8"/>
+<path id="Vector_13" transform="translate(114.2 123.2)" d="M2.8 5.60001C4.3464 5.60001 5.60001 4.3464 5.60001 2.8C5.60001 1.25361 4.3464 0 2.8 0C1.25361 0 0 1.25361 0 2.8C0 4.3464 1.25361 5.60001 2.8 5.60001Z" fill="#C3CEC8"/>
+<path id="Vector_14" transform="translate(124 124)" d="M26.5 0H1.5C0.671573 0 0 0.671573 0 1.5V2.5C0 3.32843 0.671573 4 1.5 4H26.5C27.3284 4 28 3.32843 28 2.5V1.5C28 0.671573 27.3284 0 26.5 0Z" fill="#DDE4E0"/>
+<path id="Vector_15" transform="translate(114.2 139.2)" d="M2.8 5.60001C4.3464 5.60001 5.60001 4.3464 5.60001 2.8C5.60001 1.25361 4.3464 0 2.8 0C1.25361 0 0 1.25361 0 2.8C0 4.3464 1.25361 5.60001 2.8 5.60001Z" fill="#C3CEC8"/>
+<path id="Vector_16" transform="translate(124 140)" d="M26.5 0H1.5C0.671573 0 0 0.671573 0 1.5V2.5C0 3.32843 0.671573 4 1.5 4H26.5C27.3284 4 28 3.32843 28 2.5V1.5C28 0.671573 27.3284 0 26.5 0Z" fill="#DDE4E0"/>
+<path id="Vector_17" transform="translate(174 50)" d="M292 0H8C3.58172 0 0 3.58172 0 8V92C0 96.4183 3.58172 100 8 100H292C296.418 100 300 96.4183 300 92V8C300 3.58172 296.418 0 292 0Z" fill="white"/>
+<g id="Clip_path_group" transform="translate(174 50)">
+<mask id="mask0_1168_1281" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="588" height="200">
+<g id="docclip">
+<path id="Vector_18" d="M292 0H8C3.58172 0 0 3.58172 0 8V92C0 96.4183 3.58172 100 8 100H292C296.418 100 300 96.4183 300 92V8C300 3.58172 296.418 0 292 0Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_1168_1281)">
+<g id="Frame" transform="translate(6 12)">
+<g id="Frame_2">
+<path id="Vector_19" opacity="0.8" transform="translate(8)" d="M90 0H2C0.89543 0 0 0.89543 0 2V5C0 6.10457 0.89543 7 2 7H90C91.1046 7 92 6.10457 92 5V2C92 0.89543 91.1046 0 90 0Z" fill="#004331"/>
+<path id="Vector_20" transform="translate(8 16)" d="M248 0H2C0.89543 0 0 0.89543 0 2V4C0 5.10457 0.89543 6 2 6H248C249.105 6 250 5.10457 250 4V2C250 0.89543 249.105 0 248 0Z" fill="#DDE4E0"/>
+<path id="Vector_21" transform="translate(0 30)" d="M282 0H4C1.79086 0 0 1.79086 0 4V28C0 30.2091 1.79086 32 4 32H282C284.209 32 286 30.2091 286 28V4C286 1.79086 284.209 0 282 0Z" fill="#ECE1F8"/>
+<path id="Vector_22" transform="translate(8 36)" d="M234 0H2C0.89543 0 0 0.89543 0 2V4C0 5.10457 0.89543 6 2 6H234C235.105 6 236 5.10457 236 4V2C236 0.89543 235.105 0 234 0Z" fill="#C3CEC8"/>
+<path id="Vector_23" transform="translate(8 48)" d="M180 0H2C0.89543 0 0 0.89543 0 2V4C0 5.10457 0.89543 6 2 6H180C181.105 6 182 5.10457 182 4V2C182 0.89543 181.105 0 180 0Z" fill="#C3CEC8"/>
+<g id="Frame_3" transform="translate(8 46)">
+<g id="Frame_4">
+<path id="Vector_24" d="M1.2 0H1C0.447715 0 0 0.447715 0 1V8.5C0 9.05229 0.447715 9.5 1 9.5H1.2C1.75228 9.5 2.2 9.05229 2.2 8.5V1C2.2 0.447715 1.75228 0 1.2 0Z" fill="#A6B2AB"/>
+</g>
+</g>
+<path id="Vector_25" transform="translate(8 70)" d="M248 0H2C0.89543 0 0 0.89543 0 2V4C0 5.10457 0.89543 6 2 6H248C249.105 6 250 5.10457 250 4V2C250 0.89543 249.105 0 248 0Z" fill="#DDE4E0"/>
+</g>
+</g>
+</g>
+</g>
+<g id="Frame_5" transform="translate(119 106)">
+<g id="Frame_6">
+<path id="Vector_26" d="M0 0L24 20.8L14.4 22.72L19.04 33.28L14.56 35.2L9.92 24.64L3.2 30.08L0 0Z" fill="#008661" stroke="white" stroke-width="2.24" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+<defs>
+<radialGradient id="paint0_radial_1168_1281" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(221.92 19.8) scale(613.2 207.9)">
+<stop stop-color="#D8EBE0"/>
+<stop offset="0.6" stop-color="#BFDFCF"/>
+<stop offset="1" stop-color="#A9D2BC"/>
+</radialGradient>
+<clipPath id="clip0_1168_1281">
+<rect width="588" height="200" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,12 @@
+<!doctype html><html lang="en" class="font-sans text-gray-800 text-body leading-[1.15] min-h-screen"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name="theme-color" content="#000000"><meta name="referrer" content="origin"><link rel="icon" href="/scheduled-insights-prototype/prototype/conveyor-favicon.ico"><title>Conveyor</title><script>// Check if browser is unsupported which currently is Internet Explorer 11 and below
+    // code is lifted from https://github.com/arasatasaygin/is.js
+    var windowObject = function (value) {
+      return value != null && typeof value === 'object' && 'setInterval' in value;
+    };
+    var freeSelf = windowObject(typeof self == 'object' && self) && self;
+    var navigator = freeSelf && freeSelf.navigator;
+    var userAgent = (navigator && navigator.userAgent || '').toLowerCase();
+    var match = userAgent.match(/(?:msie |trident.+?; rv:)(\d+)/);
+    if (match !== null && match[1] <= 11) {
+      window.location.href = window.location.origin + "/unsupported.html";
+    }</script><script defer="defer" src="/scheduled-insights-prototype/prototype/static/vendors~main.13e90f.bundle.js"></script><script defer="defer" src="/scheduled-insights-prototype/prototype/static/main.3aaf0c.bundle.js"></script><link href="/scheduled-insights-prototype/prototype/static/main.6731f0.css" rel="stylesheet"></head><body class="bg-gray-100 min-h-screen overflow-hidden"><div id="app" class="flex flex-col min-h-screen"></div><script integrity="sha384-WhU5M4wjkBNzKad/seVynclBH8Fh2CQOoYVhhvz9jp8ASZm6dvRb/Gp5YAJdSWfr" crossorigin="anonymous" src="https://status.conveyor.com/embed/script.js"></script></body></html>

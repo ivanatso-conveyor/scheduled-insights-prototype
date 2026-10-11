@@ -9,14 +9,12 @@ Reference snapshot of the Scheduled Insights design work (recurring AI-generated
 - `source/app-prototype/`: the source of that standalone package, for reference. It only builds inside the comply-ui monorepo.
 - `screens/`: full-height screenshots of the 25 states used for the Figma annotations (1440 wide).
 
-## Running the prototype locally
+## Viewing
 
-The build expects to be served from the root of a web server, not from a subfolder.
-
-    cd prototype
-    python3 -m http.server 8010
-
-Then open http://localhost:8010/ in a browser. The page redirects to Insights > Scheduled.
+With GitHub Pages enabled for this repo, everything is served at
+https://ivanatso-conveyor.github.io/scheduled-insights-prototype/ (landing page with the three links).
+The prototype build is compiled for that subfolder address, so it will not run from a plain
+file:// open or from a server root; the wireframes are single files and open anywhere.
 
 ## Where the real work lives
 
