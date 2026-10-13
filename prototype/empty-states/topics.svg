@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130"
+     role="img" aria-label="Conveyor empty state — Topics — routing rails into topic buckets">
+  <title>Conveyor empty-state motion artwork — Topics — routing rails into topic buckets (Warm Sand)</title>
+  <style><![CDATA[
+    svg{
+      --paper:#FFFFFF; --halo:rgba(255,255,255,.45); --txt2:#5a6b66;
+      --grid:#DDD4C8; --xline:rgba(150,135,113,.6); --ink:#002118; --ink2:#004331;
+      --c1:#008661; --c2:#1DEAB4; --c3:#D8CDBB; --c4:#C1B5A5; --c5:#EFE9E1;
+      --acc:#8000DF; --acc2:#E1C0F9; --acc3:#ECE1F5; --pop:#FFB042;
+      --sk:#E7E0D6; --sk2:#D3C9BA; --sk3:#F1EBE2; --sk4:#FAF6F0; --ghost:#C1B5A5;
+      --bg1:#FBF8F3; --bg2:#F3EDE4; --bg3:#EDE5D9;
+      --blu:#1668C4; --blu2:#A9C8EE; --blu3:#E6EEF9;
+    }
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    @keyframes w-chipbump{0%,26%{transform:scale(1);} 32%{transform:scale(1.11);} 40%,100%{transform:scale(1);}}
+    @keyframes w-run{
+    0%{opacity:0; transform:translate(0,0);}
+    7%{opacity:1;}
+    30%{transform:translate(0,34px);}
+    62%{transform:translate(var(--bx,0px),76px);}
+    88%{opacity:1; transform:translate(var(--bx,0px),76px);}
+    96%,100%{opacity:0; transform:translate(var(--bx,0px),76px);}
+  }
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    .w-run{transform-box:fill-box; transform-origin:center; animation:w-run 5.2s cubic-bezier(.3,.7,.3,1) infinite both;}
+    @keyframes w-pick{0%,28%{fill:var(--base,var(--c4));} 36%{fill:var(--c1);} 52%,100%{fill:var(--base,var(--c4));}}
+    .w-pick{animation:w-pick 5.2s cubic-bezier(.2,.8,.3,1) infinite both;}
+    .w-chipbump{transform-box:fill-box; transform-origin:center; animation:w-chipbump 5.2s cubic-bezier(.2,.9,.3,1.25) infinite both;}
+    @media (prefers-reduced-motion: reduce){ *{animation:none !important;} }
+  ]]></style>
+  <defs>
+    <radialGradient id="wash" cx="0.3" cy="0.2" r="1.1"><stop offset="0" stop-color="#FBF8F3"/><stop offset="0.7" stop-color="#F3EDE4"/><stop offset="1" stop-color="#EDE5D9"/></radialGradient>
+    <g id="cai"><path d="M5.09375 11.668C5.84488 11.4293 6.64737 11.5553 7.28613 12.0117C7.92494 12.4683 8.29554 13.1805 8.29688 13.957V14.8428C7.84871 14.9458 7.38148 15 6.90137 15C6.80942 15 6.71791 14.9981 6.62695 14.9941V13.9248C6.62686 13.4307 6.13437 13.081 5.65625 13.2334C4.91505 13.4698 4.17188 13.7018 3.42969 13.9355C2.9046 13.578 2.43948 13.1414 2.05176 12.6436L5.09375 11.668ZM10.0039 9.56348C10.6349 9.10739 11.4356 8.98279 12.1943 9.22266L12.9863 9.47559C12.9414 10.0388 12.8172 10.5801 12.625 11.0889C12.2894 10.9815 11.9539 10.8736 11.6182 10.7666C11.1468 10.6165 10.6681 10.9631 10.668 11.4502V13.7217C10.1667 14.1086 9.60202 14.4201 8.99219 14.6387L8.99414 11.5107C8.99281 10.7342 9.35782 10.0219 10.0039 9.56348ZM3.7334 8.0791C4.1997 8.71466 4.32686 9.50224 4.08105 10.2334C3.83747 10.9795 3.26193 11.5415 2.51074 11.7803L1.64746 12.0557C1.36497 11.5872 1.14507 11.0773 1 10.5381L2.02734 10.1963C2.50419 10.0376 2.68284 9.46548 2.38379 9.06738C1.93612 8.47144 1.4957 7.87005 1.05566 7.26855C1.24211 6.65945 1.52388 6.09066 1.88477 5.58008L3.7334 8.0791ZM12.0215 1.31055C12.2129 0.896301 12.7979 0.896272 12.9893 1.31055L13.8291 3.18164L15.6895 4.02148C16.1037 4.21292 16.1037 4.79785 15.6895 4.98926L13.8291 5.8291L12.9893 7.68945C12.7978 8.10374 12.2022 8.10374 12.0107 7.68945L11.1709 5.81836L9.31055 4.97852C8.8963 4.78708 8.89627 4.20215 9.31055 4.01074L11.1816 3.1709L12.0215 1.31055ZM6.90137 3C7.48922 3 8.05778 3.08191 8.5957 3.23438L6.78516 5.68555C6.32131 6.31355 5.59801 6.6776 4.80859 6.67871C4.01907 6.67971 3.29451 6.32018 2.82812 5.68457L2.33496 5.01855C2.70711 4.60645 3.13657 4.24505 3.61035 3.94629L4.20996 4.78027C4.50276 5.18692 5.11624 5.18845 5.41113 4.7832L6.70605 3.00293C6.77087 3.00093 6.83606 3 6.90137 3Z" fill="#fff"/></g>
+  </defs>
+  <rect width="130" height="130" rx="8" fill="url(#wash)"/>
+  <g>
+      <rect x="12" y="12" width="106" height="106" rx="9" fill="var(--halo)"/>
+      <path d="M65 20V50" stroke="var(--c4)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M65 72V76Q65 80 61 80H33Q29 80 29 84V88" stroke="var(--c4)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M65 72V88" stroke="var(--c4)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M65 72V76Q65 80 69 80H97Q101 80 101 84V88" stroke="var(--c4)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect class="card" x="16" y="88" width="26" height="26" rx="3.5" fill="var(--paper)"/>
+      <rect class="w-pick" style="--base:var(--c4)" x="21" y="92" width="16" height="4" rx="1.1" fill="var(--c4)"/>
+      <rect class="w-pick" style="--base:var(--c5)" x="21" y="100" width="16" height="5.5" rx="1.5" fill="var(--c5)"/>
+      <rect class="w-pick" style="--base:var(--c5)" x="21" y="107.5" width="11" height="5" rx="1.5" fill="var(--c5)"/>
+      <rect class="card" x="52" y="88" width="26" height="26" rx="3.5" fill="var(--paper)"/>
+      <rect class="w-pick" style="--base:var(--c4); animation-delay:1.1s" x="57" y="92" width="16" height="4" rx="1.1" fill="var(--c4)"/>
+      <rect class="w-pick" style="--base:var(--c5); animation-delay:1.1s" x="57" y="100" width="16" height="5.5" rx="1.5" fill="var(--c5)"/>
+      <rect class="w-pick" style="--base:var(--c5); animation-delay:1.1s" x="57" y="107.5" width="11" height="5" rx="1.5" fill="var(--c5)"/>
+      <rect class="card" x="88" y="88" width="26" height="26" rx="3.5" fill="var(--paper)"/>
+      <rect class="w-pick" style="--base:var(--c4); animation-delay:2.2s" x="93" y="92" width="16" height="4" rx="1.1" fill="var(--c4)"/>
+      <rect class="w-pick" style="--base:var(--c5); animation-delay:2.2s" x="93" y="100" width="16" height="5.5" rx="1.5" fill="var(--c5)"/>
+      <rect class="w-pick" style="--base:var(--c5); animation-delay:2.2s" x="93" y="107.5" width="11" height="5" rx="1.5" fill="var(--c5)"/>
+      <rect class="w-run" opacity="0" style="--bx:-36px" x="56" y="24" width="18" height="5.5" rx="1.5" fill="var(--sk)"/>
+      <rect class="w-run" opacity="0" style="--bx:0px; animation-delay:1.1s" x="56" y="24" width="18" height="5.5" rx="1.5" fill="var(--sk)"/>
+      <rect class="w-run" opacity="0" style="--bx:36px; animation-delay:2.2s" x="56" y="24" width="18" height="5.5" rx="1.5" fill="var(--sk)"/>
+      <g class="w-chipbump"><rect class="card" x="54" y="50" width="22" height="22" rx="4" fill="var(--c1)"/>
+      <g transform="translate(57.8,54.2) scale(0.85)"><use href="#cai"/></g></g>
+  </g>
+</svg>

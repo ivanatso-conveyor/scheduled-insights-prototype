@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130" role="img" aria-label="Conveyor empty state — Error / alert">
+<title>Conveyor empty-state motion artwork — Error / alert (Warm Sand)</title>
+<style><![CDATA[
+svg{--c1:#008661;--c2:#1DEAB4;--c3:#D8CDBB;--c4:#C1B5A5;--c5:#EFE9E1;--acc:#8000DF;--acc2:#E1C0F9;--acc3:#ECE1F5;--pop:#FFB042;--sk:#E7E0D6;--sk2:#D3C9BA;--sk3:#F1EBE2;--sk4:#FAF6F0;--ghost:#C1B5A5;--ink:#002118;--ink2:#004331;--paper:#FFFFFF;--halo:rgba(255,255,255,.45);--xline:rgba(150,135,113,.6);}
+.card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+@keyframes rowIn{0%,8%{opacity:0; transform:translateX(-8px);} 26%,100%{opacity:1; transform:translateX(0);}}
+  .r1{animation:rowIn 4.2s ease infinite;} .r2{animation:rowIn 4.2s .35s ease infinite both;} .r3{animation:rowIn 4.2s .7s ease infinite both;}
+  @keyframes pop{0%,55%{opacity:0; transform:scale(.7);} 68%,100%{opacity:1; transform:scale(1);}}
+  .pop{transform-box:fill-box; transform-origin:center; animation:pop 4.2s cubic-bezier(.2,.9,.3,1.25) infinite;}
+  @keyframes chipPop{0%,58%{opacity:0; transform:translateY(6px);} 72%,100%{opacity:1; transform:translateY(0);}}
+  .chip-pop{animation:chipPop 4.2s cubic-bezier(.2,.8,.3,1) infinite;}
+  @keyframes slide{0%,12%{transform:translateY(-26px); opacity:0;} 20%{opacity:1;} 46%{transform:translateY(2px);} 58%{transform:translateY(0);} 84%{transform:translateY(0); opacity:1;} 94%,100%{opacity:0;}}
+  .slide{animation:slide 4.4s cubic-bezier(.3,.7,.3,1) infinite;}
+
+  /* checklist: cursor comes in, clicks the dotted circle, it completes */
+  @keyframes curIn{0%{transform:translate(46px,30px); opacity:0;} 10%{opacity:1;} 40%{transform:translate(0,0);} 46%{transform:translate(0,0) scale(.86);} 52%{transform:translate(0,0) scale(1);} 68%{transform:translate(12px,14px); opacity:1;} 80%,100%{transform:translate(24px,26px); opacity:0;}}
+  .cur{transform-box:fill-box; transform-origin:top left; animation:curIn 5.2s ease-in-out infinite;}
+  @keyframes dotHide{0%,48%{opacity:1;} 52%,100%{opacity:0;}}
+  .dot-c{animation:dotHide 5.2s steps(1) infinite;}
+  @keyframes checkPop{0%,48%{opacity:0; transform:scale(.6);} 58%,100%{opacity:1; transform:scale(1);}}
+  .check-c{transform-box:fill-box; transform-origin:center; animation:checkPop 5.2s cubic-bezier(.2,.9,.3,1.3) infinite;}
+  @keyframes barfill2{0%,52%{transform:scaleX(.12);} 72%,100%{transform:scaleX(1);}}
+  .barfill{transform-box:fill-box; transform-origin:left; animation:barfill2 5.2s cubic-bezier(.2,.8,.3,1) infinite;}
+
+  /* books */
+  @keyframes bookIn{0%,6%{opacity:0; transform:translateY(8px);} 20%,80%{opacity:1; transform:translateY(0);} 92%,100%{opacity:0; transform:translateY(0);}}
+  .bk1{animation:bookIn 5s ease infinite;} .bk2{animation:bookIn 5s .4s ease infinite both;} .bk3{animation:bookIn 5s .8s ease infinite both;}
+  @keyframes bookDrop{0%,4%{opacity:0; transform:translateY(-24px);} 12%{opacity:1; transform:translateY(2px);} 18%,80%{transform:translateY(0); opacity:1;} 92%,100%{opacity:0;}}
+  .bk4{animation:bookDrop 5s 1.2s cubic-bezier(.3,.7,.3,1) infinite both;}
+
+  /* celebration */
+  @keyframes confA{0%,50%{opacity:0; transform:translate(0,6px) rotate(0);} 62%{opacity:1;} 100%{opacity:0; transform:translate(var(--dx,8px),var(--dy,-18px)) rotate(60deg);}}
+  .conf{animation:confA 4.2s ease-out infinite;}
+  @keyframes burst{0%,52%{opacity:0; transform:scale(.3);} 64%{opacity:1;} 86%,100%{opacity:0; transform:scale(1.2);}}
+  .burst{transform-box:fill-box; transform-origin:center; animation:burst 4.2s ease-out infinite;}
+
+  @keyframes shake{0%,60%,100%{transform:translateX(0);} 66%{transform:translateX(-2.5px);} 72%{transform:translateX(2.5px);} 78%{transform:translateX(-1.5px);} 84%{transform:translateX(0);}}
+  .shake{animation:shake 4.2s ease infinite;}
+  @keyframes hand{0%{transform:rotate(0);} 100%{transform:rotate(360deg);}}
+  .hand{transform-box:fill-box; transform-origin:50% 88%; animation:hand 8s linear infinite;}
+
+  /* kanban drag — straight line */
+  @keyframes drag{0%,14%{transform:translate(0,0) scale(1); opacity:1;} 20%{transform:translate(0,0) scale(1.07);} 55%{transform:translate(36px,0) scale(1.07);} 62%{transform:translate(36px,0) scale(1);} 66%,86%{transform:translate(36px,0); opacity:1;} 96%,100%{transform:translate(36px,0); opacity:0;}}
+  .k-card{transform-box:fill-box; transform-origin:center; animation:drag 4.8s ease-in-out infinite;}
+  @keyframes cur2{0%,10%{transform:translate(-6px,6px); opacity:0;} 16%{transform:translate(0,0); opacity:1;} 55%{transform:translate(36px,0);} 62%{transform:translate(36px,0);} 72%{transform:translate(40px,8px); opacity:1;} 82%,100%{transform:translate(46px,14px); opacity:0;}}
+  .k-cur{animation:cur2 4.8s ease-in-out infinite;}
+  @keyframes slot{0%,16%{opacity:0;} 24%,56%{opacity:1;} 64%,100%{opacity:0;}}
+  .k-slot{animation:slot 4.8s ease infinite;}
+  @keyframes ghostHold{0%,86%{opacity:1;} 96%,100%{opacity:0;}}
+  .k-ghost{animation:ghostHold 4.8s ease infinite;}
+
+  /* bars */
+  @keyframes barUp{0%,12%{transform:scaleY(.15);} 55%,100%{transform:scaleY(1);}}
+  .bar{transform-box:fill-box; transform-origin:bottom; animation:barUp 4.2s cubic-bezier(.2,.8,.3,1) infinite;}
+  .bar.g2{animation-delay:.3s;} .bar.g3{animation-delay:.6s;}
+
+  /* tetris cycle: 3 rows — pieces complete row 2 (L→R), row 3 builds R→L, bottom line clears, stack drops */
+  @keyframes tetBase{0%{opacity:0;} 3%,60%{opacity:1;} 68%,100%{opacity:0;}}
+  .tbase{animation:tetBase 8s ease infinite;}
+  @keyframes tetFlash{0%,58%{opacity:0;} 62%,66%{opacity:.85;} 70%,100%{opacity:0;}}
+  .tflash{animation:tetFlash 8s ease infinite;}
+  @keyframes tetPre{0%,70%{transform:translateY(0); opacity:1;} 80%,94%{transform:translateY(20px); opacity:1;} 100%{transform:translateY(20px); opacity:0;}}
+  .thold{animation:tetPre 8s cubic-bezier(.3,.7,.3,1) infinite;}
+  @keyframes tetP1{0%{transform:translateY(-95px); opacity:0;} 3%{opacity:1;} 12%{transform:translateY(0);} 15%{transform:translateY(2px);} 18%,70%{transform:translateY(0); opacity:1;} 80%,94%{transform:translateY(20px); opacity:1;} 100%{transform:translateY(20px); opacity:0;}}
+  .tp1{animation:tetP1 8s cubic-bezier(.4,0,.6,1) infinite;}
+  @keyframes tetP2{0%,18%{transform:translateY(-95px); opacity:0;} 22%{opacity:1;} 30%{transform:translateY(0);} 33%{transform:translateY(2px);} 36%,70%{transform:translateY(0); opacity:1;} 80%,94%{transform:translateY(20px); opacity:1;} 100%{transform:translateY(20px); opacity:0;}}
+  .tp2{animation:tetP2 8s cubic-bezier(.4,0,.6,1) infinite;}
+  @keyframes tetP3{0%,36%{transform:translateY(-95px); opacity:0;} 40%{opacity:1;} 48%{transform:translateY(0);} 51%{transform:translateY(2px);} 54%,70%{transform:translateY(0); opacity:1;} 80%,94%{transform:translateY(20px); opacity:1;} 100%{transform:translateY(20px); opacity:0;}}
+  .tp3{animation:tetP3 8s cubic-bezier(.4,0,.6,1) infinite;}
+  @keyframes tetP4{0%,52%{transform:translateY(-95px); opacity:0;} 55%{opacity:1;} 62%{transform:translateY(0);} 64%{transform:translateY(2px);} 66%,70%{transform:translateY(0); opacity:1;} 80%,94%{transform:translateY(20px); opacity:1;} 100%{transform:translateY(20px); opacity:0;}}
+  .tp4{animation:tetP4 8s cubic-bezier(.4,0,.6,1) infinite;}
+  /* new motifs */
+  @keyframes sweep2{0%,38%{transform:translate(0,0);} 52%,86%{transform:translate(20px,12px);} 100%{transform:translate(0,0);}}
+  .sweep2{animation:sweep2 4.4s ease-in-out infinite;}
+  @keyframes bellSwing{0%,20%{transform:rotate(0);} 28%{transform:rotate(9deg);} 36%{transform:rotate(-7deg);} 44%{transform:rotate(4deg);} 52%,100%{transform:rotate(0);}}
+  .bell-s{transform-box:fill-box; transform-origin:top center; animation:bellSwing 4.4s ease-in-out infinite;}
+  @keyframes badgePop{0%,48%{opacity:0; transform:scale(.5);} 58%,88%{opacity:1; transform:scale(1);} 96%,100%{opacity:0;}}
+  .badge{transform-box:fill-box; transform-origin:center; animation:badgePop 4.4s cubic-bezier(.2,.9,.3,1.3) infinite;}
+  @keyframes waveOut{0%,24%{opacity:0; transform:scale(.5);} 32%{opacity:1;} 52%,100%{opacity:0; transform:scale(1.3);}}
+  .wave{transform-box:fill-box; transform-origin:center; animation:waveOut 4.4s ease-out infinite;}
+  @keyframes planeBob{0%,100%{transform:translate(0,0) rotate(0);} 50%{transform:translate(3px,-5px) rotate(2deg);}}
+  .plane{transform-box:fill-box; transform-origin:center; animation:planeBob 3.6s ease-in-out infinite;}
+  @keyframes trailDraw{0%{stroke-dashoffset:60; opacity:0;} 12%{opacity:1;} 55%,80%{stroke-dashoffset:0; opacity:1;} 95%,100%{stroke-dashoffset:0; opacity:0;}}
+  .trail{stroke-dasharray:60; animation:trailDraw 3.6s ease-in-out infinite;}
+
+  /* Click Lock + Locked Draft */
+  @keyframes chipDrainV{0%,28%{fill:var(--c1);} 52%,84%{fill:var(--ghost);} 100%{fill:var(--c1);}}
+  .drainv{animation:chipDrainV 5.5s ease infinite;}
+  @keyframes shackleV{0%,30%{transform:translateY(-8px) rotate(-14deg);} 52%{transform:translateY(0) rotate(0);} 55%{transform:translateY(1px);} 58%,100%{transform:translateY(0);}}
+  .shkv{transform-box:fill-box; transform-origin:bottom left; animation:shackleV 5.5s cubic-bezier(.4,0,.5,1) infinite;}
+  @keyframes qRowV{0%,var(--in,4%){opacity:0; transform:translateX(-6px);} var(--set,12%),88%{opacity:1; transform:translateX(0);} 96%,100%{opacity:0;}}
+  .qv1{--in:4%; --set:12%; animation:qRowV 8s ease infinite;}
+  .qv2{--in:16%; --set:24%; animation:qRowV 8s ease infinite;}
+  @keyframes typeBarV{0%,26%{transform:scaleX(.12);} 30%{transform:scaleX(.25);} 36%{transform:scaleX(.4);} 42%{transform:scaleX(.52);} 48%,88%{transform:scaleX(.62);} 96%,100%{transform:scaleX(.12);}}
+  .typev{transform-box:fill-box; transform-origin:left; animation:typeBarV 8s steps(6) infinite;}
+  @keyframes landOpenV{0%,44%{opacity:0; transform:translateY(-8px);} 52%,88%{opacity:1; transform:translateY(0);} 96%,100%{opacity:0;}}
+  .landv{animation:landOpenV 8s cubic-bezier(.3,.8,.3,1) infinite;}
+  @keyframes shutLateV{0%,54%{transform:translateY(-8px) rotate(-14deg);} 62%{transform:translateY(0) rotate(0);} 65%{transform:translateY(1px);} 68%,100%{transform:translateY(0);}}
+  .shkv2{transform-box:fill-box; transform-origin:bottom left; animation:shutLateV 8s cubic-bezier(.4,0,.5,1) infinite;}
+  @keyframes veilLateV{0%,58%{opacity:0;} 68%,88%{opacity:.55;} 96%,100%{opacity:0;}}
+  .veilv{animation:veilLateV 8s ease infinite;}
+  @keyframes typeBarM{0%,30%{transform:scaleX(.15);} 42%,46%{transform:scaleX(.62);} 56%,88%{transform:scaleX(.62);} 96%,100%{transform:scaleX(.15);}}
+  .typem{transform-box:fill-box; transform-origin:left; animation:typeBarM 8s steps(8) infinite;}
+  @keyframes veilM{0%,44%{opacity:0;} 56%,88%{opacity:.55;} 96%,100%{opacity:0;}}
+  .veilm{animation:veilM 8s ease infinite;}
+  @keyframes lockLandM{0%,46%{opacity:0; transform:translateY(-10px) scale(.85);} 55%{opacity:1; transform:translateY(1.5px) scale(1);} 58%{transform:translateY(0);} 60%,88%{opacity:1; transform:translateY(0) scale(1);} 96%,100%{opacity:0;}}
+  .landm{transform-box:fill-box; transform-origin:center; animation:lockLandM 8s cubic-bezier(.3,.8,.3,1) infinite;}
+  /* Trial Handoff (shipped reference) */
+  .tem-cardIn{transform-box:fill-box;transform-origin:bottom center}
+  @keyframes tem-fanL{0%,6%{opacity:0;transform:rotate(8deg) translateY(10px)}14%{opacity:1}26%{transform:rotate(-1deg) translateY(-1px)}32%,88%{opacity:1;transform:rotate(0deg) translateY(0)}95%,100%{opacity:0;transform:rotate(0deg) translateY(0)}}
+  .tem-fanL{animation:tem-fanL 7s cubic-bezier(.22,.61,.36,1) infinite}
+  @keyframes tem-fanR{0%,10%{opacity:0;transform:rotate(-8deg) translateY(10px)}18%{opacity:1}30%{transform:rotate(1deg) translateY(-1px)}36%,88%{opacity:1;transform:rotate(0deg) translateY(0)}95%,100%{opacity:0;transform:rotate(0deg) translateY(0)}}
+  .tem-fanR{animation:tem-fanR 7s cubic-bezier(.22,.61,.36,1) infinite}
+  @keyframes tem-riseF{0%,2%{opacity:0;transform:translateY(20px)}18%{opacity:1;transform:translateY(-2px)}24%,88%{opacity:1;transform:translateY(0)}95%,100%{opacity:0;transform:translateY(20px)}}
+  .tem-riseF{animation:tem-riseF 7s cubic-bezier(.22,.61,.36,1) infinite}
+  @keyframes tem-lockDrop{0%,40%{opacity:0;transform:translateY(-14px) scale(.8)}48%{opacity:1;transform:translateY(3px) scale(1.08)}53%{transform:translateY(-1px) scale(.98)}58%,88%{opacity:1;transform:translateY(0) scale(1)}95%,100%{opacity:0;transform:translateY(-14px) scale(.8)}}
+  .tem-lockIn{transform-box:fill-box;transform-origin:center bottom;animation:tem-lockDrop 7s cubic-bezier(.34,.72,.28,1) infinite}
+  @keyframes tem-aiDim{0%,44%{opacity:1}58%,88%{opacity:.4}95%,100%{opacity:1}}
+  .tem-aiFront{transform-box:fill-box;transform-origin:center;animation:tem-aiDim 7s ease infinite}
+  .handoff-band{position:relative; height:176px; background:#F7F2EB; overflow:hidden; display:flex; align-items:flex-start; justify-content:center; border-radius:8px;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important;} }
+]]></style>
+<defs>
+<radialGradient id="wash" cx="0.3" cy="0.2" r="1.1">
+<stop offset="0" stop-color="#FBF4F4"/><stop offset="0.7" stop-color="#F6E7E7"/><stop offset="1" stop-color="#F2DEDE"/>
+</radialGradient>
+</defs>
+  <rect width="130" height="130" rx="8" fill="url(#wash)"/>
+
+    <rect x="12" y="12" width="106" height="106" rx="9" fill="var(--halo)"/>
+    <g class="shake"><rect class="card" x="24" y="28" width="82" height="74" rx="5" fill="var(--paper)"/>
+    <circle cx="65" cy="54" r="13" fill="#FAE3E4"/><rect x="63.2" y="45" width="3.6" height="12" rx="0.9" fill="#E5484D"/><circle cx="65" cy="61.5" r="2.2" fill="#E5484D"/>
+    <rect x="42" y="76" width="46" height="6" rx="1.5" fill="var(--sk)"/><rect x="50" y="87" width="30" height="6" rx="1.5" fill="var(--sk3)"/></g>
+  
+</svg>

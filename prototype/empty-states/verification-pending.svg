@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130"
+     role="img" aria-label="Conveyor empty state — Account verification pending">
+  <title>Conveyor empty-state motion artwork — Account verification pending (Warm Sand)</title>
+  <style><![CDATA[
+    svg{
+      --paper:#FFFFFF; --halo:rgba(255,255,255,.45); --txt2:#5a6b66;
+      --grid:#DDD4C8; --xline:rgba(150,135,113,.6); --ink:#002118; --ink2:#004331;
+      --c1:#008661; --c2:#1DEAB4; --c3:#D8CDBB; --c4:#C1B5A5; --c5:#EFE9E1;
+      --acc:#8000DF; --acc2:#E1C0F9; --acc3:#ECE1F5; --pop:#FFB042;
+      --sk:#E7E0D6; --sk2:#D3C9BA; --sk3:#F1EBE2; --sk4:#FAF6F0; --ghost:#C1B5A5;
+      --bg1:#FBF8F3; --bg2:#F3EDE4; --bg3:#EDE5D9;
+      --blu:#1668C4; --blu2:#A9C8EE; --blu3:#E6EEF9;
+    }
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    @keyframes vp-breathe{0%,100%{opacity:.55; transform:scale(.94);} 50%{opacity:1; transform:scale(1.06);}}
+    @keyframes vp-scan{0%,100%{transform:translateY(0);} 50%{transform:translateY(44px);}}
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    .vp-breathe{transform-box:fill-box; transform-origin:center; animation:vp-breathe 4.6s ease-in-out infinite;}
+    .vp-scan{transform-box:fill-box; transform-origin:center; animation:vp-scan 4.8s ease-in-out infinite;}
+    @media (prefers-reduced-motion: reduce){ *{animation:none !important;} }
+  ]]></style>
+  <defs>
+    <radialGradient id="wash" cx="0.3" cy="0.2" r="1.1"><stop offset="0" stop-color="#FBF8F3"/><stop offset="0.7" stop-color="#F3EDE4"/><stop offset="1" stop-color="#EDE5D9"/></radialGradient>
+  </defs>
+  <rect width="130" height="130" rx="8" fill="url(#wash)"/>
+  <g>
+      <rect x="12" y="12" width="106" height="106" rx="9" fill="var(--halo)"/>
+      <rect class="card" x="30" y="20" width="70" height="78" rx="5" fill="var(--paper)"/>
+      <rect x="40" y="32" width="34" height="6" rx="1.5" fill="var(--sk2)"/>
+      <rect x="40" y="46" width="50" height="5.5" rx="1.4" fill="var(--sk)"/>
+      <rect x="40" y="57" width="42" height="5.5" rx="1.4" fill="var(--sk)"/>
+      <rect x="40" y="68" width="46" height="5.5" rx="1.4" fill="var(--sk3)"/>
+      <rect x="40" y="79" width="30" height="5.5" rx="1.4" fill="var(--sk3)"/>
+      <g class="vp-scan" style="transform:translateY(23px)"><rect x="30" y="30" width="70" height="12" fill="var(--c2)" opacity=".16"/><rect x="30" y="30" width="70" height="1.6" rx="0.8" fill="var(--c1)" opacity=".5"/></g>
+      <g><rect class="card" x="62" y="88" width="40" height="17" rx="4.3" fill="var(--paper)"/><g class="vp-breathe"><circle cx="72" cy="96.5" r="5" fill="none" stroke="var(--c4)" stroke-width="1.8" stroke-dasharray="3 2.5"/></g><rect x="81" y="94" width="16" height="5" rx="1.3" fill="var(--sk)"/></g>
+  </g>
+</svg>

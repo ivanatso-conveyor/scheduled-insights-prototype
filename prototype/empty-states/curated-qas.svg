@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130"
+     role="img" aria-label="Conveyor empty state — Curated Q&amp;As — an FAQ accordion (gold stars)">
+  <title>Conveyor empty-state motion artwork — Curated Q&amp;As — an FAQ accordion (gold stars) (Warm Sand)</title>
+  <style><![CDATA[
+    svg{
+      --paper:#FFFFFF; --halo:rgba(255,255,255,.45); --txt2:#5a6b66;
+      --grid:#DDD4C8; --xline:rgba(150,135,113,.6); --ink:#002118; --ink2:#004331;
+      --c1:#008661; --c2:#1DEAB4; --c3:#D8CDBB; --c4:#C1B5A5; --c5:#EFE9E1;
+      --acc:#8000DF; --acc2:#E1C0F9; --acc3:#ECE1F5; --pop:#FFB042;
+      --sk:#E7E0D6; --sk2:#D3C9BA; --sk3:#F1EBE2; --sk4:#FAF6F0; --ghost:#C1B5A5;
+      --bg1:#FBF8F3; --bg2:#F3EDE4; --bg3:#EDE5D9;
+      --blu:#1668C4; --blu2:#A9C8EE; --blu3:#E6EEF9;
+    }
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    @keyframes cq3-chev{
+    0%,26%{transform:rotate(0deg);}
+    42%,90%{transform:rotate(180deg);}
+    100%{transform:rotate(0deg);}
+  }
+    @keyframes cq3-line1{0%,36%{transform:scaleX(0);} 48%,90%{transform:scaleX(1);} 100%{transform:scaleX(0);}}
+    @keyframes cq3-line2{0%,42%{transform:scaleX(0);} 54%,90%{transform:scaleX(1);} 100%{transform:scaleX(0);}}
+    @keyframes cq3-open{
+    0%,26%{opacity:0; transform:scaleY(0);}
+    33%{opacity:1;}
+    42%,90%{opacity:1; transform:scaleY(1);}
+    100%{opacity:0; transform:scaleY(0);}
+  }
+    @keyframes cq3-push{
+    0%,26%{transform:translateY(-20px);}
+    42%,90%{transform:translateY(0px);}
+    100%{transform:translateY(-20px);}
+  }
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    .cq3-open{transform-box:fill-box; transform-origin:top; animation:cq3-open 5.6s cubic-bezier(.2,.8,.3,1) infinite;}
+    .cq3-push{transform-box:fill-box; transform-origin:center; animation:cq3-push 5.6s cubic-bezier(.2,.8,.3,1) infinite;}
+    .cq3-chev{transform-box:fill-box; transform-origin:center; animation:cq3-chev 5.6s cubic-bezier(.2,.8,.3,1) infinite;}
+    .cq3-line1,.cq3-line2{transform-box:fill-box; transform-origin:left;
+    animation-duration:5.6s; animation-timing-function:cubic-bezier(.2,.8,.3,1); animation-iteration-count:infinite;}
+    .cq3-line1{animation-name:cq3-line1;}
+    .cq3-line2{animation-name:cq3-line2;}
+    @media (prefers-reduced-motion: reduce){ *{animation:none !important;} }
+  ]]></style>
+  <defs>
+    <radialGradient id="wash" cx="0.3" cy="0.2" r="1.1"><stop offset="0" stop-color="#FBF8F3"/><stop offset="0.7" stop-color="#F3EDE4"/><stop offset="1" stop-color="#EDE5D9"/></radialGradient>
+  </defs>
+  <rect width="130" height="130" rx="8" fill="url(#wash)"/>
+  <g>
+      <rect x="12" y="12" width="106" height="106" rx="9" fill="var(--halo)"/>
+      <rect class="card" x="22" y="24" width="86" height="13" rx="3.5" fill="var(--paper)"/>
+      <path d="M32.00,26.30 L33.03,29.08 L35.99,29.20 L33.66,31.04 L34.47,33.90 L32.00,32.25 L29.53,33.90 L30.34,31.04 L28.01,29.20 L30.97,29.08 Z" fill="var(--pop)"/>
+      <rect x="41" y="28.5" width="40" height="4" rx="1.5" fill="var(--sk2)"/>
+      <path d="M96 29.2L99 32.4L102 29.2" stroke="var(--sk2)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect class="cq3-open" x="22" y="52" width="86" height="22" rx="3.5" fill="var(--c5)"/>
+      <g class="cq3-open">
+      <rect class="cq3-line1" x="41" y="59" width="52" height="4" rx="1.5" fill="var(--c1)"/>
+      <rect class="cq3-line2" x="41" y="66" width="38" height="4" rx="1.5" fill="var(--c1)"/>
+      </g>
+      <rect class="card" x="22" y="41" width="86" height="13" rx="3.5" fill="var(--paper)"/>
+      <path d="M32.00,43.30 L33.03,46.08 L35.99,46.20 L33.66,48.04 L34.47,50.90 L32.00,49.25 L29.53,50.90 L30.34,48.04 L28.01,46.20 L30.97,46.08 Z" fill="var(--pop)"/>
+      <rect x="41" y="45.5" width="47" height="4" rx="1.5" fill="var(--sk2)"/>
+      <g class="cq3-chev" style="transform:rotate(180deg)">
+      <path d="M96 46.2L99 49.4L102 46.2" stroke="var(--sk2)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <g class="cq3-push">
+      <rect class="card" x="22" y="78" width="86" height="13" rx="3.5" fill="var(--paper)"/>
+      <path d="M32.00,80.30 L33.03,83.08 L35.99,83.20 L33.66,85.04 L34.47,87.90 L32.00,86.25 L29.53,87.90 L30.34,85.04 L28.01,83.20 L30.97,83.08 Z" fill="var(--pop)"/>
+      <rect x="41" y="82.5" width="34" height="4" rx="1.5" fill="var(--sk2)"/>
+      <path d="M96 83.2L99 86.4L102 83.2" stroke="var(--sk2)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect class="card" x="22" y="95" width="86" height="13" rx="3.5" fill="var(--paper)"/>
+      <path d="M32.00,97.30 L33.03,100.08 L35.99,100.20 L33.66,102.04 L34.47,104.90 L32.00,103.25 L29.53,104.90 L30.34,102.04 L28.01,100.20 L30.97,100.08 Z" fill="var(--pop)"/>
+      <rect x="41" y="99.5" width="43" height="4" rx="1.5" fill="var(--sk2)"/>
+      <path d="M96 100.2L99 103.4L102 100.2" stroke="var(--sk2)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+  </g>
+</svg>

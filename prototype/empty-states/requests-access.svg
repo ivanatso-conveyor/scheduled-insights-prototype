@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130"
+     role="img" aria-label="Conveyor empty state — Requests — Trust Center access">
+  <title>Conveyor empty-state motion artwork — Requests — Trust Center access (Warm Sand)</title>
+  <style><![CDATA[
+    svg{
+      --paper:#FFFFFF; --halo:rgba(255,255,255,.45); --txt2:#5a6b66;
+      --grid:#DDD4C8; --xline:rgba(150,135,113,.6); --ink:#002118; --ink2:#004331;
+      --c1:#008661; --c2:#1DEAB4; --c3:#D8CDBB; --c4:#C1B5A5; --c5:#EFE9E1;
+      --acc:#8000DF; --acc2:#E1C0F9; --acc3:#ECE1F5; --pop:#FFB042;
+      --sk:#E7E0D6; --sk2:#D3C9BA; --sk3:#F1EBE2; --sk4:#FAF6F0; --ghost:#C1B5A5;
+      --bg1:#FBF8F3; --bg2:#F3EDE4; --bg3:#EDE5D9;
+      --blu:#1668C4; --blu2:#A9C8EE; --blu3:#E6EEF9;
+    }
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    @keyframes x-nob{0%,48%{opacity:0; transform:scale(.72);} 56%,62%{opacity:1; transform:scale(1);} 70%,100%{opacity:0; transform:scale(1);}}
+    @keyframes x-noout{0%,62%{opacity:1; transform:translateX(0);} 74%,100%{opacity:0; transform:translateX(-38px);}}
+    @keyframes x-step{0%,32%{transform:translateY(0);} 42%,74%{transform:translateY(-26px);} 86%,100%{transform:translateY(-52px);}}
+    @keyframes x-yesb{0%,4%{opacity:0; transform:scale(.6);} 12%,20%{opacity:1; transform:scale(1);} 28%,100%{opacity:0; transform:scale(1);}}
+    @keyframes x-yesout{0%,20%{opacity:1; transform:translateX(0);} 32%,100%{opacity:0; transform:translateX(38px);}}
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    .x-step{transform-box:fill-box; transform-origin:center; animation:x-step 7s cubic-bezier(.2,.8,.3,1) infinite;}
+    .x-yesb{transform-box:fill-box; transform-origin:center; animation:x-yesb 7s cubic-bezier(.2,.9,.3,1.25) infinite;}
+    .x-yesout{transform-box:fill-box; transform-origin:center; animation:x-yesout 7s cubic-bezier(.2,.8,.3,1) infinite;}
+    .x-nob{transform-box:fill-box; transform-origin:center; animation:x-nob 7s ease infinite;}
+    .x-noout{transform-box:fill-box; transform-origin:center; animation:x-noout 7s cubic-bezier(.2,.8,.3,1) infinite;}
+    @media (prefers-reduced-motion: reduce){ *{animation:none !important;} }
+  ]]></style>
+  <defs>
+    <radialGradient id="wash" cx="0.3" cy="0.2" r="1.1"><stop offset="0" stop-color="#FBF8F3"/><stop offset="0.7" stop-color="#F3EDE4"/><stop offset="1" stop-color="#EDE5D9"/></radialGradient>
+    <clipPath id="haloClip"><rect x="12" y="12" width="106" height="106" rx="9"/></clipPath>
+  </defs>
+  <rect width="130" height="130" rx="8" fill="url(#wash)"/>
+  <g>
+      <rect x="12" y="12" width="106" height="106" rx="9" fill="var(--halo)"/>
+      <g clip-path="url(#haloClip)">
+      <g class="x-step"><rect class="card" x="26" y="152" width="78" height="20" rx="3.5" fill="var(--paper)"/><circle cx="39" cy="159.5" r="4.5" fill="var(--sk2)"/><path d="M33 169.5a6 6 0 0 1 12 0z" fill="var(--sk2)"/><rect x="51" y="157" width="25" height="4.5" rx="1.4" fill="var(--sk)"/><rect x="51" y="164" width="15" height="4.5" rx="1.4" fill="var(--sk3)"/></g>
+      <g class="x-step"><rect class="card" x="26" y="126" width="78" height="20" rx="3.5" fill="var(--paper)"/><circle cx="39" cy="133.5" r="4.5" fill="var(--sk2)"/><path d="M33 143.5a6 6 0 0 1 12 0z" fill="var(--sk2)"/><rect x="51" y="131" width="25" height="4.5" rx="1.4" fill="var(--sk)"/><rect x="51" y="138" width="15" height="4.5" rx="1.4" fill="var(--sk3)"/></g>
+      <g class="x-step"><rect class="card" x="26" y="100" width="78" height="20" rx="3.5" fill="var(--paper)"/><circle cx="39" cy="107.5" r="4.5" fill="var(--sk2)"/><path d="M33 117.5a6 6 0 0 1 12 0z" fill="var(--sk2)"/><rect x="51" y="105" width="25" height="4.5" rx="1.4" fill="var(--sk)"/><rect x="51" y="112" width="15" height="4.5" rx="1.4" fill="var(--sk3)"/></g>
+      <g class="x-step"><rect class="card" x="26" y="74" width="78" height="20" rx="3.5" fill="var(--paper)"/><circle cx="39" cy="81.5" r="4.5" fill="var(--sk2)"/><path d="M33 91.5a6 6 0 0 1 12 0z" fill="var(--sk2)"/><rect x="51" y="79" width="25" height="4.5" rx="1.4" fill="var(--sk)"/><rect x="51" y="86" width="15" height="4.5" rx="1.4" fill="var(--sk3)"/></g>
+      <g class="x-step"><g class="x-noout"><rect class="card" x="26" y="48" width="78" height="20" rx="3.5" fill="var(--paper)"/><circle cx="39" cy="55.5" r="4.5" fill="var(--sk2)"/><path d="M33 65.5a6 6 0 0 1 12 0z" fill="var(--sk2)"/><rect x="51" y="53" width="25" height="4.5" rx="1.4" fill="var(--sk)"/><rect x="51" y="60" width="15" height="4.5" rx="1.4" fill="var(--sk3)"/>
+      <g class="x-nob"><circle cx="93" cy="58" r="6" fill="var(--ghost)"/><path d="M90.8 55.8l4.4 4.4M95.2 55.8l-4.4 4.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></g></g></g>
+      <g class="x-step"><g class="x-yesout" style="transform:translateX(11px); opacity:.88"><rect class="card" x="26" y="22" width="78" height="20" rx="3.5" fill="var(--paper)"/><circle cx="39" cy="29.5" r="4.5" fill="var(--sk2)"/><path d="M33 39.5a6 6 0 0 1 12 0z" fill="var(--sk2)"/><rect x="51" y="27" width="25" height="4.5" rx="1.4" fill="var(--sk)"/><rect x="51" y="34" width="15" height="4.5" rx="1.4" fill="var(--sk3)"/>
+      <g class="x-yesb"><circle cx="93" cy="32" r="6" fill="var(--c1)"/><path d="M90.2 32l2.2 2.2 3.9-4.6" stroke="#fff" stroke-width="1.7" fill="none" stroke-linecap="round"/></g></g></g>
+      </g>
+  </g>
+</svg>

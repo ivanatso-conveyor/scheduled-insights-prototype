@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="130" height="130"
+     role="img" aria-label="Conveyor empty state — Contacts — signed NDA">
+  <title>Conveyor empty-state motion artwork — Contacts — signed NDA (Warm Sand)</title>
+  <style><![CDATA[
+    svg{
+      --paper:#FFFFFF; --halo:rgba(255,255,255,.45); --txt2:#5a6b66;
+      --grid:#DDD4C8; --xline:rgba(150,135,113,.6); --ink:#002118; --ink2:#004331;
+      --c1:#008661; --c2:#1DEAB4; --c3:#D8CDBB; --c4:#C1B5A5; --c5:#EFE9E1;
+      --acc:#8000DF; --acc2:#E1C0F9; --acc3:#ECE1F5; --pop:#FFB042;
+      --sk:#E7E0D6; --sk2:#D3C9BA; --sk3:#F1EBE2; --sk4:#FAF6F0; --ghost:#C1B5A5;
+      --bg1:#FBF8F3; --bg2:#F3EDE4; --bg3:#EDE5D9;
+      --blu:#1668C4; --blu2:#A9C8EE; --blu3:#E6EEF9;
+    }
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    @keyframes ct-cardPop{0%,8%{opacity:0; transform:translateY(6px) scale(.82);} 26%,100%{opacity:1; transform:translateY(0) scale(1);}}
+    @keyframes ct-sign{0%,10%{stroke-dashoffset:55;} 52%,100%{stroke-dashoffset:0;}}
+    @keyframes pop{0%,55%{opacity:0; transform:scale(.7);} 68%,100%{opacity:1; transform:scale(1);}}
+    .card{filter:drop-shadow(0 1px 2px rgba(0,33,24,.08));}
+    .pop{transform-box:fill-box; transform-origin:center; animation:pop 4.2s cubic-bezier(.2,.9,.3,1.25) infinite;}
+    .ct-sign{stroke-dasharray:55; animation:ct-sign 4.2s cubic-bezier(.2,.8,.3,1) infinite;}
+    .ct-card-pop{transform-box:fill-box; transform-origin:center; animation:ct-cardPop 4.2s cubic-bezier(.2,.9,.3,1.25) infinite;}
+    @media (prefers-reduced-motion: reduce){ *{animation:none !important;} }
+  ]]></style>
+  <defs>
+    <radialGradient id="wash" cx="0.3" cy="0.2" r="1.1"><stop offset="0" stop-color="#FBF8F3"/><stop offset="0.7" stop-color="#F3EDE4"/><stop offset="1" stop-color="#EDE5D9"/></radialGradient>
+  </defs>
+  <rect width="130" height="130" rx="8" fill="url(#wash)"/>
+  <g>
+      <rect x="12" y="12" width="106" height="106" rx="9" fill="var(--halo)"/>
+      <g class="ct-card-pop">
+      <rect class="card" x="38" y="22" width="54" height="84" rx="5" fill="var(--paper)"/>
+      <circle cx="50" cy="34" r="6" fill="var(--c4)"/><path d="M42 46a8 8 0 0 1 16 0z" fill="var(--c4)"/>
+      <rect x="62" y="30" width="22" height="5" rx="1.5" fill="var(--sk)"/>
+      <rect x="62" y="39" width="14" height="3.5" rx="1.1" fill="var(--sk3)"/>
+      <rect x="44" y="50" width="42" height="1.6" rx="1.1" fill="var(--sk3)"/>
+      <rect x="46" y="57" width="38" height="4.5" rx="1.1" fill="var(--sk)"/>
+      <rect x="46" y="65" width="32" height="4.5" rx="1.1" fill="var(--sk)"/>
+      <rect x="46" y="73" width="36" height="4.5" rx="1.1" fill="var(--sk3)"/>
+      <path class="ct-sign" d="M48 90c2-5 4 3 6.5-1 2.5-4 4 3 6.5-1" stroke="var(--c1)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <rect x="46" y="93" width="38" height="2.6" rx="1.1" fill="var(--sk2)"/>
+      </g>
+      <g class="pop"><circle cx="78" cy="88" r="7" fill="var(--c1)"/><path d="M74.8 88l2.6 2.6 4.5-5.4" stroke="#fff" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+  </g>
+</svg>
